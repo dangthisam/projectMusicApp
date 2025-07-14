@@ -1,16 +1,10 @@
-import { Router , Request , Response  } from "express";
-import Topic from "../../model/topic.model";
+import { Router  } from "express";
+;
 
 const router=Router();
+import {indexTopic} from "../../controller/client/topic.controller"
 
-
-router.get("/" , async (req:Request , res:Response) =>{
-   const data=await Topic.findOne({
-    deleted:false 
-  })
-  console.log(data)
-  res.render("client/pages/topics/index")
-})
+router.get("/" , indexTopic)
 
 
 export default router;
