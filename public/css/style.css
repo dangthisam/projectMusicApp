@@ -1586,8 +1586,8 @@ body {
 
 /* Biểu tượng */
 .inner-action i {
-  color: #84b9ff;
-  font-size: 1rem;
+  color: #1b75ea;
+ 
 }
 
 /* Play section (ảnh + audio) */
@@ -1611,7 +1611,7 @@ body {
   border: 4px solid #333;
   animation: spin 10s linear infinite;
   transition: transform 0.3s;
-  
+  animation-play-state:paused
 }
 
 @keyframes spin {
@@ -1641,6 +1641,14 @@ body {
   border-radius: 10px;
   margin-bottom: 24px;
 }
+  .singer-detail .inner-actions .inner-like.active {
+  color: #1268c3;
+}
+.singer-detail .inner-actions .inner-like.active i {
+ font-weight: 900;
+}
+
+
 
 .inner-label {
   font-weight: 600;
