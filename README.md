@@ -30,3 +30,8 @@ Organized folder structure for maintainability
 ├── .env
 ├── .gitignore
 ├── README.md
+⚙️ Getting Started
+1. Clone the repository
+bash
+git clone https://github.com/yourusername/convertJstoTS.git
+cd convertJstoTS
