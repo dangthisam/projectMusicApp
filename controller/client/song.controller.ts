@@ -5,8 +5,6 @@ import Topic from "../../model/topic.model";
 import Singer from "../../model/singer.model";
 
 export const indexSongs= async (req:Request , res:Response) =>{
-    console.log(req.params.slugTopic)
-
     const topic =await Topic.findOne({
         slug:req.params.slugTopic,
         deleted:false,
@@ -38,4 +36,35 @@ export const indexSongs= async (req:Request , res:Response) =>{
         songs:songs
     })
 
+}
+
+export const detailSong= async (req:Request , res:Response) =>{
+
+    const slugSong:string=req.params.slugSong;
+    const song=await Song.findOne({
+        slug:slugSong,
+        deleted:false,
+        status:"active"
+    
+    })
+   const singer=await Singer.findOne({
+    _id:song.singerId,
+    deleted:false,
+    status:"active"
+
+   }).select("fullName")
+
+   const topic=await Topic.findOne({
+    _id:song.topicId,
+    deleted:false,
+    status:"active"
+
+   }).select("title")
+
+   res.render("client/pages/songs/detail.pug",{
+    titlePage:"Chi tiet bai hat",
+    song:song,
+    singer:singer,
+    topic:topic
+   })
 }

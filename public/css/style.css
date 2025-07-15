@@ -1520,3 +1520,146 @@ ul.list-unstyled li:nth-child(even) {
 .inner-image:hover::before {
   opacity: 1;
 }
+
+/* detail song */
+
+/* Giao diện tổng thể */
+body {
+  background-color: #16181c;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* Vùng ảnh avatar/quay */
+.singer-detail .inner-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid #F57F20; /* màu cam nóng */
+  margin-right: 20px;
+  animation-name: spin;
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-play-state: paused;
+}
+
+
+
+/* Khối hiện chi tiết bài hát */
+.singer-detail {
+  padding: 40px 0;
+}
+
+/* Tiêu đề bài hát */
+.singer-detail .inner-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Hàng thông tin (ngày, ca sĩ, chủ đề, lượt thích...) */
+.singer-detail .inner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.inner-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 15px;
+  color: #ccc;
+  transition: background 0.3s;
+}
+
+.inner-action:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Biểu tượng */
+.inner-action i {
+  color: #84b9ff;
+  font-size: 1rem;
+}
+
+/* Play section (ảnh + audio) */
+.inner-play {
+  background-color: #22252a;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Ảnh đĩa nhạc */
+.inner-avatar img {
+  width: 180px;
+  max-width: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  border: 4px solid #333;
+  animation: spin 10s linear infinite;
+  transition: transform 0.3s;
+  
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+/* Audio player */
+.inner-audio audio {
+  width: 100%;
+  outline: none;
+  background-color: #2f333a;
+  border-radius: 8px;
+  padding: 4px 0;
+}
+
+/* Mô tả & lời bài hát */
+.inner-desc {
+  background-color: #202328;
+  border-left: 4px solid #0d6efd;
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+}
+
+.inner-label {
+  font-weight: 600;
+  color: #0d6efd;
+  margin-bottom: 6px;
+  font-size: 1.1rem;
+}
+
+.inner-text {
+  color: #ccc;
+  font-size: 1rem;
+}
+
+.inner-avatar{
+  border-radius: 100%;
+  
+  box-shadow: 0 0 ;
+}
+body{
+  background-color: #18191a;
+  
+}
