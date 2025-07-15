@@ -813,3 +813,400 @@ ul.list-unstyled li:nth-child(even) {
   }
 }
 /* end box head */
+
+
+/* ===== CARD GRID THEME - COMPLETE ===== */
+
+/* Container styling */
+.container.my-4 {
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
+  max-width: 1200px;
+}
+
+/* Grid container */
+.row.g-4 {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Column animations */
+.row.g-4 > [class*="col-"] {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideInUp 0.8s ease forwards;
+}
+
+.row.g-4 > [class*="col-"]:nth-child(1) { animation-delay: 0.1s; }
+.row.g-4 > [class*="col-"]:nth-child(2) { animation-delay: 0.2s; }
+.row.g-4 > [class*="col-"]:nth-child(3) { animation-delay: 0.3s; }
+.row.g-4 > [class*="col-"]:nth-child(4) { animation-delay: 0.4s; }
+.row.g-4 > [class*="col-"]:nth-child(5) { animation-delay: 0.5s; }
+.row.g-4 > [class*="col-"]:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Card styling */
+.card.h-100.shadow-sm.border-0 {
+  background: #ffffff;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Card hover effects */
+.card.h-100.shadow-sm.border-0:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15) !important;
+  border-color: rgba(220, 53, 69, 0.2) !important;
+}
+
+/* Card image */
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  transition: all 0.4s ease;
+  border-radius: 16px 16px 0 0 !important;
+  position: relative;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05);
+  filter: brightness(1.1) saturate(1.2);
+}
+
+/* Image overlay effect */
+.card-img-top::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 0%, rgba(220, 53, 69, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .card-img-top::after {
+  opacity: 1;
+}
+
+/* Card body */
+.card-body.d-flex.flex-column {
+  padding: 1.5rem !important;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  position: relative;
+  height: 100%;
+}
+
+/* Card title */
+.card-title {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: #2c3e50 !important;
+  margin-bottom: 0.75rem !important;
+  line-height: 1.3;
+  transition: all 0.3s ease;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card:hover .card-title {
+  color: #dc3545 !important;
+  transform: translateX(5px);
+}
+
+/* Card title underline effect */
+.card-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #dc3545, #fd7e14);
+  transition: width 0.4s ease;
+}
+
+.card:hover .card-title::after {
+  width: 100%;
+}
+
+/* Card text */
+.card-text.text-muted {
+  color: #6c757d !important;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem !important;
+  flex-grow: 1;
+  transition: color 0.3s ease;
+}
+
+.card:hover .card-text.text-muted {
+  color: #495057 !important;
+}
+
+/* Button styling */
+.btn.btn-outline-primary.mt-auto {
+  border: 2px solid #007bff !important;
+  color: #007bff !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+}
+
+/* Button hover effects */
+.btn.btn-outline-primary.mt-auto:hover {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+  border-color: #0056b3 !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3) !important;
+}
+
+/* Button ripple effect */
+.btn.btn-outline-primary.mt-auto::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.btn.btn-outline-primary.mt-auto:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+/* Card glow effect */
+.card.h-100.shadow-sm.border-0::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(220, 53, 69, 0.05), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover.h-100.shadow-sm.border-0::before {
+  opacity: 1;
+}
+
+/* Loading skeleton for images */
+.card-img-top {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.card-img-top[src] {
+  animation: none;
+  background: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container.my-4 {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .row.g-4 {
+    --bs-gutter-x: 1rem;
+    --bs-gutter-y: 1rem;
+  }
+  
+  .card-img-top {
+    height: 180px;
+  }
+  
+  .card-body.d-flex.flex-column {
+    padding: 1.25rem !important;
+  }
+  
+  .card-title {
+    font-size: 1.1rem !important;
+  }
+  
+  .btn.btn-outline-primary.mt-auto {
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-img-top {
+    height: 160px;
+  }
+  
+  .card-body.d-flex.flex-column {
+    padding: 1rem !important;
+  }
+  
+  .card-title {
+    font-size: 1rem !important;
+  }
+  
+  .card-text.text-muted {
+    font-size: 0.9rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .card.h-100.shadow-sm.border-0 {
+    background: #2c3e50;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  .card-body.d-flex.flex-column {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  }
+  
+  .card-title {
+    color: #ecf0f1 !important;
+  }
+  
+  .card:hover .card-title {
+    color: #e74c3c !important;
+  }
+  
+  .card-text.text-muted {
+    color: #bdc3c7 !important;
+  }
+  
+  .card:hover .card-text.text-muted {
+    color: #ecf0f1 !important;
+  }
+}
+
+/* Special effects for featured cards */
+.card.featured {
+  position: relative;
+  overflow: hidden;
+}
+
+.card.featured::before {
+  content: '★';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(45deg, #ffd700, #ffed4a);
+  color: #333;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+}
+
+/* Masonry effect for different heights */
+.card-grid-masonry .card {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+}
+
+/* Infinite scroll loading */
+.card.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.card.loading .card-img-top {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Intersection observer fade in */
+.card.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.card.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover sound effect indicator */
+.card.has-audio::after {
+  content: '🎵';
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card.has-audio:hover::after {
+  opacity: 1;
+}
+
+/* Grid view toggle */
+.grid-view-2 .col-md-6.col-lg-4 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.grid-view-3 .col-md-6.col-lg-4 {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+}
+
+.grid-view-4 .col-md-6.col-lg-4 {
+  flex: 0 0 25%;
+  max-width: 25%;
+}
+
+@media (max-width: 768px) {
+  .grid-view-2 .col-md-6.col-lg-4,
+  .grid-view-3 .col-md-6.col-lg-4,
+  .grid-view-4 .col-md-6.col-lg-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
