@@ -35,3 +35,5 @@ Organized folder structure for maintainability
 bash
 git clone https://github.com/yourusername/convertJstoTS.git
 cd convertJstoTS
+
+![alt text](image.png)
