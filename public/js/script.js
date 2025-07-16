@@ -6,8 +6,6 @@ const aplayer=document.querySelector("#aplayer");
 if(aplayer){
     const dataSong=JSON.parse(aplayer.getAttribute("data-song"));
 const dataSinger=JSON.parse(aplayer.getAttribute("data-singer"));
-
-
     const ap = new APlayer({
     container: aplayer,
     audio: [{
@@ -42,12 +40,47 @@ if(buttonLike){
         const isActive =buttonLike.classList.contains("active");
         const type=isActive ? "dislike" : "like";
         const link =`/songs/like/${type}/${idSong}`;
-     fetch(link)
+        const option={
+            method:"PATCH"
+        
+        }
+     fetch(link , option)
         .then(res => res.json())
         .then(data=>{
-            const span=buttonLike.querySelector("span");
+            if(data.code){
+                const span=buttonLike.querySelector("span");
             span.innerHTML=`${data.like} like`
             buttonLike.classList.toggle("active");
+            }
+
+        })
+    })
+
+
+    
+}
+
+
+//Button heart 
+
+const buttonHeart=document.querySelector("[button-heart]");
+if(buttonLike){
+    buttonHeart.addEventListener("click" , () =>{
+        const idSong=buttonHeart.getAttribute("button-heart");
+        const isActive =buttonHeart.classList.contains("active");
+        const type=isActive ? "unfavorite" : "favorite";
+        const link =`/songs/favorite/${type}/${idSong}`;
+        const option={
+            method:"PATCH"
+        
+        }
+     fetch(link , option)
+        .then(res => res.json())
+        .then(data=>{
+            
+           if(data.code){
+             buttonHeart.classList.toggle("active");
+           }
 
         })
     })

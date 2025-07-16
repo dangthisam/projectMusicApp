@@ -22,7 +22,7 @@ block main
             div(class="inner-action inner-like"  button-like=song.id)
               i.fa-regular.fa-thumbs-up.me-2
               span #{song.like} like
-            .inner-action.inner-heart
+            div(class=(`inner-action inner-heart` +`${song.isFavorite ? ' active' : ''}`)  button-heart=song.id)
               i.fa-regular.fa-heart.me-2
               | Bài hát yêu thích
 

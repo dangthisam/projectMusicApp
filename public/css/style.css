@@ -1585,11 +1585,14 @@ body {
 }
 
 /* Biểu tượng */
-.inner-action i {
+.inner-action.inner-like i {
   color: #1b75ea;
  
 }
+.inner-action.inner-heart i{
+  color:  #eb1010;
 
+}
 /* Play section (ảnh + audio) */
 .inner-play {
   background-color: #22252a;
@@ -1645,6 +1648,12 @@ body {
   color: #1268c3;
 }
 .singer-detail .inner-actions .inner-like.active i {
+ font-weight: 900;
+}
+ .singer-detail .inner-actions .inner-heart.active {
+  color: #eb1010;
+}
+.singer-detail .inner-actions .inner-heart.active i {
  font-weight: 900;
 }
 
