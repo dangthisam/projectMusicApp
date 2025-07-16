@@ -25,8 +25,7 @@ export const indexFavoriteSongs=async (req:Request , res:Response)=>{
         favoriteSong["infoSinger"]=singer;
         favoriteSong["infoSong"]=songs;
     }
-    console.log(favoriteSongs);
-
+  
 
     res.render("client/pages/favorite-songs/index",{
         titlePage:"Danh sach bai hat yeu thich",

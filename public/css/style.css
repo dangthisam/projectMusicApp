@@ -1760,6 +1760,145 @@ body{
 .inner-heart.active i {
   font-weight: 900;;
 }
+.heart i{
+  font-weight: 900;
+  color: red;
+}
+/* CSS cho phần lyrics */
+.inner-text {
+  white-space: pre-line;
+  line-height: 1.8;
+  font-size: 16px;
+  color: #333;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+  margin: 10px 0;
+}
+
+/* Style cho từng đoạn lyrics */
+.inner-text p {
+  margin-bottom: 1.5rem;
+  padding: 0;
+  font-weight: 400;
+  text-align: justify;
+}
+
+/* Style cho chorus nếu có */
+.inner-text p:contains("Chorus") {
+  background: rgba(0, 123, 255, 0.1);
+  padding: 15px;
+  border-radius: 5px;
+  margin: 20px 0;
+  border-left: 3px solid #007bff;
+  font-weight: 500;
+}
+
+/* Style cho dòng đầu tiên của mỗi đoạn */
+.inner-text p:first-child {
+  margin-top: 0;
+  font-weight: 500;
+}
+
+/* Style cho dòng cuối */
+.inner-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+  .inner-text {
+    font-size: 14px;
+    padding: 15px;
+    line-height: 1.6;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .inner-text {
+    background: #2d3748;
+    color: #e2e8f0;
+    border-left-color: #63b3ed;
+  }
+  
+  .inner-text p:contains("Chorus") {
+    background: rgba(99, 179, 237, 0.1);
+    border-left-color: #63b3ed;
+  }
+}
+
+/* Animation cho lyrics khi load */
+.inner-text {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover effect */
+.inner-text:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Style cho việc select text */
+.inner-text::selection {
+  background: #007bff;
+  color: white;
+}
+
+/* Style cho scrollbar nếu content dài */
+.inner-text {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.inner-text::-webkit-scrollbar {
+  width: 8px;
+}
+
+.inner-text::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.inner-text::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.inner-text::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Style cho label */
+.inner-label {
+  font-size: 18px;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+/* Tạo spacing giữa các section */
+.inner-desc {
+  margin-bottom: 2rem;
+}
+
+.inner-desc:last-child {
+  margin-bottom: 0;
+}
 
 .text-muted {
   color: #b8bed0 !important;
