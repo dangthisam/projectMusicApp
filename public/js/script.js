@@ -63,9 +63,11 @@ if(buttonLike){
 
 //Button heart 
 
-const buttonHeart=document.querySelector("[button-heart]");
-if(buttonLike){
-    buttonHeart.addEventListener("click" , () =>{
+const listbuttonHeart=document.querySelectorAll("[button-heart]");
+
+if(listbuttonHeart.length>0){
+    listbuttonHeart.forEach((buttonHeart)=> {
+buttonHeart.addEventListener("click" , () =>{
         const idSong=buttonHeart.getAttribute("button-heart");
         const isActive =buttonHeart.classList.contains("active");
         const type=isActive ? "unfavorite" : "favorite";
@@ -84,4 +86,8 @@ if(buttonLike){
 
         })
     })
+    }
+
+    )
+    
 }

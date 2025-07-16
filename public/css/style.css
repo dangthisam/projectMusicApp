@@ -1680,3 +1680,93 @@ body{
   background-color: #18191a;
   
 }
+
+/* bai hay yeu thich */
+
+.song-item {
+  transition: box-shadow 0.22s, transform 0.18s;
+  background: #23272f;
+  color: #ececec;
+  border-radius: 16px;
+  box-shadow: 0 2px 18px rgba(40,50,70,0.11);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.song-item:hover {
+  box-shadow: 0 8px 30px rgba(30,40,90,0.14);
+  transform: translateY(-6px) scale(1.02);
+}
+
+.card-img-top img {
+  width: 100%;
+  display: block;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 14px 14px 0 0;
+  transition: filter 0.18s, transform 0.18s;
+}
+
+.song-item:hover .card-img-top img {
+  filter: brightness(1.10);
+  transform: scale(1.04);
+}
+
+.card-body {
+  background: #26292e;
+  border-radius: 0 0 14px 14px;
+  padding: 1.15rem 1.1rem;
+}
+
+.card-title {
+  margin-bottom: 0.6rem;
+}
+
+.card-title a {
+  color: #faf9f6;
+  font-size: 1.09rem;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  text-decoration: none;
+  transition: color 0.21s;
+}
+
+.card-title a:hover {
+  color: #F57F20;
+}
+
+.d-flex.align-items-center i {
+  font-size: 1.13em;
+}
+
+.text-primary {
+  color: #75baff !important;
+}
+.inner-heart.active i,
+.fa-heart.text-danger {
+  color: #fc5176 !important;
+  animation: favpulse 1.2s infinite alternate cubic-bezier(0.6,0.05,0.7,1.7);
+}
+@keyframes favpulse {
+  to { transform: scale(1.13); }
+}
+.inner-time {
+  color: #b7bed2;
+  font-size: 0.96rem;
+  font-style: italic;
+  margin-top: 3px;
+}
+.inner-heart.active i {
+  font-weight: 900;;
+}
+
+.text-muted {
+  color: #b8bed0 !important;
+}
+
+@media (max-width: 767px) {
+  .card-img-top img { height: 110px; }
+  .card-body { padding: 0.95rem 0.5rem; }
+  .card-title a { font-size: 0.96rem; }
+}
