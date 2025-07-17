@@ -5,6 +5,7 @@
 const aplayer=document.querySelector("#aplayer");
 if(aplayer){
     const dataSong=JSON.parse(aplayer.getAttribute("data-song"));
+  
 const dataSinger=JSON.parse(aplayer.getAttribute("data-singer"));
     const ap = new APlayer({
     container: aplayer,
@@ -29,6 +30,26 @@ ap.on('pause' , function(){
     avatar.style.animationPlayState="paused";
 
 })
+
+ap.on('ended' , function(){
+       const link =`/songs/listen/${dataSong._id}`;
+        const option={
+            method:"PATCH"
+        
+        }
+      fetch(link , option)
+        .then(res => res.json())
+        .then(data=>{
+            if(data.code==200){
+               console.log(data);
+               const documentLIstend=document.querySelector(".singer-detail .inner-listen span")
+    documentLIstend.innerHTML=`${data.listen} listened`;
+            }
+
+        })
+
+})
+
 }
 
 //Button like
@@ -95,7 +116,7 @@ buttonHeart.addEventListener("click" , () =>{
 // search suggest 
 
 const boxSearch=document.querySelector(".search-box");
-console.log(boxSearch);
+
 if(boxSearch){
     const inputSearch=boxSearch.querySelector("input[name=keyword]");
     const boxSuggest=boxSearch.querySelector(".inner-suggest");

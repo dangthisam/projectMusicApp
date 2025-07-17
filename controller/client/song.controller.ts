@@ -4,6 +4,7 @@ import Song from "../../model/songs.model";
 import Topic from "../../model/topic.model";
 import Singer from "../../model/singer.model";
 import FavoriteSongs from "../../model/favorite-songs.model";
+import { rmSync } from "fs";
 export const indexSongs= async (req:Request , res:Response) =>{
     const topic =await Topic.findOne({
         slug:req.params.slugTopic,
@@ -137,4 +138,37 @@ res.json({
     message:"Favorite thanh cong"
 
 })
+}
+
+
+ export const listenSong= async (req:Request , res:Response) =>{
+    const songId=req.params.idSong;
+    const songs=await Song.findOne({
+        _id:songId,
+        deleted:false,
+        status:"active"
+    
+    })
+
+    const listen=songs.totalListen+1;
+    await Song.updateOne({
+        _id:songId
+    },{
+        totalListen:listen
+    })
+
+    const dataSong=await Song.findOne({
+        _id:songId,
+        deleted:false,
+        status:"active"
+    
+    })
+
+    res.json({
+        code:200,
+        message:"Listen thanh cong",
+        listen:dataSong.totalListen
+    })
+
+
 }
