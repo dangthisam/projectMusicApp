@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-
+import bodyParser from "body-parser";
 dotenv.config();
 const app = express();
 import connect from"./config/connectDB";
@@ -20,10 +20,14 @@ app.set("views", "./views");
 app.set("view engine", "pug");
 
 //tinyEcm
-
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
-//end tinyEcm
+// to send data in form to server
+    // Middleware to parse URL-encoded form data
+    app.use(bodyParser.urlencoded({ extended: true }));
+    // Middleware to parse JSON data (if you also handle JSON submissions)
+    app.use(express.json());
+
 app.listen(port, () => {
    console.log(`Server running at http://localhost:${port}`);
 });

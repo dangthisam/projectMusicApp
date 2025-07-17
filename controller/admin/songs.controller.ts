@@ -21,3 +21,9 @@ export const createSong=async (req:Request , res:Response)=>{
     })
     
 }
+
+export const postCreateSong=async (req:Request , res:Response)=>{
+    const data=req.body;
+    console.log(data)
+
+}
