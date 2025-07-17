@@ -18,6 +18,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.3",
     "pug": "^3.0.3",
+    "tinymce": "^7.9.1",
     "unidecode": "^1.1.0"
   },
   "devDependencies": {

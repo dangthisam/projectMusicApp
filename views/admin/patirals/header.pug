@@ -1,0 +1,28 @@
+header.header
+  .container-fluid
+    .row.align-items-center
+      .col-3
+        .inner-logo
+          a(href=`/${prefixAdmin}/dashboard`)
+            img(src="/image/ST.png", alt="logo", style="border-radius:50%")
+      .col-9
+        .text-end
+          .dropdown.d-inline-block
+            button.btn.btn-primary.btn-sm.me-2.dropdown-toggle(
+              type="button",
+              id="userDropdown",
+              data-bs-toggle="dropdown",
+              aria-expanded="false"
+            )
+              i.fa-solid.fa-user.me-1
+              | Đang Thi Thùy
+            ul.dropdown-menu.dropdown-menu-end(aria-labelledby="userDropdown")
+              li.px-3.py-2
+                div.fw-semibold.mb-1 Tài khoản: Đang Thi Thùy
+                div.text-muted Email: youremail@example.com
+              li
+                hr.dropdown-divider
+              li
+                a.dropdown-item.text-danger(href=`/${prefixAdmin}/auth/logout`)
+                  i.fa-solid.fa-right-from-bracket.me-2
+                  | Đăng xuất

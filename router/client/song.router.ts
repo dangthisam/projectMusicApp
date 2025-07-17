@@ -1,9 +1,9 @@
 import { Router  } from "express";
-;
+
 
 const router=Router();
 import {indexSongs, detailSong , likeSong   , favoriteSong  , listenSong} from "../../controller/client/song.controller"
-import { listenerCount } from "process";
+
 
 router.get("/:slugTopic" , indexSongs)
 
