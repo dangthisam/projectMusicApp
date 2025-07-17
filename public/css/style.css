@@ -2032,3 +2032,80 @@ body{
   transform: translateY(0);
   
 }
+
+
+/* register */
+/* Modal Đăng nhập / Đăng ký chung */
+.modal-content {
+  border-radius: 14px;
+  border: 1.5px solid #e6e6f0;
+  box-shadow: 0 8px 30px rgba(120,95,234,0.09);
+  padding: 1.5rem 1.7rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Tiêu đề modal */
+.modal-header {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #3b3f62;
+}
+
+/* Nút đóng */
+.btn-close {
+  filter: drop-shadow(0 0 1px rgba(120,95,234,0.3));
+}
+
+/* Form input */
+.modal-body .form-label {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #5a5f85;
+  margin-bottom: 0.28rem;
+}
+
+.modal-body input.form-control {
+  border-radius: 8px;
+  border: 1.5px solid #d8d8e7;
+  padding: 10px 14px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.modal-body input.form-control:focus {
+  border-color: #785fea;
+  box-shadow: 0 0 6px rgba(120,95,234,0.45);
+  outline: none;
+}
+
+/* Footer phần nút */
+.modal-footer {
+  border-top: none;
+  padding-top: 0;
+  justify-content: space-between;
+}
+
+.modal-footer button.btn-primary,
+.modal-footer button.btn-success {
+  border-radius: 8px;
+  padding: 8px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  box-shadow: 0 3px 8px rgba(120,95,234,0.15);
+}
+
+.modal-footer button.btn-link {
+  font-size: 0.9rem;
+  color: #785fea;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.modal-footer button.btn-link:hover {
+  color: #5a3eab;
+  text-decoration: none;
+}
