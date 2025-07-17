@@ -1,0 +1,38 @@
+extends ../../layout/default.pug
+
+block main
+  h1.mb-4 #{titlePage}
+
+  .card.mb-3
+    .card-header Danh sách
+    .card-body
+      .row
+        .col-8
+          //- Bạn có thể chèn bảng hoặc danh sách ở đây
+        .col-4.text-end
+          a.btn.btn-outline-success(href=`${prefixAdmin}/topics/create`) + Thêm mới
+
+      table.table.table-hover.table-sm
+        thead
+          tr
+            th STT
+            th Hình ảnh
+            th Tiêu đề
+            th Trạng thái
+            th Hành động
+        tbody
+          each item, index in topics
+            tr
+              td #{index + 1}
+              td
+                img(src=item.avatar, alt=item.title, width="100px", height="auto")
+              td #{item.title}
+              td
+                if item.status === "active"
+                  a.badge.badge-success.text-success(href="javascript:void(0);") Hoạt động
+                else
+                  a.badge.badge-danger.text-danger(href="javascript:void(0);") Dừng hoạt động
+              td
+                a.btn.btn-secondary.btn-sm(href=`${prefixAdmin}/topics/detail/${item.id}`) Chi tiết
+                a.btn.btn-warning.btn-sm.ms-1(href=`${prefixAdmin}/topics/edit/${item.id}`) Sửa
+                button.btn.btn-danger.btn-sm.ms-1(button-delete, data-id=item.id) Xóa

@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "aplayer": "^1.10.1",
     "bcryptjs": "^3.0.2",

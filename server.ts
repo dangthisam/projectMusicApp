@@ -21,7 +21,7 @@ app.set("view engine", "pug");
 
 //tinyEcm
 
-app.use('/tinymce', express.static(path.join(process.cwd(), 'node_modules', 'tinymce')));
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 //end tinyEcm
 app.listen(port, () => {
