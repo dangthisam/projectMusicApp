@@ -17,11 +17,15 @@ header.header
                 i.fa-solid.fa-music.me-2
                 | Chủ đề
             li
-              a(href="/favorite-songs" class="heart")
+              a.heart(href="/favorite-songs")
                 i.fa-solid.fa-heart.me-2
                 | Bài hát Yêu thích
-          //- Thêm form tìm kiếm
-          form.search-form.d-flex.ms-4(action="/search/results", method="GET")
-            input.form-control(type="text", name="keyword" ,value=keyword, placeholder="Tìm kiếm bài hát...")
-            button.btn.btn-primary.ms-2(type="submit")
-              i.fa-solid.fa-magnifying-glass
+          .search-box.position-relative.ms-4
+            form.search-form.d-flex(action="/search/results", method="GET", autocomplete="off")
+              input.form-control(type="text", name="keyword", value=keyword, placeholder="Tìm kiếm bài hát...")
+              button.btn.btn-primary.ms-2(type="submit")
+                i.fa-solid.fa-magnifying-glass
+            //- Gợi ý kết quả tìm kiếm (auto-complete)
+            .inner-suggest
+              .inner-list
+                

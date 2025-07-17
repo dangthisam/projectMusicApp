@@ -6,7 +6,9 @@ import {searchSongs} from "../../controller/client/search-song.controller"
 const router=Router();
 
 
-router.get("/results" ,searchSongs);
+router.get("/:typeSearch" ,searchSongs);
+
+
 
 
 export default router;

@@ -91,3 +91,51 @@ buttonHeart.addEventListener("click" , () =>{
     )
     
 }
+
+// search suggest 
+
+const boxSearch=document.querySelector(".search-box");
+console.log(boxSearch);
+if(boxSearch){
+    const inputSearch=boxSearch.querySelector("input[name=keyword]");
+    const boxSuggest=boxSearch.querySelector(".inner-suggest");
+
+        inputSearch.addEventListener("keyup" , () =>{
+            const keyword=inputSearch.value.trim();
+         const link =`/search/suggest?keyword=${keyword}`;
+
+fetch(link)
+.then(res=>res.json())
+.then(data=>{
+    if(data.code=200){
+    const song=data.songs
+    console.log(song);
+    if(song.length>0){
+            boxSuggest.classList.add("show");
+            const html =song.map(song =>{
+                return `<a href="/songs/detail/${song.slug}" class="inner-item">
+                                <div class="inner-image">
+                                    <img src=${song.avatar} />
+                                </div>
+                                <div class="inner-info">
+                                    <div class="inner-title">${song.title}</div>
+                                    <div class="inner-singer"><i class="fa-solid fa-microphone-lines"></i> ${song.infoSinger.fullName}</div>
+                                </div>
+                            </a>
+                          `
+            })
+
+            const innerList=boxSearch.querySelector(".inner-list");
+            innerList.innerHTML=html.join("");
+
+
+    }else{
+      boxSuggest.classList.remove("show");
+
+    }
+    }
+})
+        })
+
+
+}
