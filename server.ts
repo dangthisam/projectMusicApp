@@ -5,6 +5,8 @@ dotenv.config();
 const app = express();
 import connect from"./config/connectDB";
 import mainV1Router from "./router/client/index.router";
+
+
 import path from "path"
 import mainAdminRouter from "./router/admin/index.router";
 import systemConfig from "./config/system.config";
@@ -18,7 +20,8 @@ app.set("views", "./views");
 app.set("view engine", "pug");
 
 //tinyEcm
-app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
+app.use('/tinymce', express.static(path.join(process.cwd(), 'node_modules', 'tinymce')));
 
 //end tinyEcm
 app.listen(port, () => {
