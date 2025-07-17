@@ -635,3 +635,228 @@ h1.mb-4::after {
 .table-responsive::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+
+/* CSS cho form tạo bài hát */
+
+/* Title */
+h1.mb-4 {
+  color: #2563eb;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Form container */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  border: 1px solid #e5e7eb;
+}
+
+/* Form groups */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Labels */
+label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Input fields */
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+}
+
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  outline: none;
+  background: #fff;
+}
+
+.form-control:hover {
+  border-color: #9ca3af;
+}
+
+/* Select dropdown */
+select.form-control {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 45px;
+  appearance: none;
+}
+
+/* Textarea */
+textarea.form-control {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+/* File input */
+.upload-image {
+  position: relative;
+}
+
+.form-control-file {
+  width: 100%;
+  padding: 20px;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+}
+
+.form-control-file:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.form-control-file:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  outline: none;
+}
+
+/* Image preview */
+.image-preview {
+  max-width: 180px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 2px solid #e5e7eb;
+  margin-top: 10px;
+}
+
+/* Radio buttons */
+.form-check-inline {
+  margin-right: 20px;
+}
+
+.form-check-input {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.form-check-input:checked {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.form-check-label {
+  font-weight: 500;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+/* Submit button */
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Required field indicator */
+label[for]::after {
+  content: ' *';
+  color: #ef4444;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  form {
+    margin: 0 15px;
+    padding: 20px;
+  }
+  
+  .form-control {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
+
+/* Focus states for accessibility */
+.form-control:focus,
+.form-check-input:focus,
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Validation states */
+.form-control.is-valid {
+  border-color: #10b981;
+}
+
+.form-control.is-invalid {
+  border-color: #ef4444;
+}
+
+/* Hover effects */
+.form-group:hover label {
+  color: #2563eb;
+}
+
+/* Animation */
+form {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,44 @@
+extends ../../layout/default.pug
+
+block main
+  h1.mb-4 #{pageTitle}
+
+  .card.mb-3
+    .card-header Danh sách
+    .card-body
+      .row
+        .col-8
+          //- Nơi hiển thị bảng hoặc các thông tin phụ
+        .col-4.text-end
+          a.btn.btn-outline-success(href=`${prefixAdmin}/songs/create`) + Thêm mới
+
+      table.table.table-hover.table-sm
+        thead
+          tr
+            th STT
+            th Hình ảnh
+            th Tiêu đề
+            //- th Ca sĩ
+            //- th Chủ đề
+            //- th Vị trí
+            th Trạng thái
+            th Hành động
+        tbody
+          each item, index in songs
+            tr
+              td #{index + 1}
+              td
+                img(src=item.avatar, alt=item.title, width="80px", height="auto")
+              td #{item.title}
+              //- td Để dữ liệu ca sĩ nếu cần
+              //- td Để dữ liệu chủ đề nếu cần
+              //- td Để dữ liệu vị trí nếu cần
+              td
+                if item.status === "active"
+                  a.badge.badge-success(href="javascript:void(0);") Hoạt động
+                else
+                  a.badge.badge-danger(href="javascript:void(0);") Dừng hoạt động
+              td
+                a.btn.btn-secondary.btn-sm(href=`${prefixAdmin}/songs/detail/${item.id}`) Chi tiết
+                a.btn.btn-warning.btn-sm.ms-1(href=`${prefixAdmin}/songs/edit/${item.id}`) Sửa
+                button.btn.btn-danger.btn-sm.ms-1(button-delete, data-id=item.id) Xóa

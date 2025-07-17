@@ -4,7 +4,7 @@ import Song from "../../model/songs.model";
 import Topic from "../../model/topic.model";
 import Singer from "../../model/singer.model";
 import FavoriteSongs from "../../model/favorite-songs.model";
-import { rmSync } from "fs";
+
 export const indexSongs= async (req:Request , res:Response) =>{
     const topic =await Topic.findOne({
         slug:req.params.slugTopic,
