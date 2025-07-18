@@ -36,9 +36,18 @@ block main
         button.btn.btn-danger.btn-sm.ms-2(type="button", data-upload-image-remove) Xóa
 
     //- Phần upload file âm thanh
-    .form-group.mb-3
+    .form-group.mb-3(data-upload-audio)
       label(for="audio") File âm thanh
-      input#audio.form-control-file(type="file", name="audio", accept="audio/*")
+      input#audio.form-control-file(type="file", name="audio", accept="audio/*" , data-upload-audio-input)
+      .mt-2.d-flex.align-items-center
+        audio(controls  data-upload-audio-preview)
+          source(
+            src=""
+           
+          
+          )
+         
+        
 
     .form-group.mb-3
       label(for="desc") Mô tả

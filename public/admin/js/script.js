@@ -26,3 +26,26 @@ if (buttonDeleteImage) {
        
     });
 }
+
+
+// play preview audio
+
+// xử lý upload ảnh
+const uploadAudio = document.querySelector("[data-upload-audio]");
+
+console.log(uploadAudio);
+if (uploadAudio) {
+    const uploadAudioInput= uploadAudio.querySelector("[data-upload-audio-input]");
+    console.log(uploadAudioInput)
+    const uploadAudioPreview = uploadAudio.querySelector("[data-upload-audio-preview]");
+    const sourceAudio = uploadAudio.querySelector("source");
+    uploadAudioInput.addEventListener("change", (e) => {
+ 
+        const file = e.target.files[0];
+        if (file) {
+           
+           sourceAudio.src = URL.createObjectURL(file);
+      uploadAudioPreview.load()
+        }
+    });
+}
