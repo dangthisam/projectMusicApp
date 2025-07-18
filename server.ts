@@ -27,6 +27,12 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
     app.use(bodyParser.urlencoded({ extended: true }));
     // Middleware to parse JSON data (if you also handle JSON submissions)
     app.use(express.json());
+process.on('uncaughtException', err => {
+  console.error('Uncaught Exception:', err);
+});
+process.on('unhandledRejection', reason => {
+  console.error('Unhandled Promise rejection:', reason);
+});
 
 app.listen(port, () => {
    console.log(`Server running at http://localhost:${port}`);

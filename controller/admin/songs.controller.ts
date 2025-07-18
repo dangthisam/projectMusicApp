@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 import Song from "../../model/songs.model";
 import Topic from "../../model/topic.model";
 import Singer from "../../model/singer.model";
+import systemConfig from "../../config/system.config";
 
 
 export const indexSongs=async (req:Request , res:Response)=>{
@@ -42,7 +43,18 @@ export const createSong=async (req:Request , res:Response)=>{
 }
 
 export const postCreateSong=async (req:Request , res:Response)=>{
-    const data=req.body;
+
+   
+    let avatar="";
+    let audio="";
+
+    if(req.body.avatar){
+        avatar=req.body.avatar[0];
+    }
+
+    if(req.body.audio){
+        audio=req.body.audio[0];
+    }
 
     const datasongs={
         title:req.body.title,
@@ -50,10 +62,12 @@ export const postCreateSong=async (req:Request , res:Response)=>{
         singerId:req.body.singerId,
         description :req.body.description,
        status:req.body.status,
-        avatar:req.body.avatar,
+        avatar:avatar,
+        audio:audio
+      
     }
     const song=new Song(datasongs)
     await song.save();
-    res.redirect("/admin/songs")
-
+    res.redirect(`${systemConfig.prefixAdmin}/songs`)
 }
+

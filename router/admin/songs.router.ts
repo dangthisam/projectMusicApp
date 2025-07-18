@@ -1,16 +1,26 @@
-import { Router  } from "express";
+import { Router } from "express";
 import multer from "multer";
-const router=Router();
-import { indexSongs , createSong  , postCreateSong } from "../../controller/admin/songs.controller";
+const router = Router();
+import {
+  indexSongs,
+  createSong,
+  postCreateSong,
+} from "../../controller/admin/songs.controller";
 import * as uploadMiddleware from "../../middleware/admin/uploadCould.middleware";
-const upload=multer()
-router.get("/" , indexSongs);
+const upload = multer();
+router.get("/", indexSongs);
 
-router.get("/create" , createSong)
+router.get("/create", createSong);
 
-router.post("/create",
-    upload.single("avatar"),
-    uploadMiddleware.uploadSingle,
-     postCreateSong)
+router.post(
+  "/create",
+  upload.fields([
+    { name: "avatar", maxCount: 1 },
+    { name: "audio", maxCount: 1 },
+  ]),
+
+  uploadMiddleware.uploadFields,
+  postCreateSong
+);
 
 export default router;
