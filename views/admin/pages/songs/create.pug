@@ -12,15 +12,19 @@ block main
       label(for="topic") Chủ đề
       select#topic.form-control(name="topicId", required)
         option(value="" disabled selected) -- Chọn chủ đề --
-        option(value="id1") Nhạc trẻ
-        option(value="id2") Remix
+        each item in topics
+          option(value=item.id) #{item.title}
 
+
+      
     .form-group.mb-3
       label(for="singer") Ca sĩ
       select#singer.form-control(name="singerId", required)
         option(value="" disabled selected) -- Chọn ca sĩ --
-        option(value="id1") Le Van A
-        option(value="id2") Le Van B
+        each item in singers
+          option(value=item.id) #{item.fullName}
+
+    
 
     //- Phần upload ảnh đại diện với preview và nút xóa
     .form-group.mb-3(data-upload-image)
