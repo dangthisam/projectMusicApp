@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const router = (0, express_1.Router)();
+const song_controller_1 = require("../../controller/client/song.controller");
+router.get("/:slugTopic", song_controller_1.indexSongs);
+router.get("/detail/:slugSong", song_controller_1.detailSong);
+router.patch("/like/:typeLike/:idSong", song_controller_1.likeSong);
+router.patch("/favorite/:typeFavorite/:idSong", song_controller_1.favoriteSong);
+router.patch("/listen/:idSong", song_controller_1.listenSong);
+exports.default = router;

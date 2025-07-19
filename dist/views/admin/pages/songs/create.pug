@@ -1,0 +1,67 @@
+extends ../../layout/default.pug
+
+block main
+  h1.mb-4 #{titlePage}
+
+  form(action=`${prefixAdmin}/songs/create`, method="POST", enctype="multipart/form-data")
+    .form-group.mb-3
+      label(for="title") Tiêu đề
+      input#title.form-control(type="text", name="title", required)
+
+    .form-group.mb-3
+      label(for="topic") Chủ đề
+      select#topic.form-control(name="topicId", required)
+        option(value="" disabled selected) -- Chọn chủ đề --
+        each item in topics
+          option(value=item.id)= item.title
+
+    .form-group.mb-3
+      label(for="singer") Ca sĩ
+      select#singer.form-control(name="singerId", required)
+        option(value="" disabled selected) -- Chọn ca sĩ --
+        each item in singers
+          option(value=item.id)= item.fullName
+
+    //- Phần upload ảnh đại diện
+    .form-group.mb-3(data-upload-image)
+      label(for="avatar") Ảnh đại diện
+      input#avatar.form-control(type="file", name="avatar", accept="image/*", data-upload-image-input)
+      .mt-2.d-flex.align-items-center
+        img.image-preview.rounded.border(
+          src=""
+        
+          style="max-width: 180px; max-height: 180px;"
+          data-upload-image-preview
+        )
+        button.btn.btn-danger.btn-sm.ms-2(type="button", data-upload-image-remove) Xóa
+
+    //- Phần upload file âm thanh
+    .form-group.mb-3(data-upload-audio)
+      label(for="audio") File âm thanh
+      input#audio.form-control-file(type="file", name="audio", accept="audio/*" , data-upload-audio-input)
+      .mt-2.d-flex.align-items-center
+        audio(controls  data-upload-audio-preview)
+          source(
+            src=""
+          )
+    .form-group.mb-3
+      label(for="lyrics") Lời bài hát
+      textarea#desc.form-control(name="lyrics", rows="5")
+         
+        
+
+    .form-group.mb-3
+      label(for="desc") Mô tả
+      textarea#desc.desc.form-control(name="description", rows="5")
+
+    .form-group.mb-3
+      .form-check.form-check-inline
+        input#statusActive.form-check-input(type="radio", name="status", value="active", checked)
+        label.form-check-label(for="statusActive") Hoạt động
+
+      .form-check.form-check-inline
+        input#statusInActive.form-check-input(type="radio", name="status", value="inactive")
+        label.form-check-label(for="statusInActive") Dừng hoạt động
+
+    .form-group
+      button.btn.btn-primary(type="submit") Tạo mới

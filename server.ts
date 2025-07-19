@@ -16,9 +16,9 @@ mainAdminRouter(app);
 mainV1Router(app);
 connect();
 const port: number |string= process.env.PORT || 3000;
-app.use(express.static('public'))
+app.use(express.static(`${__dirname}/public`))
 app.locals.prefixAdmin=systemConfig.prefixAdmin
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 //tinyEcm

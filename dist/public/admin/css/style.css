@@ -1,0 +1,862 @@
+header.header {
+  background: #fff;
+  border-bottom: 2px solid #f2f3f7;
+  box-shadow: 0 4px 18px rgba(50,50,93,0.04);
+  padding: 0.6rem 1.2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 1;
+}
+
+.inner-logo a {
+  font-weight: 700;
+  font-size: 1.28rem;
+  color: #573ccb;
+  font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.inner-logo a:hover {
+  color: #785fea;
+}
+
+.text-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Button chuẩn */
+.btn-sm {
+  padding: 0.24rem 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.18s ease;
+}
+
+/* Nút chính */
+.btn-primary {
+  background: linear-gradient(91deg, #785fea 45%, #d24985 97%);
+  border: none;
+  color: #fff;
+  box-shadow: 0 3px 11px rgba(120,95,234,0.14);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(91deg, #5a3eab 45%, #b02c6d 97%);
+}
+
+/* Nút logout */
+.btn-danger {
+  background: #dc3545;
+  border: none;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(220,53,69,0.3);
+}
+
+.btn-danger:hover {
+  background: #bb2d3b;
+  box-shadow: 0 5px 22px rgba(187,45,59,0.5);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .text-end {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .text-end a {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+}
+
+.sider {
+  width: 240px;
+  background: linear-gradient(120deg, #faf5ff 80%, #e9e3ff 100%);
+  min-height: 100vh;
+  box-shadow: 2px 0 32px 0 rgba(98,68,255,0.07);
+  border-radius: 20px 0 0 20px;
+  padding: 32px 0 24px 0;
+  position: fixed;
+  top: 0; left: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.inner-menu {
+  width: 100%;
+}
+
+.inner-menu ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+}
+
+.inner-menu ul li {
+  margin-bottom: 10px;
+}
+
+.inner-menu ul li:last-child {
+  margin-bottom: 0;
+}
+
+.inner-menu a {
+  display: flex;
+  align-items: center;
+  padding: 12px 32px;
+  color: #463c7a;
+  background: none;
+  border-radius: 8px 20px 20px 8px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  transition: 
+    background 0.18s, 
+    color 0.18s, 
+    box-shadow 0.18s;
+  text-decoration: none;
+  box-shadow: none;
+  position: relative;
+  letter-spacing: 0.03em;
+}
+
+.inner-menu a:hover, .inner-menu a.active {
+  background: #f1ecfe;
+  color: #6b4af3;
+  box-shadow: 0 6px 18px rgba(98,68,255,0.06);
+}
+
+.inner-menu a::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+  margin-right: 14px;
+  transition: background 0.18s;
+}
+
+.inner-menu a.active::before,
+.inner-menu a:hover::before {
+  background: #6b4af3;
+}
+
+/* Responsive sidebar thu nhỏ trên mobile */
+@media (max-width: 900px) {
+  .sider {
+    width: 68px;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 16px 0 0 16px;
+  }
+  .inner-menu a {
+    padding: 11px 12px;
+    font-size: 1.1rem;
+    justify-content: center;
+    text-align: left;
+  }
+  .inner-menu a span {
+    display: none; /* Ẩn text, chỉ giữ icon nếu bạn thêm */
+  }
+}
+/* Reset cơ bản, box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Body nền theo bootstrap, nếu muốn dark mode add class 'dark' ở html */
+/* Bạn có thể dùng css biến CSS custom properties để thay đổi theme */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bs-body-bg, #fff);
+  color: var(--bs-body-color, #212529);
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header */
+header.header {
+  background-color: #fff;
+  border-bottom: 2px solid #f2f3f7;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 4px 18px rgba(50, 50, 93, 0.04);
+  z-index: 1030;
+  position: sticky;
+  top: 0;
+}
+
+/* Logo */
+.inner-logo a img {
+  max-height: 48px;
+  width: auto;
+  display: block;
+}
+
+/* Menu List */
+.inner-menu ul.menu-list {
+  display: flex;
+  gap: 18px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.inner-menu ul.menu-list li a {
+  color: #283046;
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out;
+}
+
+.inner-menu ul.menu-list li a:hover,
+.inner-menu ul.menu-list li a.active {
+  color: #785fea;
+}
+
+/* Search Box Styles */
+.search-box {
+  position: relative;
+  width: 320px;
+}
+
+.search-form .form-control {
+  border-radius: 6px;
+  border: 1.5px solid #e3e6f0;
+  padding: 8px 12px;
+  font-size: 1rem;
+}
+
+.search-form .form-control:focus {
+  border-color: #785fea;
+  box-shadow: 0 0 8px rgba(120, 95, 234, 0.3);
+  outline: none;
+}
+
+.search-form button.btn {
+  border-radius: 6px;
+  padding: 7px 16px;
+}
+
+.inner-suggest {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1.5px solid #e5e6ee;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+  max-height: 310px;
+  overflow-y: auto;
+  margin-top: 4px;
+  z-index: 1045;
+  display: none;
+}
+
+.inner-suggest.show {
+  display: block;
+}
+
+/* Suggestion item */
+.inner-suggest .inner-list a.inner-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: #212338;
+  border-bottom: 1px solid #f1f2f6;
+  transition: background 0.15s ease;
+}
+
+.inner-suggest .inner-list a.inner-item:last-child {
+  border-bottom: none;
+}
+
+.inner-suggest .inner-list a.inner-item:hover {
+  background-color: #f6f7fe;
+}
+
+.inner-image {
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-right: 12px;
+  background-color: #f0f0f0;
+  flex-shrink: 0;
+}
+
+.inner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.inner-info .inner-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.inner-info .inner-singer {
+  font-size: 0.9rem;
+  color: #7f8ab2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inner-singer i.fa-microphone-lines {
+  color: #bba9f5;
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .inner-menu ul.menu-list {
+    flex-wrap: wrap;
+  }
+  .search-box {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+.sider {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  /* các style khác */
+  background: #faf5ff;
+  z-index: 1040;
+}
+
+.main {
+  margin-left: 240px; /* tạo cách bên trái bằng với chiều rộng của sidebar */
+  padding: 20px;
+  min-height: 100vh;
+  background: #fff;
+  /* các style khác */
+}
+
+
+/* profile  */
+/* Dropdown xổ ra khi hover trên .dropdown */
+.dropdown:hover > .dropdown-menu {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Ẩn dropdown mặc định để không bị trùng */
+.dropdown-menu {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Giữ style dropdown bình thường khi dropdown được show */
+.dropdown.show > .dropdown-menu {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+/* table */
+
+/* CSS cho trang danh sách topics */
+
+/* Card styling */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 12px 12px 0 0 !important;
+  padding: 15px 20px;
+  border-bottom: none;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Button styling */
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-outline-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+}
+
+.btn-outline-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* Table styling */
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+}
+
+.table thead th {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #475569;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
+  padding: 15px 12px;
+  text-align: center;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table tbody td {
+  padding: 15px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+  background-color: #f8fafc;
+  transform: scale(1.01);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Image styling */
+.table img {
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+  max-width: 100px;
+  height: auto;
+}
+
+.table img:hover {
+  transform: scale(1.1);
+}
+
+/* Badge styling */
+.badge {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 20px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.badge-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white !important;
+}
+
+.badge-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white !important;
+}
+
+.badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Action buttons */
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  margin: 0 2px;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  border: none;
+  color: white;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: none;
+  color: white;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border: none;
+  color: white;
+}
+
+.btn-secondary:hover,
+.btn-warning:hover,
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Title styling */
+h1.mb-4 {
+  color: #1e293b;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: center;
+  position: relative;
+}
+
+h1.mb-4::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.8rem;
+  }
+  
+  .table img {
+    max-width: 60px;
+  }
+  
+  .btn-sm {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+}
+
+/* Animation cho loading */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.table tbody tr {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Styling cho số thứ tự */
+.table tbody tr td:first-child {
+  font-weight: 600;
+  color: #6366f1;
+}
+
+/* Hover effect cho title */
+.table tbody tr td:nth-child(3) {
+  font-weight: 500;
+  color: #374151;
+}
+
+/* Custom scrollbar cho table nếu cần */
+.table-responsive {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* CSS cho form tạo bài hát */
+
+/* Title */
+h1.mb-4 {
+  color: #2563eb;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Form container */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  border: 1px solid #e5e7eb;
+}
+
+/* Form groups */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Labels */
+label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Input fields */
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+}
+
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  outline: none;
+  background: #fff;
+}
+
+.form-control:hover {
+  border-color: #9ca3af;
+}
+
+/* Select dropdown */
+select.form-control {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 45px;
+  appearance: none;
+}
+
+/* Textarea */
+textarea.form-control {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+/* File input */
+.upload-image {
+  position: relative;
+}
+
+.form-control-file {
+  width: 100%;
+  padding: 20px;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+}
+
+.form-control-file:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.form-control-file:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  outline: none;
+}
+
+/* Image preview */
+.image-preview {
+  max-width: 180px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 2px solid #e5e7eb;
+  margin-top: 10px;
+}
+
+/* Radio buttons */
+.form-check-inline {
+  margin-right: 20px;
+}
+
+.form-check-input {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.form-check-input:checked {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.form-check-label {
+  font-weight: 500;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+/* Submit button */
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Required field indicator */
+label[for]::after {
+  content: ' *';
+  color: #ef4444;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  form {
+    margin: 0 15px;
+    padding: 20px;
+  }
+  
+  .form-control {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
+
+/* Focus states for accessibility */
+.form-control:focus,
+.form-check-input:focus,
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Validation states */
+.form-control.is-valid {
+  border-color: #10b981;
+}
+
+.form-control.is-invalid {
+  border-color: #ef4444;
+}
+
+/* Hover effects */
+.form-group:hover label {
+  color: #2563eb;
+}
+
+/* Animation */
+form {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

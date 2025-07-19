@@ -1,0 +1,18 @@
+extends ../../layout/default.pug
+include ../../mixins/box-header.pug
+
+block main
+  .container.my-4
+    .row
+      .col-12
+        +box-head(titlePage)
+
+    .row.g-4
+      each topic in topics
+        .col-md-6.col-lg-4
+          .card.h-100.shadow-sm.border-0
+            img.card-img-top(src=topic.avatar, alt=topic.title)
+            .card-body.d-flex.flex-column
+              h5.card-title #{topic.title}
+              p.card-text.text-muted #{topic.description}
+              a.btn.btn-outline-primary.mt-auto(href=`/songs/${topic.slug}`) Xem chi tiết

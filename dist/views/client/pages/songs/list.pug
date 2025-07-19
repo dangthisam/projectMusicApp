@@ -1,0 +1,29 @@
+extends ../../layout/default.pug
+include ../../mixins/box-header.pug
+
+block main
+  .container.my-4
+    .row
+      .col-12
+        +box-head(titlePage)
+
+    .row.g-4
+      each song in songs
+        .col-md-6.col-lg-4
+          .song-item.shadow-sm.p-3.bg-white.rounded.h-100
+            .inner-image.mb-2
+              a(href=`/songs/detail/${song.slug}`)
+                img(src=song.avatar, alt=song.title)
+            .inner-content
+              .inner-title.mb-1
+                a.fw-bold.text-dark(href=`/songs/detail/${song.slug}`) #{song.title}
+              .inner-singer.mb-1.text-muted
+                i.fa-solid.fa-microphone-lines.me-1
+                | #{song.infoSinger.fullName}
+              .d-flex.justify-content-between.align-items-center
+                .inner-like.text-secondary
+                  i.fa-solid.fa-thumbs-up.me-1
+                  | #{song.like}
+                .inner-time.text-secondary
+                  i.fa-regular.fa-clock.me-1
+                  | Hôm nay

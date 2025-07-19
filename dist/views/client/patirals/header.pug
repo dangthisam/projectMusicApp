@@ -1,0 +1,92 @@
+header.header
+  .container
+    .row.align-items-center
+      .col-3
+        .inner-logo
+          a(href="/")
+            img(src="/image/ST.png", alt="Logo")
+      .col-9
+        .inner-menu.d-flex.align-items-center.justify-content-between
+          ul.menu-list.mb-0
+            li
+              a(href="/") 
+                i.fa-solid.fa-house.me-2
+                | Trang chủ
+            li
+              a(href="/topics") 
+                i.fa-solid.fa-music.me-2
+                | Chủ đề
+            li
+              a.heart(href="/favorite-songs")
+                i.fa-solid.fa-heart.me-2
+                | Bài hát Yêu thích
+          .search-box.position-relative.ms-4
+            form.search-form.d-flex(action="/search/results", method="GET", autocomplete="off")
+              input.form-control(type="text", name="keyword", value=keyword, placeholder="Tìm kiếm bài hát...")
+              button.btn.btn-primary.ms-2(type="submit")
+                i.fa-solid.fa-magnifying-glass
+            //- Gợi ý kết quả tìm kiếm (auto-complete)
+            .inner-suggest
+              .inner-list
+                a.inner-item(href='/songs/detail/:slugSong')
+                  .inner-image
+                    img(src="https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg", alt="Cắt đôi nỗi sầu")
+                  .inner-info
+                    .inner-title Cắt đôi nỗi sầu
+                    .inner-singer
+                      i.fa-solid.fa-microphone-lines
+                      | Tăng Duy Tân
+                a.inner-item(href='/songs/detail/:slugSong')
+                  .inner-image
+                    img(src="https://backend.daca.vn/assets/images/ngay-mai-nguoi-ta-lay-chong.jpg", alt="Ngày Mai Người Ta Lấy Chong")
+                  .inner-info
+                    .inner-title Ngày Mai Người Ta Lấy Chong
+                    .inner-singer
+                      i.fa-solid.fa-microphone-lines
+                      | Thanh Đạt
+
+          //- Nút đăng nhập / đăng ký
+          .d-flex.align-items-center.ms-4.gap-2
+            button.btn.btn-outline-primary(type="button", data-bs-toggle="modal", data-bs-target="#loginModal") Đăng nhập
+            button.btn.btn-primary(type="button", data-bs-toggle="modal", data-bs-target="#registerModal") Đăng ký
+
+//- Modal đăng nhập
+.modal.fade#loginModal(tabindex="-1")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5.modal-title Đăng nhập
+        button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+      form(action="/auth/login", method="POST", autocomplete="off")
+        .modal-body
+          .mb-3
+            label.form-label(for="loginEmail") Email
+            input#loginEmail.form-control(type="email", name="email", required, placeholder="Nhập email")
+          .mb-3
+            label.form-label(for="loginPassword") Mật khẩu
+            input#loginPassword.form-control(type="password", name="password", required, placeholder="Nhập mật khẩu")
+        .modal-footer
+          button.btn.btn-primary(type="submit") Đăng nhập
+          button.btn.btn-link(type="button", data-bs-toggle="modal", data-bs-target="#registerModal", data-bs-dismiss="modal") Chưa có tài khoản? Đăng ký
+
+//- Modal đăng ký
+.modal.fade#registerModal(tabindex="-1")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5.modal-title Đăng ký
+        button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+      form(action="/auth/register", method="POST", autocomplete="off")
+        .modal-body
+          .mb-3
+            label.form-label(for="registerUsername") Tên người dùng
+            input#registerUsername.form-control(type="text", name="username", required, placeholder="Nhập tên người dùng")
+          .mb-3
+            label.form-label(for="registerEmail") Email
+            input#registerEmail.form-control(type="email", name="email", required, placeholder="Nhập email")
+          .mb-3
+            label.form-label(for="registerPassword") Mật khẩu
+            input#registerPassword.form-control(type="password", name="password", required, placeholder="Nhập mật khẩu tối thiểu 6 ký tự")
+        .modal-footer
+          button.btn.btn-success(type="submit") Đăng ký
+          button.btn.btn-link(type="button", data-bs-toggle="modal", data-bs-target="#loginModal", data-bs-dismiss="modal") Đã có tài khoản? Đăng nhập
