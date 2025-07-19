@@ -5,16 +5,18 @@
 const aplayer=document.querySelector("#aplayer");
 if(aplayer){
     const dataSong=JSON.parse(aplayer.getAttribute("data-song"));
-  
+  console.log(dataSong.lyrics)
 const dataSinger=JSON.parse(aplayer.getAttribute("data-singer"));
     const ap = new APlayer({
     container: aplayer,
+      lrcType: 1,
     audio: [{
         
         name: dataSong.title,
         artist: dataSinger.fullName,
         url: dataSong.audio,
-        cover:dataSong.avatar
+        cover:dataSong.avatar,
+      lrc:dataSong.lyrics
 
     }],
     autoplay:true,
@@ -30,6 +32,7 @@ ap.on('pause' , function(){
     avatar.style.animationPlayState="paused";
 
 })
+
 
 ap.on('ended' , function(){
        const link =`/songs/listen/${dataSong._id}`;
