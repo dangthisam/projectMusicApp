@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userLogin = exports.userRegister = void 0;
+exports.userLogout = exports.userLogin = exports.userRegister = void 0;
 const User_model_1 = __importDefault(require("../../model/User.model"));
 const md5_1 = __importDefault(require("md5"));
 const userRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -58,3 +58,9 @@ const userLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.redirect("/topics");
 });
 exports.userLogin = userLogin;
+const userLogout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.clearCookie("tokenUser");
+    req.flash("success", "Đăng xuất thành công");
+    res.redirect("/topics");
+});
+exports.userLogout = userLogout;

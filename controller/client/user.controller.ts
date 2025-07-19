@@ -60,3 +60,12 @@ deleted:false,
  res.redirect("/topics")
   
 }
+
+//[GET  ]  /user/logout
+
+export const userLogout= async (req:Request , res:Response) =>{
+  res.clearCookie("tokenUser");
+  req.flash("success" , "Đăng xuất thành công");
+  res.redirect("/topics")
+
+}
