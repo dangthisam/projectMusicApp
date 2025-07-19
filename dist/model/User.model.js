@@ -14,6 +14,7 @@ const userSchema = new mongoose_1.default.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     profilePicture: { type: String, default: "" },
+    status: { type: String, default: "active" },
     deleted: { type: Boolean, default: false },
     deletedAt: Date,
 }, { timestamps: true });

@@ -4,44 +4,60 @@ import bodyParser from "body-parser";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
-import flash from "express-flash"
+import flash from "express-flash";
+import path from "path";
+
 dotenv.config();
 const app = express();
-import connect from"./config/connectDB";
+
+import connect from "./config/connectDB";
 import mainV1Router from "./router/client/index.router";
-
-
-import path from "path"
 import mainAdminRouter from "./router/admin/index.router";
 import systemConfig from "./config/system.config";
-    // Middleware to parse URL-encoded form data
-    app.use(bodyParser.urlencoded({ extended: true }));
-    // Middleware to parse JSON data (if you also handle JSON submissions)
-    app.use(express.json());
+import middlewareUser from "./middleware/client/user.middleware";
 
-    app.use(methodOverride('_method'))
-// Flash
+// ===== THỨ TỰ MIDDLEWARE ĐÚNG =====
+
+// 1. Body parsing middleware TRƯỚC
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
+// 2. Method override
+app.use(methodOverride('_method'));
+
+// 3. Cookie parser PHẢI TRƯỚC user middleware
 app.use(cookieParser('nguyenvansamthichdangthithuy'));
-app.use(session({ cookie: { maxAge: 60000 }}));
+
+// 4. Session và Flash
+app.use(session({ 
+    cookie: { maxAge: 60000 },
+    secret: 'nguyenvansamthichdangthithuy', // Thêm secret
+    resave: false,
+    saveUninitialized: true
+}));
 app.use(flash());
-//end Flash
 
-mainAdminRouter(app);
-mainV1Router(app);
-connect();
-const port: number |string= process.env.PORT || 3000;
-app.use(express.static(`${__dirname}/public`))
-app.locals.prefixAdmin=systemConfig.prefixAdmin
-app.set("views", `${__dirname}/views`);
-app.set("view engine", "pug");
-
-//tinyEcm
+// 5. Static files
+app.use(express.static(`${__dirname}/public`));
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
-// to send data in form to server
+// 6. View engine setup
+app.set("views", `${__dirname}/views`);
+app.set("view engine", "pug");
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
+// 7. USER MIDDLEWARE - SAU KHI ĐÃ CẤU HÌNH COOKIE PARSER
+app.use(middlewareUser);
 
+// 8. Routes cuối cùng
+mainAdminRouter(app);
+mainV1Router(app);
 
+// Database connection
+connect();
+
+// Start server
+const port: number | string = process.env.PORT || 3000;
 app.listen(port, () => {
-   console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running at http://localhost:${port}`);
 });

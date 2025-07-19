@@ -9,11 +9,11 @@ header.header
         .inner-menu.d-flex.align-items-center.justify-content-between
           ul.menu-list.mb-0
             li
-              a(href="/") 
+              a(href="/")
                 i.fa-solid.fa-house.me-2
                 | Trang chủ
             li
-              a(href="/topics") 
+              a(href="/topics")
                 i.fa-solid.fa-music.me-2
                 | Chủ đề
             li
@@ -45,48 +45,72 @@ header.header
                       i.fa-solid.fa-microphone-lines
                       | Thanh Đạt
 
-          //- Nút đăng nhập / đăng ký
+          //- Kiểm tra đăng nhập
           .d-flex.align-items-center.ms-4.gap-2
-            button.btn.btn-outline-primary(type="button", data-bs-toggle="modal", data-bs-target="#loginModal") Đăng nhập
-            button.btn.btn-primary(type="button", data-bs-toggle="modal", data-bs-target="#registerModal") Đăng ký
+            if users
+              //- Nếu đã đăng nhập - hiển thị thông tin user
+              .dropdown
+                button.btn.btn-outline-primary.dropdown-toggle(type="button", data-bs-toggle="dropdown", aria-expanded="false")
+                  i.fa-solid.fa-user.me-2
+                  | #{users.username}
+                ul.dropdown-menu
+                  li
+                    a.dropdown-item(href="/user/profile")
+                      i.fa-solid.fa-user-gear.me-2
+                      | Thông tin tài khoản
+                  li
+                    a.dropdown-item(href="/user/change-password")
+                      i.fa-solid.fa-key.me-2
+                      | Đổi mật khẩu
+                  li
+                    hr.dropdown-divider
+                  li
+                    a.dropdown-item(href="/user/logout")
+                      i.fa-solid.fa-right-from-bracket.me-2
+                      | Đăng xuất
+            else
+              //- Nếu chưa đăng nhập - hiển thị nút đăng nhập/đăng ký
+              button.btn.btn-outline-primary(type="button", data-bs-toggle="modal", data-bs-target="#loginModal") Đăng nhập
+              button.btn.btn-primary(type="button", data-bs-toggle="modal", data-bs-target="#registerModal") Đăng ký
 
-//- Modal đăng nhập
-.modal.fade#loginModal(tabindex="-1")
-  .modal-dialog
-    .modal-content
-      .modal-header
-        h5.modal-title Đăng nhập
-        button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-      form(action="/user/login", method="POST", autocomplete="off")
-        .modal-body
-          .mb-3
-            label.form-label(for="loginEmail") Email
-            input#loginEmail.form-control(type="email", name="email", required, placeholder="Nhập email")
-          .mb-3
-            label.form-label(for="loginPassword") Mật khẩu
-            input#loginPassword.form-control(type="password", name="password", required, placeholder="Nhập mật khẩu")
-        .modal-footer
-          button.btn.btn-primary(type="submit") Đăng nhập
-          button.btn.btn-link(type="button", data-bs-toggle="modal", data-bs-target="#registerModal", data-bs-dismiss="modal") Chưa có tài khoản? Đăng ký
+//- Modal đăng nhập (chỉ hiện khi chưa đăng nhập)
+if !users
+  .modal.fade#loginModal(tabindex="-1")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h5.modal-title Đăng nhập
+          button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+        form(action="/user/login", method="POST", autocomplete="off")
+          .modal-body
+            .mb-3
+              label.form-label(for="loginEmail") Email
+              input#loginEmail.form-control(type="email", name="email", required, placeholder="Nhập email")
+            .mb-3
+              label.form-label(for="loginPassword") Mật khẩu
+              input#loginPassword.form-control(type="password", name="password", required, placeholder="Nhập mật khẩu")
+          .modal-footer
+            button.btn.btn-primary(type="submit") Đăng nhập
+            button.btn.btn-link(type="button", data-bs-toggle="modal", data-bs-target="#registerModal", data-bs-dismiss="modal") Chưa có tài khoản? Đăng ký
 
-//- Modal đăng ký
-.modal.fade#registerModal(tabindex="-1")
-  .modal-dialog
-    .modal-content
-      .modal-header
-        h5.modal-title Đăng ký
-        button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-      form(action="/user/register", method="POST", autocomplete="off")
-        .modal-body
-          .mb-3
-            label.form-label(for="registerUsername") Tên người dùng
-            input#registerUsername.form-control(type="text", name="username", required, placeholder="Nhập tên người dùng")
-          .mb-3
-            label.form-label(for="registerEmail") Email
-            input#registerEmail.form-control(type="email", name="email", required, placeholder="Nhập email")
-          .mb-3
-            label.form-label(for="registerPassword") Mật khẩu
-            input#registerPassword.form-control(type="password", name="password", required, placeholder="Nhập mật khẩu tối thiểu 6 ký tự")
-        .modal-footer
-          button.btn.btn-success(type="submit") Đăng ký
-          button.btn.btn-link(type="button", data-bs-toggle="modal", data-bs-target="#loginModal", data-bs-dismiss="modal") Đã có tài khoản? Đăng nhập
+  //- Modal đăng ký (chỉ hiện khi chưa đăng nhập)
+  .modal.fade#registerModal(tabindex="-1")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h5.modal-title Đăng ký
+          button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+        form(action="/user/register", method="POST", autocomplete="off")
+          .modal-body
+            .mb-3
+              label.form-label(for="registerUsername") Tên người dùng
+              input#registerUsername.form-control(type="text", name="username", required, placeholder="Nhập tên người dùng")
+            .mb-3
+              label.form-label(for="registerEmail") Email
+              input#registerEmail.form-control(type="email", name="email", required, placeholder="Nhập email")
+            .mb-3
+              label.form-label(for="registerPassword") Mật khẩu
+              input#registerPassword.form-control(type="password", name="password", required, placeholder="Nhập mật khẩu tối thiểu 6 ký tự")
+          .modal-footer
+            button.btn.btn-success(type="submit") Đăng ký
+            button.btn.btn-link(type="button", data-bs-toggle="modal", data-bs-target="#loginModal", data-bs-dismiss="modal") Đã có tài khoản? Đăng nhập
