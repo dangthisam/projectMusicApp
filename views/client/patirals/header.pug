@@ -57,7 +57,7 @@ header.header
       .modal-header
         h5.modal-title Đăng nhập
         button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-      form(action="/auth/login", method="POST", autocomplete="off")
+      form(action="/user/login", method="POST", autocomplete="off")
         .modal-body
           .mb-3
             label.form-label(for="loginEmail") Email
@@ -76,7 +76,7 @@ header.header
       .modal-header
         h5.modal-title Đăng ký
         button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-      form(action="/auth/register", method="POST", autocomplete="off")
+      form(action="/user/register", method="POST", autocomplete="off")
         .modal-body
           .mb-3
             label.form-label(for="registerUsername") Tên người dùng

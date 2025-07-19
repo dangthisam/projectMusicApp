@@ -1,7 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import session from "express-session";
+import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
+import flash from "express-flash"
 dotenv.config();
 const app = express();
 import connect from"./config/connectDB";
@@ -11,7 +14,18 @@ import mainV1Router from "./router/client/index.router";
 import path from "path"
 import mainAdminRouter from "./router/admin/index.router";
 import systemConfig from "./config/system.config";
+    // Middleware to parse URL-encoded form data
+    app.use(bodyParser.urlencoded({ extended: true }));
+    // Middleware to parse JSON data (if you also handle JSON submissions)
+    app.use(express.json());
+
     app.use(methodOverride('_method'))
+// Flash
+app.use(cookieParser('nguyenvansamthichdangthithuy'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
+//end Flash
+
 mainAdminRouter(app);
 mainV1Router(app);
 connect();
@@ -25,10 +39,6 @@ app.set("view engine", "pug");
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // to send data in form to server
-    // Middleware to parse URL-encoded form data
-    app.use(bodyParser.urlencoded({ extended: true }));
-    // Middleware to parse JSON data (if you also handle JSON submissions)
-    app.use(express.json());
 
 
 
