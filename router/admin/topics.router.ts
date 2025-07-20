@@ -7,6 +7,7 @@ import {
   topicsController,
   adminCreateTopics,
   adminPostCreateTopics,
+  detailTopics
 } from "../../controller/admin/topic.controller";
 router.get("/", topicsController);
 
@@ -22,5 +23,7 @@ router.post(
   uploadMiddleware.uploadFields,
   adminPostCreateTopics
 );
+
+router.get("/detail/:id" , detailTopics);
 
 export default router;

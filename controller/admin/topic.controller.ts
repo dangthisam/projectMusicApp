@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Topic from "../../model/topic.model";
+import Song from "../../model/songs.model";
 import multer from "multer";
 import systemConfig from "../../config/system.config";
 const upload = multer();
@@ -46,5 +47,29 @@ export const adminPostCreateTopics=async (req:Request , res:Response)=>{
   await topics.save();
   req.flash("success","Thêm chủ đề thành công")
   res.redirect(`${systemConfig.prefixAdmin}/topics`)
+
+}
+
+// [GET] /topics/detail/:id
+export const detailTopics=async (req:Request , res:Response)=>{
+  const topicId=req.params.id;
+  const topic=await Topic.findById({
+    _id:topicId,
+    deleted:false,
+    status:"active"
+  })
+
+  const songs=await Song.find({
+    topicId:topicId,
+    deleted:false,
+    status:"active"
+  })
+
+
+  res.render("admin/pages/topics/detail.pug",{
+    titlePage:"Chi tiết chủ đề",
+    topic:topic,
+    songs:songs
+  })
 
 }

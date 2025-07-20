@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.adminPostCreateTopics = exports.adminCreateTopics = exports.topicsController = void 0;
+exports.detailTopics = exports.adminPostCreateTopics = exports.adminCreateTopics = exports.topicsController = void 0;
 const topic_model_1 = __importDefault(require("../../model/topic.model"));
+const songs_model_1 = __importDefault(require("../../model/songs.model"));
 const multer_1 = __importDefault(require("multer"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
 const upload = (0, multer_1.default)();
@@ -51,3 +52,22 @@ const adminPostCreateTopics = (req, res) => __awaiter(void 0, void 0, void 0, fu
     res.redirect(`${system_config_1.default.prefixAdmin}/topics`);
 });
 exports.adminPostCreateTopics = adminPostCreateTopics;
+const detailTopics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const topicId = req.params.id;
+    const topic = yield topic_model_1.default.findById({
+        _id: topicId,
+        deleted: false,
+        status: "active"
+    });
+    const songs = yield songs_model_1.default.find({
+        topicId: topicId,
+        deleted: false,
+        status: "active"
+    });
+    res.render("admin/pages/topics/detail.pug", {
+        titlePage: "Chi tiết chủ đề",
+        topic: topic,
+        songs: songs
+    });
+});
+exports.detailTopics = detailTopics;

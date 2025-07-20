@@ -1,0 +1,119 @@
+extends ../../layout/default.pug
+include ../../mixins/box-header.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert(3000)
+  +alertError(3000)
+  
+  //- Topic Detail Section
+  .topic-detail-section
+    .container
+      .topic-header-container
+        .row.align-items-center.g-4
+          .col-md-5.text-center
+            .topic-avatar-wrapper
+              if topic.avatar
+                img.topic-avatar.img-fluid.shadow-lg(
+                  src=topic.avatar,
+                  alt=topic.title
+                )
+              else
+                .topic-avatar-placeholder.d-flex.align-items-center.justify-content-center(
+                  style="width:320px;height:320px;"
+                )
+                  i.fa-solid.fa-music.fa-5x.text-white
+          
+          .col-md-7
+            h1.topic-title
+              i.fa-solid.fa-hashtag.me-2
+              = topic.title
+            
+            .topic-description!= topic.description
+            
+            .topic-stats.d-flex.flex-wrap.mb-4
+              if topic.songCount
+                span.stat-badge.badge.fs-6
+                  i.fa-solid.fa-music.me-2
+                  | #{topic.songCount} bài hát
+              
+              if topic.likeCount
+                span.stat-badge.badge.badge-danger.fs-6
+                  i.fa-solid.fa-heart.me-2
+                  | #{topic.likeCount} lượt thích
+              
+              //- Thêm badge cho view count nếu có
+              if topic.viewCount
+                span.stat-badge.badge.badge-success.fs-6
+                  i.fa-solid.fa-eye.me-2
+                  | #{topic.viewCount} lượt xem
+            
+            if topic.createdAt
+              .topic-created-date
+                i.fa-solid.fa-calendar.me-2
+                | Tạo ngày #{new Date(topic.createdAt).toLocaleDateString('vi-VN')}
+
+      //- Songs List Section
+      .songs-section
+        .songs-section-title
+          h2
+            i.fa-solid.fa-music.me-2
+            | Danh Sách Bài Hát
+          p Khám phá những bài hát hay nhất trong chủ đề này
+
+        if songs && songs.length > 0
+          .row
+            each song in songs
+              .col-12
+                .song-card
+                  .row.align-items-center
+                    .col-auto
+                      if song.avatar
+                        img.song-thumbnail(
+                          src=song.avatar,
+                          alt=song.title
+                        )
+                      else
+                        .song-thumbnail.bg-light.d-flex.align-items-center.justify-content-center
+                          i.fa-solid.fa-music.text-muted
+                    
+                    .col
+                      .song-info
+                        h5= song.title
+                        if song.singerId && song.singerId.fullName
+                          .song-artist
+                            i.fa-solid.fa-user.me-1
+                            | #{song.singerId.fullName}
+                        
+                        .song-meta
+                          if song.likeCount
+                            span.song-badge.likes
+                              i.fa-solid.fa-heart.me-1
+                              | #{song.likeCount} thích
+                          
+                          if song.listenCount
+                            span.song-badge.listens
+                              i.fa-solid.fa-play.me-1
+                              | #{song.listenCount} lượt nghe
+                          
+                          if song.duration
+                            span.song-badge.duration
+                              i.fa-solid.fa-clock.me-1
+                              | #{song.duration}
+                    
+                    .col-auto
+                      .song-actions
+                        a.btn-play(href=`/songs/detail/${song.slug}`)
+                          i.fa-solid.fa-play.me-2
+                          | Nghe ngay
+                        
+                        .btn-like(
+                          data-song-id=song._id,
+                          title="Thích bài hát"
+                        )
+                          i.fa-solid.fa-heart
+        else
+          .no-songs
+            i.fa-solid.fa-music-slash
+            h4 Chưa có bài hát nào
+            p Chủ đề này hiện tại chưa có bài hát. Hãy quay lại sau nhé!
