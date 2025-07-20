@@ -5,6 +5,8 @@ declare global {
   namespace Express {
     interface Request {
       flash(type: string, message?: string): string[];
+      session: any;
+    
     }
   }
 }

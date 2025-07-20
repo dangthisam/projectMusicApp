@@ -20,12 +20,14 @@ header.header
               a.heart(href="/favorite-songs")
                 i.fa-solid.fa-heart.me-2
                 | Bài hát Yêu thích
+
           .search-box.position-relative.ms-4
             form.search-form.d-flex(action="/search/results", method="GET", autocomplete="off")
               input.form-control(type="text", name="keyword", value=keyword, placeholder="Tìm kiếm bài hát...")
               button.btn.btn-primary.ms-2(type="submit")
                 i.fa-solid.fa-magnifying-glass
-            //- Gợi ý kết quả tìm kiếm (auto-complete)
+
+            //- Gợi ý kết quả tìm kiếm
             .inner-suggest
               .inner-list
                 a.inner-item(href='/songs/detail/:slugSong')
@@ -45,10 +47,9 @@ header.header
                       i.fa-solid.fa-microphone-lines
                       | Thanh Đạt
 
-          //- Kiểm tra đăng nhập
+          //- Kiểm tra trạng thái đăng nhập
           .d-flex.align-items-center.ms-4.gap-2
             if users
-              //- Nếu đã đăng nhập - hiển thị thông tin user
               .dropdown
                 button.btn.btn-outline-primary.dropdown-toggle(type="button", data-bs-toggle="dropdown", aria-expanded="false")
                   i.fa-solid.fa-user.me-2
@@ -69,13 +70,12 @@ header.header
                       i.fa-solid.fa-right-from-bracket.me-2
                       | Đăng xuất
             else
-              //- Nếu chưa đăng nhập - hiển thị nút đăng nhập/đăng ký
               button.btn.btn-outline-primary(type="button", data-bs-toggle="modal", data-bs-target="#loginModal") Đăng nhập
               button.btn.btn-primary(type="button", data-bs-toggle="modal", data-bs-target="#registerModal") Đăng ký
 
-//- Modal đăng nhập (chỉ hiện khi chưa đăng nhập)
+//- Modal Đăng nhập (chỉ khi chưa đăng nhập)
 if !users
-  .modal.fade#loginModal(tabindex="-1")
+  .modal.fade#loginModal(tabindex="-1", aria-hidden="true")
     .modal-dialog
       .modal-content
         .modal-header
@@ -89,12 +89,16 @@ if !users
             .mb-3
               label.form-label(for="loginPassword") Mật khẩu
               input#loginPassword.form-control(type="password", name="password", required, placeholder="Nhập mật khẩu")
+              .text-end.mt-1
+                a.text-decoration-none(href="/user/forgot-password")
+                  i.fa-solid.fa-unlock-keyhole.me-1
+                  | Quên mật khẩu?
           .modal-footer
             button.btn.btn-primary(type="submit") Đăng nhập
             button.btn.btn-link(type="button", data-bs-toggle="modal", data-bs-target="#registerModal", data-bs-dismiss="modal") Chưa có tài khoản? Đăng ký
 
-  //- Modal đăng ký (chỉ hiện khi chưa đăng nhập)
-  .modal.fade#registerModal(tabindex="-1")
+  //- Modal Đăng ký
+  .modal.fade#registerModal(tabindex="-1", aria-hidden="true")
     .modal-dialog
       .modal-content
         .modal-header
