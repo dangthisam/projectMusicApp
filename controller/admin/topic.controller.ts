@@ -36,11 +36,16 @@ export const adminPostCreateTopics=async (req:Request , res:Response)=>{
   if(req.body.avatar){
     avatar=req.body.avatar[0];
   }
+  if(req.body.position==""){
+    const countTopics=await Topic.countDocuments();
+    req.body.position=countTopics+1;
+  }
   const data={
     title:req.body.title,
     description:req.body.description,
     status:req.body.status,
-    avatar:avatar
+    avatar:avatar,
+    position:req.body.position
   }
 
   const topics =new Topic(data);

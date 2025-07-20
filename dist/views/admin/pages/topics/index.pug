@@ -20,6 +20,7 @@ block main
             th STT
             th Hình ảnh
             th Tiêu đề
+            th Vị trí
             th Trạng thái
             th Hành động
         tbody
@@ -29,6 +30,7 @@ block main
               td
                 img(src=item.avatar, alt=item.title, width="100px", height="auto")
               td #{item.title}
+              td #{item.position}
               td
                 if item.status === "active"
                   a.badge.badge-success.text-success(href="javascript:void(0);") Hoạt động

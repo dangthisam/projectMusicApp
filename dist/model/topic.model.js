@@ -15,6 +15,7 @@ const topicSchema = new mongoose_1.default.Schema({
         type: Boolean,
         default: false
     },
+    position: Number,
     slug: {
         type: String,
         slug: 'title',

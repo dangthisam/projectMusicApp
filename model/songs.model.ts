@@ -13,7 +13,7 @@ const songSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-
+   position:Number,
     likedUsers: [String],
     totalListen: {
       type:Number,

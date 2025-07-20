@@ -12,6 +12,7 @@ const topicSchema = new mongoose.Schema({
         default:false
     
     },
+    position:Number,
     slug: {
         type: String,
         slug: 'title',

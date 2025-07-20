@@ -40,11 +40,16 @@ const adminPostCreateTopics = (req, res) => __awaiter(void 0, void 0, void 0, fu
     if (req.body.avatar) {
         avatar = req.body.avatar[0];
     }
+    if (req.body.position == "") {
+        const countTopics = yield topic_model_1.default.countDocuments();
+        req.body.position = countTopics + 1;
+    }
     const data = {
         title: req.body.title,
         description: req.body.description,
         status: req.body.status,
-        avatar: avatar
+        avatar: avatar,
+        position: req.body.position
     };
     const topics = new topic_model_1.default(data);
     yield topics.save();
