@@ -22,24 +22,24 @@ const indexSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const topic = yield topic_model_1.default.findOne({
         slug: req.params.slugTopic,
         deleted: false,
-        status: "active"
+        status: "active",
     });
     const songs = yield songs_model_1.default.find({
         topicId: topic.id,
         deleted: false,
-        status: "active"
+        status: "active",
     });
     for (const song of songs) {
         const singer = yield singer_model_1.default.findOne({
             _id: song.singerId,
             deleted: false,
-            status: "active"
+            status: "active",
         });
         song["infoSinger"] = singer;
     }
     res.render("client/pages/songs/list.pug", {
         titlePage: "Danh sach bai hat",
-        songs: songs
+        songs: songs,
     });
 });
 exports.indexSongs = indexSongs;
@@ -48,17 +48,17 @@ const detailSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const song = yield songs_model_1.default.findOne({
         slug: slugSong,
         deleted: false,
-        status: "active"
+        status: "active",
     });
     const singer = yield singer_model_1.default.findOne({
         _id: song.singerId,
         deleted: false,
-        status: "active"
+        status: "active",
     }).select("fullName");
     const topic = yield topic_model_1.default.findOne({
         _id: song.topicId,
         deleted: false,
-        status: "active"
+        status: "active",
     }).select("title");
     const favoriteSong = yield favorite_songs_model_1.default.findOne({
         songId: song.id,
@@ -74,33 +74,33 @@ const detailSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         titlePage: "Chi tiet bai hat",
         song: song,
         singer: singer,
-        topic: topic
+        topic: topic,
     });
 });
 exports.detailSong = detailSong;
 const likeSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idSong = req.params.idSong;
-    console.log(idSong);
     const typeLike = req.params.typeLike;
     const tokenUser = req.cookies.tokenUser;
-    console.log(tokenUser);
     const song = yield songs_model_1.default.findOne({
         _id: idSong,
         deleted: false,
-        status: "active"
+        status: "active",
     });
     const user = yield User_model_1.default.findOne({
         tokenUser: tokenUser,
         deleted: false,
-        status: "active"
+        status: "active",
     });
     const userId = user.id;
-    const alreadyLiked = song.likedUsers.map(id => id.toString()).includes(userId);
+    const alreadyLiked = song.likedUsers
+        .map((id) => id.toString())
+        .includes(userId);
     if (typeLike === "like" && !alreadyLiked) {
         song.likedUsers.push(userId);
     }
     else {
-        song.likedUsers = song.likedUsers.filter(id => id.toString() !== userId);
+        song.likedUsers = song.likedUsers.filter((id) => id.toString() !== userId);
     }
     song.like = song.likedUsers.length;
     yield song.save();
@@ -108,7 +108,7 @@ const likeSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.json({
         code: 200,
         message: "Like thanh cong",
-        like: song.like
+        like: song.like,
     });
 });
 exports.likeSong = likeSong;
@@ -120,14 +120,14 @@ const favoriteSong = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         case "favorite":
             const dataFavorite = new favorite_songs_model_1.default({
                 songId: idSong,
-                userId: tokenUser
+                userId: tokenUser,
             });
             yield dataFavorite.save();
             break;
         case "unfavorite":
             yield favorite_songs_model_1.default.deleteOne({
                 songId: idSong,
-                userId: tokenUser
+                userId: tokenUser,
             });
             break;
         default:
@@ -135,7 +135,7 @@ const favoriteSong = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     res.json({
         code: 200,
-        message: "Favorite thanh cong"
+        message: "Favorite thanh cong",
     });
 });
 exports.favoriteSong = favoriteSong;
@@ -144,23 +144,23 @@ const listenSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const songs = yield songs_model_1.default.findOne({
         _id: songId,
         deleted: false,
-        status: "active"
+        status: "active",
     });
     const listen = songs.totalListen + 1;
     yield songs_model_1.default.updateOne({
-        _id: songId
+        _id: songId,
     }, {
-        totalListen: listen
+        totalListen: listen,
     });
     const dataSong = yield songs_model_1.default.findOne({
         _id: songId,
         deleted: false,
-        status: "active"
+        status: "active",
     });
     res.json({
         code: 200,
         message: "Listen thanh cong",
-        listen: dataSong.totalListen
+        listen: dataSong.totalListen,
     });
 });
 exports.listenSong = listenSong;
