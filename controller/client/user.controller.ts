@@ -69,3 +69,22 @@ export const userLogout= async (req:Request , res:Response) =>{
   res.redirect("/topics")
 
 }
+
+
+//[GET ] /user/profile
+
+export const userProfile= async (req:Request , res:Response) =>{
+  const tokenUser=req.cookies.tokenUser;
+  const user=await User.findOne({
+    tokenUser:tokenUser,
+    deleted:false
+  })
+
+  res.render("client/pages/user/profile.pug" ,{
+    titlePage:"Trang cá nhân",
+    user:user
+  })
+
+
+
+}

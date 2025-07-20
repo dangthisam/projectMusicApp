@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userLogout = exports.userLogin = exports.userRegister = void 0;
+exports.userProfile = exports.userLogout = exports.userLogin = exports.userRegister = void 0;
 const User_model_1 = __importDefault(require("../../model/User.model"));
 const md5_1 = __importDefault(require("md5"));
 const userRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -64,3 +64,15 @@ const userLogout = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.redirect("/topics");
 });
 exports.userLogout = userLogout;
+const userProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const tokenUser = req.cookies.tokenUser;
+    const user = yield User_model_1.default.findOne({
+        tokenUser: tokenUser,
+        deleted: false
+    });
+    res.render("client/pages/user/profile.pug", {
+        titlePage: "Trang cá nhân",
+        user: user
+    });
+});
+exports.userProfile = userProfile;

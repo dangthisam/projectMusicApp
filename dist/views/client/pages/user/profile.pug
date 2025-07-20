@@ -1,0 +1,56 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+
+block main
+  .profile-container.py-5.bg-light
+    .container
+      .row.justify-content-center
+        .col-xl-8.col-lg-10.col-md-12
+          .card.shadow-lg.border-0.rounded-3.overflow-hidden
+            .card-header.bg-primary.text-white.text-center.py-4
+              h1.h4.mb-0.d-flex.justify-content-center.align-items-center.gap-2
+                i.fas.fa-user-circle
+                | Thông tin tài khoản
+
+            .card-body.bg-white
+              .row.g-4.align-items-center
+                .col-md-4.text-center
+                  if users.avatar
+                    img.img-fluid.rounded-circle.shadow(style="width: 150px; height: 150px; object-fit: cover;", src=users.avatar, alt="Avatar")
+                  else
+                    .avatar-placeholder.bg-secondary.d-flex.align-items-center.justify-content-center.rounded-circle.mx-auto(style="width:150px; height:150px;")
+                      i.fas.fa-user-tie.text-white.fs-1
+
+                .col-md-8
+                  dl.row.mb-0
+                    dt.col-sm-4.fw-bold.text-primary.d-flex.align-items-center
+                      i.fas.fa-id-card.me-2
+                      | Tên đăng nhập
+                    dd.col-sm-8.text-muted #{users.username}
+
+                    if users.email
+                      dt.col-sm-4.fw-bold.text-info.d-flex.align-items-center.mt-3
+                        i.fas.fa-envelope.me-2
+                        | Email
+                      dd.col-sm-8.text-muted.mt-3 #{users.email}
+
+                    if users.status
+                      dt.col-sm-4.fw-bold.text-success.d-flex.align-items-center.mt-3
+                        i.fas.fa-toggle-on.me-2
+                        | Trạng thái
+                      dd.col-sm-8.mt-3
+                        if users.status === 'active'
+                          span.badge.bg-success.px-2.py-1.rounded-pill Hoạt động
+                        else
+                          span.badge.bg-secondary.px-2.py-1.rounded-pill Không hoạt động
+                    
+                    dt.col-sm-4.fw-bold.text-warning.d-flex.align-items-center.mt-3
+                      i.fas.fa-calendar-alt.me-2
+                      | Ngày tạo
+                    dd.col-sm-8.text-muted.mt-3 #{new Date(users.createdAt).toLocaleDateString('vi-VN')}
+
+            .card-footer.bg-light.text-center.border-top.py-3
+              a.btn.btn-outline-secondary(href="/")
+                i.fas.fa-arrow-left.me-2
+                | Quay lại trang chủ
+
