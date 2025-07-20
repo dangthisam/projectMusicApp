@@ -1,0 +1,43 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+block main
+  +alert(3000)
+   
+  h1.mb-4 #{titlePage}
+
+  form(action=`${prefixAdmin}/topics/create`, method="POST", enctype="multipart/form-data")
+    .form-group.mb-3
+      label(for="title") Tiêu đề
+      input#title.form-control(type="text", name="title", required)
+
+
+    //- Phần upload ảnh đại diện
+    .form-group.mb-3(data-upload-image)
+      label(for="avatar") Ảnh đại diện
+      input#avatar.form-control(type="file", name="avatar", accept="image/*", data-upload-image-input)
+      .mt-2.d-flex.align-items-center
+        img.image-preview.rounded.border(
+          src=""
+        
+          style="max-width: 180px; max-height: 180px;"
+          data-upload-image-preview
+        )
+        button.btn.btn-danger.btn-sm.ms-2(type="button", data-upload-image-remove) Xóa
+
+        
+
+    .form-group.mb-3
+      label(for="desc") Mô tả
+      textarea#desc.desc.form-control(name="description", rows="5")
+
+    .form-group.mb-3
+      .form-check.form-check-inline
+        input#statusActive.form-check-input(type="radio", name="status", value="active", checked)
+        label.form-check-label(for="statusActive") Hoạt động
+
+      .form-check.form-check-inline
+        input#statusInActive.form-check-input(type="radio", name="status", value="inactive")
+        label.form-check-label(for="statusInActive") Dừng hoạt động
+
+    .form-group
+      button.btn.btn-primary(type="submit") Tạo mới

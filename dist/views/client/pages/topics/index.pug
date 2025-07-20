@@ -3,21 +3,30 @@ include ../../mixins/box-header.pug
 include ../../mixins/alert.pug
 
 block main
-
   +alert(3000)
   +alertError(3000)
+
   .container.my-4
     .row
       .col-12
         +box-head(titlePage)
 
+  //- Section title (tùy chọn)
+  .section-title.text-center.mb-4
+    h2 Chủ Đề Âm Nhạc
+    p.text-muted Khám phá những chủ đề nhạc hay nhất
 
-    .row.g-4
-      each topic in topics
-        .col-md-6.col-lg-4
-          .card.h-100.shadow-sm.border-0
-            img.card-img-top(src=topic.avatar, alt=topic.title)
-            .card-body.d-flex.flex-column
-              h5.card-title #{topic.title}
-              p.card-text.text-muted #{topic.description}
-              a.btn.btn-outline-primary.mt-auto(href=`/songs/${topic.slug}`) Xem chi tiết
+  //- Container chính cho topics
+  .topics-container
+    .container
+      .row.g-4
+        each topic in topics
+          .col-md-6.col-lg-4
+            .card.topic-card.h-100
+              img.card-img-top(src=topic.avatar, alt=topic.title, loading="lazy")
+              .card-body.d-flex.flex-column
+                h5.card-title= topic.title
+                .card-text !{topic.description}
+                a.btn.btn-primary.mt-auto(href=`/songs/${topic.slug}`)
+                  i.fas.fa-music.me-2
+                  | Xem chi tiết
