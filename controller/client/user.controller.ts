@@ -88,3 +88,33 @@ export const userProfile= async (req:Request , res:Response) =>{
 
 
 }
+
+//  [GET]   /user/change-password
+
+export const userChangePass= async (req:Request , res:Response) =>{
+  res.render("client/pages/user/change-password.pug",{
+    titlePage:"Đổi mật khẩu"
+  
+  })
+}
+
+//[POST]     /user/change-password
+
+export const userChangePostPassword= async (req:Request , res:Response) =>{
+   const newPassword=md5(req.body.newPassword);
+   const tokenUser=req.cookies.tokenUser;
+
+   await User.updateOne({
+    tokenUser:tokenUser
+   },{
+    password:newPassword
+   })
+
+   req.flash("success" , "Đổi mật khẩu thành công")
+   res.redirect("profile")
+
+
+
+
+
+}

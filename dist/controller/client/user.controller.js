@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userProfile = exports.userLogout = exports.userLogin = exports.userRegister = void 0;
+exports.userChangePostPassword = exports.userChangePass = exports.userProfile = exports.userLogout = exports.userLogin = exports.userRegister = void 0;
 const User_model_1 = __importDefault(require("../../model/User.model"));
 const md5_1 = __importDefault(require("md5"));
 const userRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -76,3 +76,21 @@ const userProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     });
 });
 exports.userProfile = userProfile;
+const userChangePass = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.render("client/pages/user/change-password.pug", {
+        titlePage: "Đổi mật khẩu"
+    });
+});
+exports.userChangePass = userChangePass;
+const userChangePostPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const newPassword = (0, md5_1.default)(req.body.newPassword);
+    const tokenUser = req.cookies.tokenUser;
+    yield User_model_1.default.updateOne({
+        tokenUser: tokenUser
+    }, {
+        password: newPassword
+    });
+    req.flash("success", "Đổi mật khẩu thành công");
+    res.redirect("profile");
+});
+exports.userChangePostPassword = userChangePostPassword;

@@ -18,8 +18,8 @@ const userMiddleware=async (req:Request , res:Response , next:NextFunction)=>{
        res.locals.users=user;
     
 }
-
  next();
+
 }
 
 export  default userMiddleware
