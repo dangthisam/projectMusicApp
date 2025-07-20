@@ -4,7 +4,7 @@ import Song from "../../model/songs.model";
 import Topic from "../../model/topic.model";
 import Singer from "../../model/singer.model";
 import FavoriteSongs from "../../model/favorite-songs.model";
-
+import User from "../../model/User.model";
 export const indexSongs= async (req:Request , res:Response) =>{
     const topic =await Topic.findOne({
         slug:req.params.slugTopic,
@@ -94,19 +94,44 @@ console.log(tokenUser)
             status:"active"
         })
 
-        const newLike:number =typeLike==="like"?song.like+1:song.like-1;
+        const user=await User.findOne({
+            tokenUser:tokenUser,
+            deleted:false,
+            status:"active"
 
-
-        await Song.updateOne({
-            _id:idSong
-        }, {
-            like:newLike
         })
+
+const userId=user.id;
+const alreadyLiked = song.likedUsers.map(id => id.toString()).includes(userId);
+
+
+
+if(typeLike==="like" && !alreadyLiked){
+  song.likedUsers.push(userId);
+
+
+}else{
+    song.likedUsers=song.likedUsers.filter(id => id.toString() !== userId);
+}
+
+song.like=song.likedUsers.length;
+await song.save();
+
+
+        // const newLike:number =typeLike==="like"?song.like+1:song.like-1;
+
+
+        // await Song.updateOne({
+        //     _id:idSong
+        // }, {
+        //     like:newLike
+        // })
+        console.log(song)
 
       res.json({
         code:200,
         message:"Like thanh cong",
-        like:newLike
+        like:song.like
       
       })
 

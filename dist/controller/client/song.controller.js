@@ -17,6 +17,7 @@ const songs_model_1 = __importDefault(require("../../model/songs.model"));
 const topic_model_1 = __importDefault(require("../../model/topic.model"));
 const singer_model_1 = __importDefault(require("../../model/singer.model"));
 const favorite_songs_model_1 = __importDefault(require("../../model/favorite-songs.model"));
+const User_model_1 = __importDefault(require("../../model/User.model"));
 const indexSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const topic = yield topic_model_1.default.findOne({
         slug: req.params.slugTopic,
@@ -88,16 +89,26 @@ const likeSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         deleted: false,
         status: "active"
     });
-    const newLike = typeLike === "like" ? song.like + 1 : song.like - 1;
-    yield songs_model_1.default.updateOne({
-        _id: idSong
-    }, {
-        like: newLike
+    const user = yield User_model_1.default.findOne({
+        tokenUser: tokenUser,
+        deleted: false,
+        status: "active"
     });
+    const userId = user.id;
+    const alreadyLiked = song.likedUsers.map(id => id.toString()).includes(userId);
+    if (typeLike === "like" && !alreadyLiked) {
+        song.likedUsers.push(userId);
+    }
+    else {
+        song.likedUsers = song.likedUsers.filter(id => id.toString() !== userId);
+    }
+    song.like = song.likedUsers.length;
+    yield song.save();
+    console.log(song);
     res.json({
         code: 200,
         message: "Like thanh cong",
-        like: newLike
+        like: song.like
     });
 });
 exports.likeSong = likeSong;

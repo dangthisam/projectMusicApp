@@ -16,6 +16,7 @@ const songSchema = new mongoose_1.default.Schema({
         type: Number,
         default: 0,
     },
+    likedUsers: [String],
     totalListen: {
         type: Number,
         default: 0
