@@ -79,7 +79,10 @@ const detailSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.detailSong = detailSong;
 const likeSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idSong = req.params.idSong;
+    console.log(idSong);
     const typeLike = req.params.typeLike;
+    const tokenUser = req.cookies.tokenUser;
+    console.log(tokenUser);
     const song = yield songs_model_1.default.findOne({
         _id: idSong,
         deleted: false,
@@ -100,19 +103,20 @@ const likeSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.likeSong = likeSong;
 const favoriteSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idSong = req.params.idSong;
+    const tokenUser = req.cookies.tokenUser;
     const typeFavorite = req.params.typeFavorite;
     switch (typeFavorite) {
         case "favorite":
             const dataFavorite = new favorite_songs_model_1.default({
                 songId: idSong,
-                userId: ""
+                userId: tokenUser
             });
             yield dataFavorite.save();
             break;
         case "unfavorite":
             yield favorite_songs_model_1.default.deleteOne({
                 songId: idSong,
-                userId: ""
+                userId: tokenUser
             });
             break;
         default:

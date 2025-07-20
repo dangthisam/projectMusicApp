@@ -6,7 +6,7 @@ import Singer from "../../model/singer.model";
 export const indexFavoriteSongs=async (req:Request , res:Response)=>{
     const favoriteSongs=await FavoriteSongs.find({
         deleted:false,
-      //  userId:""
+       userId:req.cookies.tokenUser
     })
 
     for (const favoriteSong of favoriteSongs){

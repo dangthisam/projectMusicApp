@@ -83,7 +83,10 @@ if(favoriteSong){
 
 export const likeSong= async (req:Request , res:Response) =>{
     const idSong:string=req.params.idSong;
+    console.log(idSong)
     const typeLike:string=req.params.typeLike;
+    const tokenUser=req.cookies.tokenUser;
+console.log(tokenUser)
 
         const song=await Song.findOne({
             _id:idSong,
@@ -110,14 +113,16 @@ export const likeSong= async (req:Request , res:Response) =>{
 }
 
 export const favoriteSong= async (req:Request , res:Response) =>{
-    const idSong:string=req.params.idSong;
+    const idSong:string=req.params.idSong; // id bài hát
+    const tokenUser:string=req.cookies.tokenUser; // token user
     const typeFavorite:string=req.params.typeFavorite;
+
 
 switch (typeFavorite) {
     case "favorite":
         const dataFavorite=new FavoriteSongs({
             songId:idSong,
-            userId:""
+            userId:tokenUser
         })
         await dataFavorite.save();
 
@@ -125,7 +130,7 @@ switch (typeFavorite) {
     case "unfavorite":
         await FavoriteSongs.deleteOne({
             songId:idSong,
-            userId:""
+            userId:tokenUser
         })
         break;
 
