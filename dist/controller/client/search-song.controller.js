@@ -49,7 +49,7 @@ const searchSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         }
     }
     switch (typeSearch) {
-        case "result":
+        case "results":
             res.render("client/pages/search/result.pug", {
                 titlePage: "Kết quả tìm kiếm",
                 keyword: keyword,
@@ -62,6 +62,7 @@ const searchSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 message: "Suggest thanh cong",
                 songs: newSong,
             });
+            break;
         default:
             break;
     }

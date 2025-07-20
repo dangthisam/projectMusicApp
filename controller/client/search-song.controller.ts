@@ -48,7 +48,7 @@ export const searchSongs = async (req: Request, res: Response) => {
 
 
   switch (typeSearch) {
-    case "result":
+    case "results":
       res.render("client/pages/search/result.pug", {
         titlePage: "Kết quả tìm kiếm",
         keyword: keyword,
@@ -63,6 +63,8 @@ export const searchSongs = async (req: Request, res: Response) => {
         message: "Suggest thanh cong",
         songs: newSong,
       });
+      break;
+
 
     default:
       break;
