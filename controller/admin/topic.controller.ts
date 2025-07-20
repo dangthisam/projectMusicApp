@@ -78,3 +78,48 @@ export const detailTopics=async (req:Request , res:Response)=>{
   })
 
 }
+
+// [GET]  /topics/edit/:id
+
+export const editTopics=async (req:Request , res:Response)=>{
+  const topicId=req.params.id;
+  const topic=await Topic.findById({
+    _id:topicId,
+    deleted:false,
+    status:"active"
+    })
+  res.render("admin/pages/topics/edit.pug",{
+    titlePage:"Chỉnh sửa chủ đề",
+    topic:topic
+  })
+}
+
+
+//[PATCH]  /topics/edit/:id
+
+export const editPatchTopics=async (req:Request , res:Response)=>{
+
+ let avatar="";
+const topicId=req.params.id;
+ const data={
+  title:req.body.title,
+  description:req.body.description,
+  status:req.body.status,
+
+ position:req.body.position
+
+ }
+  if(req.body.avatar){
+    avatar=req.body.avatar[0];
+  }
+  data["avatar"]=avatar;
+
+ await Topic.updateOne({
+  _id:topicId
+ },data)
+
+ req.flash("success"  , "Chỉnh sửa chủ đề thành công")
+ res.redirect(`${systemConfig.prefixAdmin}/topics`)
+
+}
+

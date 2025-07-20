@@ -49,4 +49,8 @@ router.post("/create", upload.fields([
     { name: "audio", maxCount: 1 },
 ]), uploadMiddleware.uploadFields, topic_controller_1.adminPostCreateTopics);
 router.get("/detail/:id", topic_controller_1.detailTopics);
+router.get("/edit/:id", topic_controller_1.editTopics);
+router.patch("/edit/:id", upload.fields([
+    { name: "avatar", maxCount: 1 },
+]), uploadMiddleware.uploadFields, topic_controller_1.editPatchTopics);
 exports.default = router;

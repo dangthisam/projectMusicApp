@@ -1,0 +1,53 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert(3000)
+
+  h1.mb-4 #{titlePage}
+
+  form(action=`${prefixAdmin}/topics/edit/${topic.id}?_method=PATCH`, method="POST", enctype="multipart/form-data")
+    .form-group.mb-3
+      label(for="title") Tiêu đề
+      input#title.form-control(type="text", name="title", required , value=topic.title)
+
+    //- Upload ảnh đại diện
+    .form-group.mb-3(data-upload-image)
+      label(for="avatar") Ảnh đại diện
+      input#avatar.form-control(type="file", name="avatar", accept="image/*", data-upload-image-input)
+      .mt-2.d-flex.align-items-center
+        img.image-preview.rounded.border(
+          src=topic.avatar
+          style="max-width: 180px; max-height: 180px;",
+          data-upload-image-preview
+        )
+        button.btn.btn-danger.btn-sm.ms-2(type="button", data-upload-image-remove) Xóa
+
+    .form-group.mb-3
+      label(for="desc") Mô tả
+      textarea#desc.desc.form-control(name="description", rows="5") #{topic.description}
+
+
+    //- ✅ Thêm ô nhập vị trí cho topic
+    .form-group.mb-3
+      label(for="position") Vị trí hiển thị
+      input#position.form-control(
+        type="number",
+        name="position",
+        min="0",
+        placeholder="Nhập số vị trí (ví dụ: 1, 2, 3...)"
+        value=topic.position
+      )
+      small.form-text.text-muted Số càng nhỏ càng ưu tiên hiển thị trên đầu.
+
+    .form-group.mb-3
+      .form-check.form-check-inline
+        input#statusActive.form-check-input(type="radio", name="status", value="active", checked =(topic.status=="active" ?  true:false))
+        label.form-check-label(for="statusActive") Hoạt động
+
+      .form-check.form-check-inline
+        input#statusInActive.form-check-input(type="radio", name="status", value="inactive"  , checked =(topic.status=="inactive" ?  true:false))
+        label.form-check-label(for="statusInActive") Dừng hoạt động
+
+    .form-group
+      button.btn.btn-primary(type="submit") Cập nhật

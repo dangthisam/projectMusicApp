@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.detailTopics = exports.adminPostCreateTopics = exports.adminCreateTopics = exports.topicsController = void 0;
+exports.editPatchTopics = exports.editTopics = exports.detailTopics = exports.adminPostCreateTopics = exports.adminCreateTopics = exports.topicsController = void 0;
 const topic_model_1 = __importDefault(require("../../model/topic.model"));
 const songs_model_1 = __importDefault(require("../../model/songs.model"));
 const multer_1 = __importDefault(require("multer"));
@@ -76,3 +76,36 @@ const detailTopics = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     });
 });
 exports.detailTopics = detailTopics;
+const editTopics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const topicId = req.params.id;
+    const topic = yield topic_model_1.default.findById({
+        _id: topicId,
+        deleted: false,
+        status: "active"
+    });
+    res.render("admin/pages/topics/edit.pug", {
+        titlePage: "Chỉnh sửa chủ đề",
+        topic: topic
+    });
+});
+exports.editTopics = editTopics;
+const editPatchTopics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let avatar = "";
+    const topicId = req.params.id;
+    const data = {
+        title: req.body.title,
+        description: req.body.description,
+        status: req.body.status,
+        position: req.body.position
+    };
+    if (req.body.avatar) {
+        avatar = req.body.avatar[0];
+    }
+    data["avatar"] = avatar;
+    yield topic_model_1.default.updateOne({
+        _id: topicId
+    }, data);
+    req.flash("success", "Chỉnh sửa chủ đề thành công");
+    res.redirect(`${system_config_1.default.prefixAdmin}/topics`);
+});
+exports.editPatchTopics = editPatchTopics;

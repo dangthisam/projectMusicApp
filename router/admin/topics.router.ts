@@ -7,7 +7,9 @@ import {
   topicsController,
   adminCreateTopics,
   adminPostCreateTopics,
-  detailTopics
+  detailTopics,
+  editTopics,
+  editPatchTopics
 } from "../../controller/admin/topic.controller";
 router.get("/", topicsController);
 
@@ -25,5 +27,22 @@ router.post(
 );
 
 router.get("/detail/:id" , detailTopics);
+
+ router.get("/edit/:id", editTopics);
+
+ 
+ router.patch(
+   "/edit/:id",
+   upload.fields([
+     { name: "avatar", maxCount: 1 },
+    
+   ]),
+ 
+   uploadMiddleware.uploadFields,
+ 
+   editPatchTopics
+ );
+ 
+
 
 export default router;
