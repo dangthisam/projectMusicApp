@@ -10,7 +10,7 @@ const upload = multer();
 export const topicsController=async (req:Request , res:Response)=>{
   const find={
     deleted:false,
-    status:"active"
+   
 
   }
    
@@ -177,5 +177,19 @@ export const deleteTopics=async (req:Request , res:Response)=>{
     deleted:true
   })
  req.flash("success"  , "Xóa chủ đề thành công")
+  res.redirect(`${systemConfig.prefixAdmin}/topics`)
+}
+
+// [ PATCH]   /admin/topics/change-status/:status/:id
+export const changeStatusTopics=async (req:Request , res:Response)=>{
+  const idTopic:string=req.params.id;
+  const status:string=req.params.status;
+  await Topic.updateOne({
+    _id:idTopic
+  },{
+    status:status
+  })
+
+  req.flash("success"  , "Thay đổi trạng thái chủ đề thành công")
   res.redirect(`${systemConfig.prefixAdmin}/topics`)
 }

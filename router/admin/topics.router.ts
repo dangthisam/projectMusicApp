@@ -10,7 +10,8 @@ import {
   detailTopics,
   editTopics,
   editPatchTopics,
-  deleteTopics
+  deleteTopics,
+  changeStatusTopics
 } from "../../controller/admin/topic.controller";
 router.get("/", topicsController);
 
@@ -47,5 +48,6 @@ router.get("/detail/:id" , detailTopics);
  router.delete("/delete/:id" , deleteTopics)
  
 
+ router.patch("/change-status/:status/:id" , changeStatusTopics);
 
 export default router;

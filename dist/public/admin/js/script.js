@@ -1,7 +1,9 @@
+
+
 // xử lý upload ảnh
 const uploadImage = document.querySelector("[data-upload-image]");
 
-console.log(uploadImage);
+
 if (uploadImage) {
     const uploadImageInput = uploadImage.querySelector("[data-upload-image-input]");
     const uploadImagePreview = uploadImage.querySelector("[data-upload-image-preview]");
@@ -33,7 +35,7 @@ if (buttonDeleteImage) {
 // xử lý upload ảnh
 const uploadAudio = document.querySelector("[data-upload-audio]");
 
-console.log(uploadAudio);
+
 if (uploadAudio) {
     const uploadAudioInput= uploadAudio.querySelector("[data-upload-audio-input]");
     console.log(uploadAudioInput)
@@ -106,4 +108,30 @@ if(buttonDelete.length > 0){
             window.location.href = url.href;
         });
     });
+   }
+
+
+   // change -status topics
+
+   const buttonChangeStatus = document.querySelectorAll('[button-change-status]');
+   console.log(buttonChangeStatus)
+
+   if(buttonChangeStatus.length>0){
+    const formChangeStatus = document.querySelector("#form-change-status");
+    const path = formChangeStatus.getAttribute("data-path");
+    buttonChangeStatus.forEach(button =>{
+        button.addEventListener("click" , (e)=>{
+        
+            const isCOnfirm = confirm("Bạn có chắc chắn muốn thay đổi trạng thái chủ đề này không?");
+
+           if(isCOnfirm){
+             const statusCurrent= button.getAttribute("data-status");
+            const id = button.getAttribute("data-id");
+                     let statusChange =statusCurrent == "active" ? "inactive" : "active";
+                      const action =path+ `/${statusChange}/${id}/?_method=PATCH`;
+            formChangeStatus.action = action;
+            formChangeStatus.submit();
+           }
+})
+    })
    }

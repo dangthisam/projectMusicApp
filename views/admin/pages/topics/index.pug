@@ -179,14 +179,24 @@ block main
                         i.fas.fa-sort.me-1.fs-6
                         | #{item.position}
                   td
-                    if item.status === "active"
-                      .badge.bg-success.rounded-pill.px-3.py-2.d-flex.align-items-center
-                        .status-dot.bg-white.rounded-circle.me-2(style="width: 6px; height: 6px;")
-                        | Hoạt động
+                    if item.status == "active"
+                      a.btn.btn-outline-success.btn-sm(
+                        href="javascript:;"
+                        data-id=item.id
+                        data-status=item.status
+                        button-change-status
+                      )
+                        i.fas.fa-toggle-on.mr-1
+                        | ON
                     else
-                      .badge.bg-danger.rounded-pill.px-3.py-2.d-flex.align-items-center
-                        .status-dot.bg-white.rounded-circle.me-2(style="width: 6px; height: 6px;")
-                        | Tạm dừng
+                     a.btn.btn-outline-danger.btn-sm(
+                        href="javascript:;"
+                        data-id=item.id
+                        data-status=item.status
+                        button-change-status
+                      )
+                        i.fas.fa-toggle-on.mr-1
+                        | OFF
                   td
                     if item.createdAt
                       .d-flex.flex-column
@@ -301,3 +311,9 @@ block main
     id="form-delete-topics",
     data-path=`${prefixAdmin}/topics/delete`
   )
+  form.d-none(
+      action=""
+      method="POST"
+      id="form-change-status"
+      data-path=`${prefixAdmin}/topics/change-status`
+    )

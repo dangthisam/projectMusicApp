@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTopics = exports.editPatchTopics = exports.editTopics = exports.detailTopics = exports.adminPostCreateTopics = exports.adminCreateTopics = exports.topicsController = void 0;
+exports.changeStatusTopics = exports.deleteTopics = exports.editPatchTopics = exports.editTopics = exports.detailTopics = exports.adminPostCreateTopics = exports.adminCreateTopics = exports.topicsController = void 0;
 const topic_model_1 = __importDefault(require("../../model/topic.model"));
 const songs_model_1 = __importDefault(require("../../model/songs.model"));
 const multer_1 = __importDefault(require("multer"));
@@ -23,7 +23,6 @@ const upload = (0, multer_1.default)();
 const topicsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const find = {
         deleted: false,
-        status: "active"
     };
     const countProducts = yield topic_model_1.default.countDocuments(find);
     let objectPagi = (0, pagination_1.default)({
@@ -149,3 +148,15 @@ const deleteTopics = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.redirect(`${system_config_1.default.prefixAdmin}/topics`);
 });
 exports.deleteTopics = deleteTopics;
+const changeStatusTopics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idTopic = req.params.id;
+    const status = req.params.status;
+    yield topic_model_1.default.updateOne({
+        _id: idTopic
+    }, {
+        status: status
+    });
+    req.flash("success", "Thay đổi trạng thái chủ đề thành công");
+    res.redirect(`${system_config_1.default.prefixAdmin}/topics`);
+});
+exports.changeStatusTopics = changeStatusTopics;
