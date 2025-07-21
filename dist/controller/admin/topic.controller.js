@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changeStatusTopics = exports.deleteTopics = exports.editPatchTopics = exports.editTopics = exports.detailTopics = exports.adminPostCreateTopics = exports.adminCreateTopics = exports.topicsController = void 0;
+exports.changeMulStatusTopics = exports.changeStatusTopics = exports.deleteTopics = exports.editPatchTopics = exports.editTopics = exports.detailTopics = exports.adminPostCreateTopics = exports.adminCreateTopics = exports.topicsController = void 0;
 const topic_model_1 = __importDefault(require("../../model/topic.model"));
 const songs_model_1 = __importDefault(require("../../model/songs.model"));
 const multer_1 = __importDefault(require("multer"));
@@ -166,3 +166,49 @@ const changeStatusTopics = (req, res) => __awaiter(void 0, void 0, void 0, funct
     res.redirect(`${system_config_1.default.prefixAdmin}/topics`);
 });
 exports.changeStatusTopics = changeStatusTopics;
+const changeMulStatusTopics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const ids = req.body.ids.split(",");
+    const type = req.body.type;
+    switch (type) {
+        case "active":
+            yield topic_model_1.default.updateMany({
+                _id: { $in: ids }
+            }, {
+                status: "active"
+            });
+            req.flash("success", `Cập nhật trạng thái cho ${ids.length} chủ đề thành công`);
+            res.redirect(`${system_config_1.default.prefixAdmin}/topics`);
+            break;
+        case "inactive":
+            yield topic_model_1.default.updateMany({
+                _id: { $in: ids }
+            }, {
+                status: "inactive"
+            });
+            req.flash("success", `Cập nhật trạng thái cho ${ids.length} chủ đề thành công`);
+            res.redirect(`${system_config_1.default.prefixAdmin}/topics`);
+            break;
+        case "delete-all":
+            yield topic_model_1.default.updateMany({
+                _id: { $in: ids }
+            }, {
+                deleted: true
+            });
+            req.flash("success", `Xóa chủ đề ${ids.length} chủ đề thành công`);
+            res.redirect(`${system_config_1.default.prefixAdmin}/topics`);
+            break;
+        case "update-position":
+            for (const item of ids) {
+                let [id, position] = item.split("-");
+                position = parseInt(position);
+                yield topic_model_1.default.updateOne({ _id: id }, { position: position
+                });
+            }
+            req.flash('success', `đã cập nhật vị trí cho ${ids.length} sản phẩm!`);
+            break;
+        default:
+            break;
+    }
+    res.redirect(`${system_config_1.default.prefixAdmin}/topics`);
+});
+exports.changeMulStatusTopics = changeMulStatusTopics;

@@ -200,3 +200,62 @@ export const changeStatusTopics=async (req:Request , res:Response)=>{
   req.flash("success"  , "Thay đổi trạng thái chủ đề thành công")
   res.redirect(`${systemConfig.prefixAdmin}/topics`)
 }
+
+
+// [PATCH ]  /admin/topics/change-multi
+
+export const changeMulStatusTopics=async (req:Request , res:Response)=>{
+const ids=req.body.ids.split(",");
+const type=req.body.type;
+
+switch (type) {
+  case "active":
+    await Topic.updateMany({
+      _id:{$in:ids}
+    },{
+      status:"active"
+    })
+
+    req.flash("success"  , `Cập nhật trạng thái cho ${ids.length} chủ đề thành công`)
+    res.redirect(`${systemConfig.prefixAdmin}/topics`)
+
+    break;
+  case "inactive":
+   await Topic.updateMany({
+      _id:{$in:ids}
+    },{
+      status:"inactive"
+    })
+    req.flash("success" , `Cập nhật trạng thái cho ${ids.length} chủ đề thành công`)
+    res.redirect(`${systemConfig.prefixAdmin}/topics`)
+    break;
+
+case "delete-all":
+  await Topic.updateMany({
+    _id:{$in:ids}
+  },{
+    deleted:true
+  })
+  req.flash("success" , `Xóa chủ đề ${ids.length} chủ đề thành công`)
+  res.redirect(`${systemConfig.prefixAdmin}/topics`)
+  break;
+ case "update-position":
+        for (const item of ids){
+          let [id, position] = item.split("-"); // Tách ID và vị trí từ chuỗi
+          position = parseInt(position); // Chuyển đổi vị trí thành số nguyên
+          await Topic.updateOne(
+            { _id: id },
+            { position: position 
+              
+            },
+           
+          );
+        }
+        req.flash('success', `đã cập nhật vị trí cho ${ids.length} sản phẩm!`);
+        break
+  default:
+    break;
+}
+res.redirect(`${systemConfig.prefixAdmin}/topics`)
+
+}

@@ -1,5 +1,6 @@
 
 
+
 // xử lý upload ảnh
 const uploadImage = document.querySelector("[data-upload-image]");
 
@@ -157,14 +158,14 @@ const statusButtons = document.querySelectorAll('[button-status]');
     // check box
     
     const checkBoxMulti=document.querySelector("[check-box-multi]");
-    console.log(checkBoxMulti)
+
 
     if(checkBoxMulti){
         const checkBoxAll=checkBoxMulti.querySelector("input[name='checkAll']");
-        console.log(checkBoxAll)
+
 
         const checkOne=checkBoxMulti.querySelectorAll("input[name='id']");
-        console.log(checkOne)
+
      checkBoxAll.addEventListener("click", ()=>{
         if(checkBoxAll.checked){
             checkOne.forEach(check=>{
@@ -198,3 +199,57 @@ const statusButtons = document.querySelectorAll('[button-status]');
 
     }
 
+
+    // form submit changes-status delete update-many position 
+
+  const formChangeMulite = document.querySelector("[form-change-multi]");
+if(formChangeMulite){
+    
+    formChangeMulite.addEventListener("submit", (e)=>{
+        e.preventDefault();
+        const checkboxMulti = document.querySelector("[check-box-multi]");
+     
+        const checkboxes = checkboxMulti.querySelectorAll("input[name='id']:checked");
+     
+        const typeChange=e.target.elements.type.value;
+
+       
+        if(typeChange === "delete-all"){
+            const isConfirm = confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?");
+            if(!isConfirm){
+                return;
+            }
+        }
+
+        
+       if(checkboxes.length>0){
+        const inputIds = formChangeMulite.querySelector("input[name='ids']");
+            
+         let ids = [];
+         checkboxes.forEach(checkbox => {
+            const id = checkbox.getAttribute("value");
+ 
+ 
+            if(typeChange === "update-position"){
+                const position=checkbox
+                .closest("tr")
+                .querySelector("input[name='position']").value;
+              
+                ids.push(`${id}-${position}`);
+            }else{
+                ids.push(id);
+            }
+         
+         });
+      
+           inputIds.value = ids.join(",");
+           formChangeMulite.submit();   
+           console.log(inputIds)
+       }else{
+        alert("Bạn chưa chọn sản phẩm nào để thực hiện thao tác này!");
+       }
+      
+
+    });
+
+}

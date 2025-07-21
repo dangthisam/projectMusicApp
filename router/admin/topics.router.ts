@@ -11,7 +11,8 @@ import {
   editTopics,
   editPatchTopics,
   deleteTopics,
-  changeStatusTopics
+  changeStatusTopics,
+  changeMulStatusTopics
 } from "../../controller/admin/topic.controller";
 router.get("/", topicsController);
 
@@ -49,5 +50,8 @@ router.get("/detail/:id" , detailTopics);
  
 
  router.patch("/change-status/:status/:id" , changeStatusTopics);
+
+ router.patch("/change-multi" , changeMulStatusTopics);
+
 
 export default router;

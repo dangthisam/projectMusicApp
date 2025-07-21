@@ -55,4 +55,5 @@ router.patch("/edit/:id", upload.fields([
 ]), uploadMiddleware.uploadFields, topic_controller_1.editPatchTopics);
 router.delete("/delete/:id", topic_controller_1.deleteTopics);
 router.patch("/change-status/:status/:id", topic_controller_1.changeStatusTopics);
+router.patch("/change-multi", topic_controller_1.changeMulStatusTopics);
 exports.default = router;
