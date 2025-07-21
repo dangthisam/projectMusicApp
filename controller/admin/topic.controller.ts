@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Topic from "../../model/topic.model";
 import Song from "../../model/songs.model";
 import multer from "multer";
-
+import search from "../../helper/search";
 import systemConfig from "../../config/system.config";
 import objectPagination from "../../helper/pagination";
 const upload = multer();
@@ -26,6 +26,25 @@ export const topicsController=async (req:Request , res:Response)=>{
         countProducts
       )
     //end pagination
+
+    //start search 
+    const keyword:string=req.query.keyword as string;
+    if(keyword){
+      const slug=search(keyword);
+      const regex=new RegExp(slug,"i");
+      find["$or"]=[
+        {
+          title:regex
+        },
+        {
+          slug:regex
+        },
+        {
+          description:regex
+        }
+      ]
+    }
+    //end search)
  const topics=await Topic.find(find)
   .skip(objectPagi.skip)
   .limit(objectPagi.limitPage)
@@ -33,7 +52,8 @@ export const topicsController=async (req:Request , res:Response)=>{
    res.render("admin/pages/topics/index.pug",{
     titlePage:" Quản lý chủ đề",
     topics:topics,
-    pagination:objectPagi
+    pagination:objectPagi,
+    keyword:keyword
    })
 }
 

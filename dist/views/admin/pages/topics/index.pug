@@ -1,160 +1,303 @@
 extends ../../layout/default.pug
 include  ../../mixins/alert.pug
+include ../../mixins/search.pug
 
 block main
   +alert(3000)
-    h1.mb-4 #{titlePage}
-   
-  .card.mb-3
-    .card-header 
-      .d-flex.justify-content-between.align-items-center
-        h5.mb-0
-          i.fas.fa-list.me-2
-          | Danh sách
-        span.badge.bg-primary.rounded-pill #{topics.length} chủ đề
-    
-    .card-body
-      .row.mb-3
-        .col-8
-          //- Search and filter can go here
-        .col-4.text-end
-          a.btn.btn-outline-success(href=`${prefixAdmin}/topics/create`)
-            i.fas.fa-plus.me-1
-            | Thêm mới
-       
-      table.table.table-hover.table-sm
-        thead.table-dark
-          tr
-            th(scope="col") STT
-            th(scope="col") Hình ảnh
-            th(scope="col") Tiêu đề
-            th(scope="col") Vị trí
-            th(scope="col") Trạng thái
-            th(scope="col", style="width: 200px;") Hành động
-        tbody
-          each item, index in topics
-            tr
-              td #{index + 1}
-              td
-                if item.avatar
-                  img.rounded(src=item.avatar, alt=item.title, width="60px", height="60px", style="object-fit: cover;")
-                else
-                  .bg-light.rounded.d-flex.align-items-center.justify-content-center(style="width: 60px; height: 60px;")
-                    i.fas.fa-image.text-muted
-              td 
-                .fw-semibold #{item.title}
-              td 
-                span.badge.bg-info.rounded-pill #{item.position}
-              td
-                if item.status === "active"
-                  span.badge.bg-success.rounded-pill
-                    i.fas.fa-check-circle.me-1
-                    | Hoạt động
-                else
-                  span.badge.bg-danger.rounded-pill
-                    i.fas.fa-times-circle.me-1
-                    | Dừng hoạt động
-              td
-                .btn-group(role="group", aria-label="Actions")
-                  a.btn.btn-outline-info.btn-sm(
-                    href=`${prefixAdmin}/topics/detail/${item.id}`,
-                    title="Xem chi tiết"
-                  )
-                    i.fas.fa-eye
-                  a.btn.btn-outline-warning.btn-sm(
-                    href=`${prefixAdmin}/topics/edit/${item.id}`,
-                    title="Chỉnh sửa"
-                  )
-                    i.fas.fa-edit
-                  button.btn.btn-outline-danger.btn-sm(
-                    type="button",
-                    data-id=item.id,
-                    data-toggle="modal",
-                    data-target="#exampleModal",
-                    button-delete,
-                    button-delete-topics,
-                    title="Xóa"
-                  )
-                    i.fas.fa-trash
+  
+  //- Header Section
+  .d-flex.justify-content-between.align-items-center.mb-4
+    div
+      h1.mb-2 #{titlePage}
+      p.text-muted.mb-0 Quản lý danh sách chủ đề âm nhạc
+    .d-flex.gap-2
+      a.btn.btn-success.px-4(href=`${prefixAdmin}/topics/create`)
+        i.fas.fa-plus.me-2
+        | Thêm mới
+      button.btn.btn-outline-secondary.dropdown-toggle(
+        type="button",
+        data-bs-toggle="dropdown"
+      )
+        i.fas.fa-cog.me-2
+        | Tùy chọn
+      ul.dropdown-menu
+        li
+          a.dropdown-item(href="#")
+            i.fas.fa-download.me-2
+            | Xuất Excel
+        li
+          a.dropdown-item(href="#")
+            i.fas.fa-upload.me-2
+            | Nhập dữ liệu
+        li
+          hr.dropdown-divider
+        li
+          a.dropdown-item.text-danger(href="#")
+            i.fas.fa-trash.me-2
+            | Xóa tất cả
 
-  //- IMPROVED PAGINATION
+  //- Stats Cards
+  .row.g-3.mb-4
+    .col-xl-3.col-md-6
+      .card.border-0.bg-primary.text-white.h-100
+        .card-body.d-flex.align-items-center
+          .me-3
+            i.fas.fa-list.fa-2x.opacity-75
+          div
+            h3.mb-1 #{topics.length}
+            small.opacity-75 Tổng chủ đề
+    .col-xl-3.col-md-6
+      .card.border-0.bg-success.text-white.h-100
+        .card-body.d-flex.align-items-center
+          .me-3
+            i.fas.fa-check-circle.fa-2x.opacity-75
+          div
+            h3.mb-1 #{topics.filter(t => t.status === 'active').length}
+            small.opacity-75 Đang hoạt động
+    .col-xl-3.col-md-6
+      .card.border-0.bg-warning.text-white.h-100
+        .card-body.d-flex.align-items-center
+          .me-3
+            i.fas.fa-pause-circle.fa-2x.opacity-75
+          div
+            h3.mb-1 #{topics.filter(t => t.status !== 'active').length}
+            small.opacity-75 Tạm dừng
+    .col-xl-3.col-md-6
+      .card.border-0.bg-info.text-white.h-100
+        .card-body.d-flex.align-items-center
+          .me-3
+            i.fas.fa-chart-line.fa-2x.opacity-75
+          div
+            h3.mb-1 #{Math.round(topics.filter(t => t.status === 'active').length / topics.length * 100) || 0}%
+            small.opacity-75 Tỷ lệ hoạt động
+
+  //- Main Content Card
+  .card.border-0.shadow-sm
+    .card-header.bg-white.border-bottom
+      .row.align-items-center
+        .col-md-8
+          .d-flex.align-items-center
+            i.fas.fa-table.text-primary.me-3.fs-4
+            div
+              h5.mb-0.fw-bold Danh sách chủ đề
+              small.text-muted Quản lý và theo dõi các chủ đề âm nhạc
+        .col-md-4.text-md-end.mt-3.mt-md-0
+          .d-flex.gap-2.justify-content-md-end
+            button.btn.btn-outline-primary.btn-sm(
+              type="button",
+              data-bs-toggle="collapse",
+              data-bs-target="#filterCollapse"
+            )
+              i.fas.fa-filter.me-1.text-danger
+              | Lọc
+            .dropdown
+              button.btn.btn-outline-secondary.btn-sm.dropdown-toggle(
+                type="button",
+                data-bs-toggle="dropdown"
+              )
+                i.fas.fa-sort.me-1
+                | Sắp xếp
+              ul.dropdown-menu
+                li
+                  a.dropdown-item(href="#") Theo tên A-Z
+                li
+                  a.dropdown-item(href="#") Theo tên Z-A
+                li
+                  a.dropdown-item(href="#") Theo vị trí
+                li
+                  a.dropdown-item(href="#") Mới nhất
+
+    //- Filter Collapse
+    .collapse(id="filterCollapse")
+      .card-body.border-bottom.bg-light
+        .row.g-3
+          .col-md-4
+            +search(keyword)
+          .col-md-3
+            select.form-select(name="status")
+              option(value="") Tất cả trạng thái
+              option(value="active") Đang hoạt động
+              option(value="inactive") Tạm dừng
+          .col-md-3
+            select.form-select(name="sort")
+              option(value="position") Theo vị trí
+              option(value="title") Theo tên
+              option(value="created") Ngày tạo
+          .col-md-2
+            button.btn.btn-primary.w-100(type="submit")
+              i.fas.fa-search.me-1
+              | Tìm
+
+    .card-body.p-0
+      //- Table Section
+      .table-responsive
+        table.table.table-hover.mb-0
+          thead.table-light
+            tr
+              th.ps-4(scope="col", style="width: 60px;")
+                input.form-check-input(type="checkbox", id="selectAll")
+              th(scope="col", style="width: 80px;") STT
+              th(scope="col", style="width: 100px;") Hình ảnh
+              th(scope="col") Tiêu đề
+              th(scope="col", style="width: 120px;") Vị trí
+              th(scope="col", style="width: 140px;") Trạng thái
+              th(scope="col", style="width: 180px;") Ngày tạo
+              th.text-center(scope="col", style="width: 200px;") Hành động
+          tbody
+            if topics && topics.length > 0
+              each item, index in topics
+                tr.table-row(data-id=item.id)
+                  td.ps-4
+                    input.form-check-input.row-checkbox(
+                      type="checkbox",
+                      value=item.id
+                    )
+                  td.fw-semibold.text-muted #{index + 1}
+                  td
+                    if item.avatar
+                      .image-container.position-relative
+                        img.rounded-3.shadow-sm(
+                          src=item.avatar,
+                          alt=item.title,
+                          style="width: 65px; height: 65px; object-fit: cover;"
+                        )
+                        .image-overlay.position-absolute.top-0.start-0.w-100.h-100.rounded-3.d-flex.align-items-center.justify-content-center
+                          i.fas.fa-eye.text-white.fs-5
+                    else
+                      .bg-light.border.rounded-3.d-flex.align-items-center.justify-content-center(
+                        style="width: 65px; height: 65px;"
+                      )
+                        i.fas.fa-image.text-muted.fs-4
+                  td
+                    .d-flex.flex-column
+                      .fw-bold.text-dark.mb-1 #{item.title}
+                      if item.description
+                        small.text-muted.text-truncate(style="max-width: 200px;") !{item.description}
+                  td
+                    .d-flex.align-items-center
+                      .badge.bg-secondary.rounded-pill.px-3.py-2
+                        i.fas.fa-sort.me-1.fs-6
+                        | #{item.position}
+                  td
+                    if item.status === "active"
+                      .badge.bg-success.rounded-pill.px-3.py-2.d-flex.align-items-center
+                        .status-dot.bg-white.rounded-circle.me-2(style="width: 6px; height: 6px;")
+                        | Hoạt động
+                    else
+                      .badge.bg-danger.rounded-pill.px-3.py-2.d-flex.align-items-center
+                        .status-dot.bg-white.rounded-circle.me-2(style="width: 6px; height: 6px;")
+                        | Tạm dừng
+                  td
+                    if item.createdAt
+                      .d-flex.flex-column
+                        small.fw-semibold.text-dark= new Date(item.createdAt).toLocaleDateString('vi-VN')
+                        small.text-muted= new Date(item.createdAt).toLocaleTimeString('vi-VN')
+                    else
+                      small.text-muted --/--/----
+                  td
+                    .d-flex.gap-1.justify-content-center
+                      a.btn.btn-outline-info.btn-sm.rounded-pill(
+                        href=`${prefixAdmin}/topics/detail/${item.id}`,
+                        title="Xem chi tiết"
+                      )
+                        i.fas.fa-eye
+                      a.btn.btn-outline-warning.btn-sm.rounded-pill(
+                        href=`${prefixAdmin}/topics/edit/${item.id}`,
+                        title="Chỉnh sửa"
+                      )
+                        i.fas.fa-edit
+                      button.btn.btn-outline-danger.btn-sm.rounded-pill(
+                        type="button",
+                        data-id=item.id,
+                        button-delete,
+                        button-delete-topics,
+                        title="Xóa"
+                      )
+                        i.fas.fa-trash
+            else
+              tr
+                td.text-center.py-5(colspan="8")
+                  .d-flex.flex-column.align-items-center
+                    i.fas.fa-inbox.text-muted.mb-3(style="font-size: 3rem;")
+                    h5.text-muted.mb-2 Không có dữ liệu
+                    p.text-muted.mb-3 Chưa có chủ đề nào được tạo
+                    a.btn.btn-primary.px-4(href=`${prefixAdmin}/topics/create`)
+                      i.fas.fa-plus.me-2
+                      | Thêm chủ đề đầu tiên
+
+  //- Enhanced Pagination
   if pagination && pagination.totalPage > 1
- 
+
           .col-md-6
             nav(aria-label="Phân trang")
-              ul.pagination.justify-content-md-end.justify-content-center.mb-0
-                //- First page button
+              ul.pagination.justify-content-md-end.justify-content-center.mb-0.pagination-modern
+                //- First page
                 if pagination.currentPage > 2
                   li.page-item
-                    button.page-link.rounded-start(
+                    button.page-link.border-0.rounded-pill.me-1(
                       button-pagination=1,
                       title="Trang đầu"
                     )
                       i.fas.fa-angle-double-left
                 
-                //- Previous page button
+                //- Previous page
                 if pagination.currentPage > 1
                   li.page-item
-                    button.page-link(
+                    button.page-link.border-0.rounded-pill.me-1(
                       button-pagination=pagination.currentPage-1,
                       title="Trang trước"
                     )
                       i.fas.fa-angle-left
                 
-                //- Page numbers with smart logic
+                //- Page numbers
                 - var startPage = Math.max(1, pagination.currentPage - 2)
                 - var endPage = Math.min(pagination.totalPage, pagination.currentPage + 2)
                 
-                //- Show first page if not in range
                 if startPage > 1
                   li.page-item
-                    button.page-link(button-pagination=1) 1
+                    button.page-link.border-0.rounded-pill.me-1(button-pagination=1) 1
                   if startPage > 2
                     li.page-item.disabled
-                      span.page-link ...
+                      span.page-link.border-0.bg-transparent.me-1 ...
                 
-                //- Show page numbers in range
                 - for (var i = startPage; i <= endPage; i++)
                   li.page-item(class=pagination.currentPage == i ? "active" : "")
-                    if pagination.currentPage == i
-                      button.page-link.fw-bold(button-pagination=i)
-                        | #{i}
-                        span.visually-hidden (trang hiện tại)
-                    else
-                      button.page-link(button-pagination=i) #{i}
+                    button.page-link.border-0.rounded-pill.me-1(
+                      button-pagination=i,
+                      class=pagination.currentPage == i ? "bg-primary text-white" : ""
+                    ) #{i}
                 
-                //- Show last page if not in range
                 if endPage < pagination.totalPage
                   if endPage < pagination.totalPage - 1
                     li.page-item.disabled
-                      span.page-link ...
+                      span.page-link.border-0.bg-transparent.me-1 ...
                   li.page-item
-                    button.page-link(button-pagination=pagination.totalPage) #{pagination.totalPage}
+                    button.page-link.border-0.rounded-pill.me-1(
+                      button-pagination=pagination.totalPage
+                    ) #{pagination.totalPage}
                 
-                //- Next page button
+                //- Next page
                 if pagination.currentPage < pagination.totalPage
                   li.page-item
-                    button.page-link(
+                    button.page-link.border-0.rounded-pill.me-1(
                       button-pagination=pagination.currentPage+1,
                       title="Trang sau"
                     )
                       i.fas.fa-angle-right
                 
-                //- Last page button
+                //- Last page
                 if pagination.currentPage < pagination.totalPage - 1
                   li.page-item
-                    button.page-link.rounded-end(
+                    button.page-link.border-0.rounded-pill(
                       button-pagination=pagination.totalPage,
                       title="Trang cuối"
                     )
                       i.fas.fa-angle-double-right
 
-       
-
+  //- Hidden Form
   form.d-none(
     action="",
     method="POST",
     id="form-delete-topics",
     data-path=`${prefixAdmin}/topics/delete`
-    
   )

@@ -1206,3 +1206,53 @@ form {
     margin: 1rem 0;
   }
 }
+
+.image-container:hover .image-overlay {
+      opacity: 1;
+    }
+    
+    .image-overlay {
+      background: rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .table-row:hover {
+      background-color: rgba(13, 110, 253, 0.05);
+      transition: background-color 0.2s ease;
+    }
+    
+    .btn:hover {
+      transform: translateY(-1px);
+      transition: transform 0.2s ease;
+    }
+    
+    .pagination-modern .page-link {
+      margin: 0 2px;
+      padding: 8px 12px;
+      transition: all 0.3s ease;
+    }
+    
+    .pagination-modern .page-link:hover {
+      background-color: rgba(13, 110, 253, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    .status-dot {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    @media (max-width: 768px) {
+      .table-responsive {
+        font-size: 0.875rem;
+      }
+      
+      .btn-sm {
+        padding: 0.25rem 0.5rem;
+      }
+    }

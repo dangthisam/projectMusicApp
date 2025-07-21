@@ -16,6 +16,7 @@ exports.deleteTopics = exports.editPatchTopics = exports.editTopics = exports.de
 const topic_model_1 = __importDefault(require("../../model/topic.model"));
 const songs_model_1 = __importDefault(require("../../model/songs.model"));
 const multer_1 = __importDefault(require("multer"));
+const search_1 = __importDefault(require("../../helper/search"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
 const pagination_1 = __importDefault(require("../../helper/pagination"));
 const upload = (0, multer_1.default)();
@@ -29,13 +30,30 @@ const topicsController = (req, res) => __awaiter(void 0, void 0, void 0, functio
         currentPage: 1,
         limitPage: 4
     }, req.query, countProducts);
+    const keyword = req.query.keyword;
+    if (keyword) {
+        const slug = (0, search_1.default)(keyword);
+        const regex = new RegExp(slug, "i");
+        find["$or"] = [
+            {
+                title: regex
+            },
+            {
+                slug: regex
+            },
+            {
+                description: regex
+            }
+        ];
+    }
     const topics = yield topic_model_1.default.find(find)
         .skip(objectPagi.skip)
         .limit(objectPagi.limitPage);
     res.render("admin/pages/topics/index.pug", {
         titlePage: " Quản lý chủ đề",
         topics: topics,
-        pagination: objectPagi
+        pagination: objectPagi,
+        keyword: keyword
     });
 });
 exports.topicsController = topicsController;
