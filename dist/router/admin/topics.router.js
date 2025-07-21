@@ -53,4 +53,5 @@ router.get("/edit/:id", topic_controller_1.editTopics);
 router.patch("/edit/:id", upload.fields([
     { name: "avatar", maxCount: 1 },
 ]), uploadMiddleware.uploadFields, topic_controller_1.editPatchTopics);
+router.delete("/delete/:id", topic_controller_1.deleteTopics);
 exports.default = router;

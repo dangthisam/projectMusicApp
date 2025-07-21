@@ -59,13 +59,13 @@ block main
                 i.fa-solid.fa-fire.text-danger.me-2
                 span.badge.bg-primary.rounded-pill Hot
               h5.card-title.fw-bold.text-dark.mb-3= topic.title
-              p.card-text.text-muted.line-clamp-3= topic.description
+              p.card-text.text-muted.line-clamp-3 !{ topic.description}
             .card-footer.bg-transparent.border-0.p-4.pt-0
               .d-flex.justify-content-between.align-items-center
                 .topic-stats.small.text-muted
                   i.fa-solid.fa-users.me-1
                   span 1.2k thành viên
-                a.btn.btn-primary.btn-sm.rounded-pill.px-3.explore-btn(href=`/topics/${topic._id}`)
+                a.btn.btn-primary.btn-sm.rounded-pill.px-3.explore-btn(href=`/songs/${topic.slug}`)
                   i.fa-solid.fa-arrow-right.me-1
                   | Khám phá
     .text-center.mt-5(data-aos="fade-up")

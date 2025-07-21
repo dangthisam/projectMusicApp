@@ -37,7 +37,10 @@ export const adminPostCreateTopics=async (req:Request , res:Response)=>{
     avatar=req.body.avatar[0];
   }
   if(req.body.position==""){
-    const countTopics=await Topic.countDocuments();
+    const countTopics=await Topic.countDocuments({
+      deleted:false,
+      status:"active"
+    });
     req.body.position=countTopics+1;
   }
   const data={
@@ -99,7 +102,7 @@ export const editTopics=async (req:Request , res:Response)=>{
 
 export const editPatchTopics=async (req:Request , res:Response)=>{
 
- let avatar="";
+ 
 const topicId=req.params.id;
  const data={
   title:req.body.title,
@@ -110,9 +113,9 @@ const topicId=req.params.id;
 
  }
   if(req.body.avatar){
-    avatar=req.body.avatar[0];
+    data["avatar"]=req.body.avatar[0];
   }
-  data["avatar"]=avatar;
+
 
  await Topic.updateOne({
   _id:topicId
@@ -123,3 +126,16 @@ const topicId=req.params.id;
 
 }
 
+
+//  [DELETE] /admin/topics/delete/:id
+
+export const deleteTopics=async (req:Request , res:Response)=>{
+  const idTopic=req.params.id;
+  await Topic.updateOne({
+    _id:idTopic
+  },{
+    deleted:true
+  })
+ req.flash("success"  , "Xóa chủ đề thành công")
+  res.redirect(`${systemConfig.prefixAdmin}/topics`)
+}

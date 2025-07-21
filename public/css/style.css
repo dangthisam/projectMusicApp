@@ -2662,3 +2662,57 @@ body{
         padding: 1.25rem;
     }
 }
+/* Hiệu ứng hover tổng thể cho thẻ chủ đề */
+.topic-card {
+  transition: transform 0.35s ease, box-shadow 0.3s ease;
+}
+.topic-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Ảnh có hiệu ứng zoom nhỏ nhẹ khi hover */
+.topic-card .card-img-top {
+  transition: transform 0.3s ease;
+}
+.topic-card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+/* Overlay lớp mờ dần hiện "Play" khi hover */
+.topic-overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.5));
+}
+.topic-card:hover .topic-overlay {
+  opacity: 1;
+}
+
+/* Icon chính giữa (fa-play-circle hover phóng nhẹ) */
+.play-icon {
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all 0.35s ease;
+}
+.topic-card:hover .play-icon {
+  transform: scale(1.2);
+  opacity: 1;
+}
+
+/* Giới hạn số dòng mô tả (nếu chưa có class line-clamp) */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+}
+
+/* Nút khám phá */
+.explore-btn {
+  transition: all 0.25s ease;
+}
+.explore-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}

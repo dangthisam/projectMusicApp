@@ -1,7 +1,10 @@
 extends ../../layout/default.pug
 include ../../mixins/box-header.pug
-
+include ../../mixins/alert.pug
 block main
+  +alert(3000)
+  +alertError(3000)
+
   .singer-detail
     .container.my-3
       .row

@@ -93,6 +93,11 @@ const likeSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         status: "active",
     });
     const userId = user.id;
+    if (!userId) {
+        req.flash("error", "Bạn cần đăng nhập để thực hiện tính năng này");
+        res.redirect("/topics");
+        return;
+    }
     const alreadyLiked = song.likedUsers
         .map((id) => id.toString())
         .includes(userId);

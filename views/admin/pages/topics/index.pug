@@ -38,5 +38,21 @@ block main
                   a.badge.badge-danger.text-danger(href="javascript:void(0);") Dừng hoạt động
               td
                 a.btn.btn-secondary.btn-sm(href=`${prefixAdmin}/topics/detail/${item.id}`) Chi tiết
-                a.btn.btn-warning.btn-sm.ms-1(href=`${prefixAdmin}/topics/edit/${item.id}`) Sửa
-                button.btn.btn-danger.btn-sm.ms-1(button-delete, data-id=item.id) Xóa
+                a.btn.btn-warning.btn-sm(href=`${prefixAdmin}/topics/edit/${item.id}`) Sửa
+                button.btn.btn-danger.btn-sm(
+                    type="button",
+                    data-id=item.id,
+                    data-toggle="modal",
+                    data-target="#exampleModal",
+                    button-delete,
+                    button-delete-topics,
+                    title="Xóa"
+                  )
+                    i.fas.fa-trash.mr-1
+                    | Xóa
+  form(
+      action=""
+      method="POST"
+      id="form-delete-topics"
+      data-path=`${prefixAdmin}/topics/delete`
+    )

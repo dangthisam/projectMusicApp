@@ -9,7 +9,8 @@ import {
   adminPostCreateTopics,
   detailTopics,
   editTopics,
-  editPatchTopics
+  editPatchTopics,
+  deleteTopics
 } from "../../controller/admin/topic.controller";
 router.get("/", topicsController);
 
@@ -42,6 +43,8 @@ router.get("/detail/:id" , detailTopics);
  
    editPatchTopics
  );
+
+ router.delete("/delete/:id" , deleteTopics)
  
 
 

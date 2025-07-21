@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editPatchTopics = exports.editTopics = exports.detailTopics = exports.adminPostCreateTopics = exports.adminCreateTopics = exports.topicsController = void 0;
+exports.deleteTopics = exports.editPatchTopics = exports.editTopics = exports.detailTopics = exports.adminPostCreateTopics = exports.adminCreateTopics = exports.topicsController = void 0;
 const topic_model_1 = __importDefault(require("../../model/topic.model"));
 const songs_model_1 = __importDefault(require("../../model/songs.model"));
 const multer_1 = __importDefault(require("multer"));
@@ -41,7 +41,10 @@ const adminPostCreateTopics = (req, res) => __awaiter(void 0, void 0, void 0, fu
         avatar = req.body.avatar[0];
     }
     if (req.body.position == "") {
-        const countTopics = yield topic_model_1.default.countDocuments();
+        const countTopics = yield topic_model_1.default.countDocuments({
+            deleted: false,
+            status: "active"
+        });
         req.body.position = countTopics + 1;
     }
     const data = {
@@ -90,7 +93,6 @@ const editTopics = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.editTopics = editTopics;
 const editPatchTopics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let avatar = "";
     const topicId = req.params.id;
     const data = {
         title: req.body.title,
@@ -99,9 +101,8 @@ const editPatchTopics = (req, res) => __awaiter(void 0, void 0, void 0, function
         position: req.body.position
     };
     if (req.body.avatar) {
-        avatar = req.body.avatar[0];
+        data["avatar"] = req.body.avatar[0];
     }
-    data["avatar"] = avatar;
     yield topic_model_1.default.updateOne({
         _id: topicId
     }, data);
@@ -109,3 +110,14 @@ const editPatchTopics = (req, res) => __awaiter(void 0, void 0, void 0, function
     res.redirect(`${system_config_1.default.prefixAdmin}/topics`);
 });
 exports.editPatchTopics = editPatchTopics;
+const deleteTopics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idTopic = req.params.id;
+    yield topic_model_1.default.updateOne({
+        _id: idTopic
+    }, {
+        deleted: true
+    });
+    req.flash("success", "Xóa chủ đề thành công");
+    res.redirect(`${system_config_1.default.prefixAdmin}/topics`);
+});
+exports.deleteTopics = deleteTopics;

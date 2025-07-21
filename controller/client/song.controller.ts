@@ -88,6 +88,11 @@ export const likeSong = async (req: Request, res: Response) => {
   });
 
   const userId = user.id;
+  if(!userId){
+    req.flash("error" , "Bạn cần đăng nhập để thực hiện tính năng này")
+    res.redirect("/topics")
+    return;
+  }
   const alreadyLiked = song.likedUsers
     .map((id) => id.toString())
     .includes(userId);
