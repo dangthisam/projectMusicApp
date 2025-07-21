@@ -2,18 +2,38 @@ import { Request, Response } from "express";
 import Topic from "../../model/topic.model";
 import Song from "../../model/songs.model";
 import multer from "multer";
+
 import systemConfig from "../../config/system.config";
+import objectPagination from "../../helper/pagination";
 const upload = multer();
 //[GET]  /admin/topics
 export const topicsController=async (req:Request , res:Response)=>{
+  const find={
+    deleted:false,
+    status:"active"
 
-    const topics=await Topic.find({
-        deleted:false,
-        status:"active"
-    })
+  }
+   
+
+    //start pagination 
+ const countProducts = await Topic.countDocuments(find);
+  let objectPagi = objectPagination(
+        {
+          currentPage:1,
+          limitPage:4
+        },
+        req.query,
+        countProducts
+      )
+    //end pagination
+ const topics=await Topic.find(find)
+  .skip(objectPagi.skip)
+  .limit(objectPagi.limitPage)
+     
    res.render("admin/pages/topics/index.pug",{
     titlePage:" Quản lý chủ đề",
-    topics:topics
+    topics:topics,
+    pagination:objectPagi
    })
 }
 

@@ -17,15 +17,25 @@ const topic_model_1 = __importDefault(require("../../model/topic.model"));
 const songs_model_1 = __importDefault(require("../../model/songs.model"));
 const multer_1 = __importDefault(require("multer"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
+const pagination_1 = __importDefault(require("../../helper/pagination"));
 const upload = (0, multer_1.default)();
 const topicsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const topics = yield topic_model_1.default.find({
+    const find = {
         deleted: false,
         status: "active"
-    });
+    };
+    const countProducts = yield topic_model_1.default.countDocuments(find);
+    let objectPagi = (0, pagination_1.default)({
+        currentPage: 1,
+        limitPage: 4
+    }, req.query, countProducts);
+    const topics = yield topic_model_1.default.find(find)
+        .skip(objectPagi.skip)
+        .limit(objectPagi.limitPage);
     res.render("admin/pages/topics/index.pug", {
         titlePage: " Quản lý chủ đề",
-        topics: topics
+        topics: topics,
+        pagination: objectPagi
     });
 });
 exports.topicsController = topicsController;

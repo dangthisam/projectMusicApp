@@ -85,3 +85,25 @@ if(buttonDelete.length > 0){
         });
     });
 }
+
+
+ // Xử lý phân trang
+    const buttonPagination = document.querySelectorAll('[button-pagination]');
+    
+   if(buttonPagination){
+    buttonPagination.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+
+             // lấy ra số trang khi người dùng click vào 
+            const page = button.getAttribute('button-pagination');
+            const url = new URL(window.location.href);
+            if (page) {
+                url.searchParams.set('page', page);
+            } else {
+                url.searchParams.delete('page');
+            }
+            window.location.href = url.href;
+        });
+    });
+   }

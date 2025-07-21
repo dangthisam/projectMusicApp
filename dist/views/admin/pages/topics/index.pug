@@ -1,45 +1,72 @@
 extends ../../layout/default.pug
 include  ../../mixins/alert.pug
+
 block main
   +alert(3000)
+    h1.mb-4 #{titlePage}
    
-  h1.mb-4 #{titlePage}
-
   .card.mb-3
-    .card-header Danh sách
+    .card-header 
+      .d-flex.justify-content-between.align-items-center
+        h5.mb-0
+          i.fas.fa-list.me-2
+          | Danh sách
+        span.badge.bg-primary.rounded-pill #{topics.length} chủ đề
+    
     .card-body
-      .row
+      .row.mb-3
         .col-8
-          //- Bạn có thể chèn bảng hoặc danh sách ở đây
+          //- Search and filter can go here
         .col-4.text-end
-          a.btn.btn-outline-success(href=`${prefixAdmin}/topics/create`) + Thêm mới
-
+          a.btn.btn-outline-success(href=`${prefixAdmin}/topics/create`)
+            i.fas.fa-plus.me-1
+            | Thêm mới
+       
       table.table.table-hover.table-sm
-        thead
+        thead.table-dark
           tr
-            th STT
-            th Hình ảnh
-            th Tiêu đề
-            th Vị trí
-            th Trạng thái
-            th Hành động
+            th(scope="col") STT
+            th(scope="col") Hình ảnh
+            th(scope="col") Tiêu đề
+            th(scope="col") Vị trí
+            th(scope="col") Trạng thái
+            th(scope="col", style="width: 200px;") Hành động
         tbody
           each item, index in topics
             tr
               td #{index + 1}
               td
-                img(src=item.avatar, alt=item.title, width="100px", height="auto")
-              td #{item.title}
-              td #{item.position}
+                if item.avatar
+                  img.rounded(src=item.avatar, alt=item.title, width="60px", height="60px", style="object-fit: cover;")
+                else
+                  .bg-light.rounded.d-flex.align-items-center.justify-content-center(style="width: 60px; height: 60px;")
+                    i.fas.fa-image.text-muted
+              td 
+                .fw-semibold #{item.title}
+              td 
+                span.badge.bg-info.rounded-pill #{item.position}
               td
                 if item.status === "active"
-                  a.badge.badge-success.text-success(href="javascript:void(0);") Hoạt động
+                  span.badge.bg-success.rounded-pill
+                    i.fas.fa-check-circle.me-1
+                    | Hoạt động
                 else
-                  a.badge.badge-danger.text-danger(href="javascript:void(0);") Dừng hoạt động
+                  span.badge.bg-danger.rounded-pill
+                    i.fas.fa-times-circle.me-1
+                    | Dừng hoạt động
               td
-                a.btn.btn-secondary.btn-sm(href=`${prefixAdmin}/topics/detail/${item.id}`) Chi tiết
-                a.btn.btn-warning.btn-sm(href=`${prefixAdmin}/topics/edit/${item.id}`) Sửa
-                button.btn.btn-danger.btn-sm(
+                .btn-group(role="group", aria-label="Actions")
+                  a.btn.btn-outline-info.btn-sm(
+                    href=`${prefixAdmin}/topics/detail/${item.id}`,
+                    title="Xem chi tiết"
+                  )
+                    i.fas.fa-eye
+                  a.btn.btn-outline-warning.btn-sm(
+                    href=`${prefixAdmin}/topics/edit/${item.id}`,
+                    title="Chỉnh sửa"
+                  )
+                    i.fas.fa-edit
+                  button.btn.btn-outline-danger.btn-sm(
                     type="button",
                     data-id=item.id,
                     data-toggle="modal",
@@ -48,11 +75,86 @@ block main
                     button-delete-topics,
                     title="Xóa"
                   )
-                    i.fas.fa-trash.mr-1
-                    | Xóa
-  form(
-      action=""
-      method="POST"
-      id="form-delete-topics"
-      data-path=`${prefixAdmin}/topics/delete`
-    )
+                    i.fas.fa-trash
+
+  //- IMPROVED PAGINATION
+  if pagination && pagination.totalPage > 1
+ 
+          .col-md-6
+            nav(aria-label="Phân trang")
+              ul.pagination.justify-content-md-end.justify-content-center.mb-0
+                //- First page button
+                if pagination.currentPage > 2
+                  li.page-item
+                    button.page-link.rounded-start(
+                      button-pagination=1,
+                      title="Trang đầu"
+                    )
+                      i.fas.fa-angle-double-left
+                
+                //- Previous page button
+                if pagination.currentPage > 1
+                  li.page-item
+                    button.page-link(
+                      button-pagination=pagination.currentPage-1,
+                      title="Trang trước"
+                    )
+                      i.fas.fa-angle-left
+                
+                //- Page numbers with smart logic
+                - var startPage = Math.max(1, pagination.currentPage - 2)
+                - var endPage = Math.min(pagination.totalPage, pagination.currentPage + 2)
+                
+                //- Show first page if not in range
+                if startPage > 1
+                  li.page-item
+                    button.page-link(button-pagination=1) 1
+                  if startPage > 2
+                    li.page-item.disabled
+                      span.page-link ...
+                
+                //- Show page numbers in range
+                - for (var i = startPage; i <= endPage; i++)
+                  li.page-item(class=pagination.currentPage == i ? "active" : "")
+                    if pagination.currentPage == i
+                      button.page-link.fw-bold(button-pagination=i)
+                        | #{i}
+                        span.visually-hidden (trang hiện tại)
+                    else
+                      button.page-link(button-pagination=i) #{i}
+                
+                //- Show last page if not in range
+                if endPage < pagination.totalPage
+                  if endPage < pagination.totalPage - 1
+                    li.page-item.disabled
+                      span.page-link ...
+                  li.page-item
+                    button.page-link(button-pagination=pagination.totalPage) #{pagination.totalPage}
+                
+                //- Next page button
+                if pagination.currentPage < pagination.totalPage
+                  li.page-item
+                    button.page-link(
+                      button-pagination=pagination.currentPage+1,
+                      title="Trang sau"
+                    )
+                      i.fas.fa-angle-right
+                
+                //- Last page button
+                if pagination.currentPage < pagination.totalPage - 1
+                  li.page-item
+                    button.page-link.rounded-end(
+                      button-pagination=pagination.totalPage,
+                      title="Trang cuối"
+                    )
+                      i.fas.fa-angle-double-right
+
+       
+
+  form.d-none(
+    action="",
+    method="POST",
+    id="form-delete-topics",
+    data-path=`${prefixAdmin}/topics/delete`
+    
+  )
