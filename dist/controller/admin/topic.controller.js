@@ -19,11 +19,16 @@ const multer_1 = __importDefault(require("multer"));
 const search_1 = __importDefault(require("../../helper/search"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
 const pagination_1 = __importDefault(require("../../helper/pagination"));
+const filterStatus_1 = __importDefault(require("../../helper/filterStatus"));
 const upload = (0, multer_1.default)();
 const topicsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const find = {
         deleted: false,
     };
+    const filterStatus = (0, filterStatus_1.default)(req.query.status);
+    if (req.query.status) {
+        find["status"] = req.query.status;
+    }
     const countProducts = yield topic_model_1.default.countDocuments(find);
     let objectPagi = (0, pagination_1.default)({
         currentPage: 1,
@@ -52,6 +57,7 @@ const topicsController = (req, res) => __awaiter(void 0, void 0, void 0, functio
         titlePage: " Quản lý chủ đề",
         topics: topics,
         pagination: objectPagi,
+        filterStatus: filterStatus,
         keyword: keyword
     });
 });

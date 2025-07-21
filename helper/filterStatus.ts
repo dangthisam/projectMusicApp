@@ -1,5 +1,5 @@
 
-const filter =(query)=>{
+const filter =(query:string)=>{
    let  filterStatus= [
         {
            name:"Tat ca",

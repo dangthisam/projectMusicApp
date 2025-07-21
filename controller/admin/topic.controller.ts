@@ -5,6 +5,7 @@ import multer from "multer";
 import search from "../../helper/search";
 import systemConfig from "../../config/system.config";
 import objectPagination from "../../helper/pagination";
+import filter from "../../helper/filterStatus";
 const upload = multer();
 //[GET]  /admin/topics
 export const topicsController=async (req:Request , res:Response)=>{
@@ -13,8 +14,13 @@ export const topicsController=async (req:Request , res:Response)=>{
    
 
   }
-   
 
+
+   
+  const filterStatus=filter(req.query.status as string);
+if(req.query.status){
+  find["status"]=req.query.status;
+}
     //start pagination 
  const countProducts = await Topic.countDocuments(find);
   let objectPagi = objectPagination(
@@ -53,6 +59,7 @@ export const topicsController=async (req:Request , res:Response)=>{
     titlePage:" Quản lý chủ đề",
     topics:topics,
     pagination:objectPagi,
+    filterStatus:filterStatus,
     keyword:keyword
    })
 }

@@ -1,7 +1,7 @@
 extends ../../layout/default.pug
 include  ../../mixins/alert.pug
 include ../../mixins/search.pug
-
+include ../../mixins/filter-status.pug
 block main
   +alert(3000)
   
@@ -71,62 +71,44 @@ block main
             h3.mb-1 #{Math.round(topics.filter(t => t.status === 'active').length / topics.length * 100) || 0}%
             small.opacity-75 Tỷ lệ hoạt động
 
+  //- Filter Section - Always visible
+  .card.border-0.shadow-sm.mb-4
+    .card-header.bg-white.border-bottom
+      .d-flex.align-items-center
+        i.fas.fa-filter.text-primary.me-2
+        h6.mb-0.fw-bold Bộ lọc
+    .card-body
+      .row.g-3
+        .col-md-6 
+          +filter-status(filterStatus)
+        .col-md-4
+          +search(keyword)
+        .col-md-2
+          .dropdown
+            button.btn.btn-outline-secondary.btn-sm.dropdown-toggle.w-100(
+              type="button",
+              data-bs-toggle="dropdown"
+            )
+              i.fas.fa-sort.me-1
+              | Sắp xếp
+            ul.dropdown-menu
+              li
+                a.dropdown-item(href="#") Theo tên A-Z
+              li
+                a.dropdown-item(href="#") Theo tên Z-A
+              li
+                a.dropdown-item(href="#") Theo vị trí
+              li
+                a.dropdown-item(href="#") Mới nhất
+
   //- Main Content Card
   .card.border-0.shadow-sm
     .card-header.bg-white.border-bottom
-      .row.align-items-center
-        .col-md-8
-          .d-flex.align-items-center
-            i.fas.fa-table.text-primary.me-3.fs-4
-            div
-              h5.mb-0.fw-bold Danh sách chủ đề
-              small.text-muted Quản lý và theo dõi các chủ đề âm nhạc
-        .col-md-4.text-md-end.mt-3.mt-md-0
-          .d-flex.gap-2.justify-content-md-end
-            button.btn.btn-outline-primary.btn-sm(
-              type="button",
-              data-bs-toggle="collapse",
-              data-bs-target="#filterCollapse"
-            )
-              i.fas.fa-filter.me-1.text-danger
-              | Lọc
-            .dropdown
-              button.btn.btn-outline-secondary.btn-sm.dropdown-toggle(
-                type="button",
-                data-bs-toggle="dropdown"
-              )
-                i.fas.fa-sort.me-1
-                | Sắp xếp
-              ul.dropdown-menu
-                li
-                  a.dropdown-item(href="#") Theo tên A-Z
-                li
-                  a.dropdown-item(href="#") Theo tên Z-A
-                li
-                  a.dropdown-item(href="#") Theo vị trí
-                li
-                  a.dropdown-item(href="#") Mới nhất
-
-    //- Filter Collapse
-    .collapse(id="filterCollapse")
-      .card-body.border-bottom.bg-light
-        .row.g-3
-          .col-md-4
-            +search(keyword)
-          .col-md-3
-            select.form-select(name="status")
-              option(value="") Tất cả trạng thái
-              option(value="active") Đang hoạt động
-              option(value="inactive") Tạm dừng
-          .col-md-3
-            select.form-select(name="sort")
-              option(value="position") Theo vị trí
-              option(value="title") Theo tên
-              option(value="created") Ngày tạo
-          .col-md-2
-            button.btn.btn-primary.w-100(type="submit")
-              i.fas.fa-search.me-1
-              | Tìm
+      .d-flex.align-items-center
+        i.fas.fa-table.text-primary.me-3.fs-4
+        div
+          h5.mb-0.fw-bold Danh sách chủ đề
+          small.text-muted Quản lý và theo dõi các chủ đề âm nhạc
 
     .card-body.p-0
       //- Table Section

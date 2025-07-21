@@ -135,3 +135,21 @@ if(buttonDelete.length > 0){
 })
     })
    }
+
+// button- status
+const statusButtons = document.querySelectorAll('[button-status]');
+    statusButtons.forEach(button => {
+        button.addEventListener('click', () => {
+    
+            const status = button.getAttribute('button-status');
+
+            // Cập nhật URL
+            const url = new URL(window.location.href);
+            if (status) {
+                url.searchParams.set('status', status);
+            } else {
+                url.searchParams.delete('status');
+            }
+            window.location.href = url.href;
+        });
+    });
