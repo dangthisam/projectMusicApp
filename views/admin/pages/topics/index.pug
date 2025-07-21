@@ -97,7 +97,9 @@ block main
               li
                 a.dropdown-item(href="#") Theo tên Z-A
               li
-                a.dropdown-item(href="#") Theo vị trí
+                a.dropdown-item(href="#") Theo vị trí tăng dần
+              li 
+                a.dropdown-item(href="#") Theo vị trí giảm dần
               li
                 a.dropdown-item(href="#") Mới nhất
 
@@ -113,11 +115,11 @@ block main
     .card-body.p-0
       //- Table Section
       .table-responsive
-        table.table.table-hover.mb-0
+        table.table.table-hover.mb-0(check-box-multi)
           thead.table-light
             tr
               th.ps-4(scope="col", style="width: 60px;")
-                input.form-check-input(type="checkbox", id="selectAll")
+                input.form-check-input(type="checkbox", id="selectAll" , name="checkAll")
               th(scope="col", style="width: 80px;") STT
               th(scope="col", style="width: 100px;") Hình ảnh
               th(scope="col") Tiêu đề
@@ -132,7 +134,8 @@ block main
                   td.ps-4
                     input.form-check-input.row-checkbox(
                       type="checkbox",
-                      value=item.id
+                      value=item.id,
+                      name="id"
                     )
                   td.fw-semibold.text-muted #{index + 1}
                   td

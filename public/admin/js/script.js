@@ -153,3 +153,48 @@ const statusButtons = document.querySelectorAll('[button-status]');
             window.location.href = url.href;
         });
     });
+
+    // check box
+    
+    const checkBoxMulti=document.querySelector("[check-box-multi]");
+    console.log(checkBoxMulti)
+
+    if(checkBoxMulti){
+        const checkBoxAll=checkBoxMulti.querySelector("input[name='checkAll']");
+        console.log(checkBoxAll)
+
+        const checkOne=checkBoxMulti.querySelectorAll("input[name='id']");
+        console.log(checkOne)
+     checkBoxAll.addEventListener("click", ()=>{
+        if(checkBoxAll.checked){
+            checkOne.forEach(check=>{
+                check.checked=true;
+            })
+        }else{
+            checkOne.forEach(check=>{
+                check.checked=false;
+            })
+        }
+
+     })
+
+
+     checkOne.forEach(check=>{
+        check.addEventListener("click", ()=>{
+            let checkAll=true;
+            checkOne.forEach(check=>{
+                if(!check.checked){
+                    checkAll=false;
+                }
+            })
+            if(checkAll){
+                checkBoxAll.checked=true;
+            }else{
+                checkBoxAll.checked=false;
+            }
+        })
+     })
+
+
+    }
+
