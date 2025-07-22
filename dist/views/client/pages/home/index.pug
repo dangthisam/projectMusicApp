@@ -99,143 +99,180 @@ block main
             h3.fw-bold.text-danger 50K+
             p.text-muted Yêu thích
 
-  //- Top 10 bài hát nhiều lượt thích
-  .top-songs-section.py-5.bg-gradient-light
+    //- Top 10 bài hát nhiều lượt thích
+    .top-songs-section.py-5.bg-light
     .container
       .section-header.text-center.mb-5(data-aos="fade-up")
         +box-head('🎵 Top 10 Bài hát được yêu thích nhất')
-        p.text-danger.mt-2 Những ca khúc đang làm mưa làm gió trong cộng đồng
+        p.text-muted.mt-2 Những ca khúc đang làm mưa làm gió trong cộng đồng
+      
+      //- Grid Layout cho bài hát
       .row.g-4
-        each song, index in topLikedSongs
-          .col-xl-6.col-lg-12(data-aos="fade-up", data-aos-delay=(index * 100))
+        each song, index in topLikedSongs.slice(0, 10)
+          .col-lg-3.col-md-4.col-sm-6(data-aos="fade-up", data-aos-delay=(index * 50))
             .song-card.card.border-0.shadow-sm.h-100.overflow-hidden.position-relative.hover-lift
-              //- Ranking Badge
-              .ranking-badge.position-absolute.top-0.start-0.z-3
-                .badge.bg-gradient-primary.rounded-pill.px-3.py-2.fw-bold.fs-6
-                  i.fa-solid.fa-trophy.me-1.text-warning
-                  | ##{index + 1}
-              .row.g-0.h-100
-                .col-4.position-relative
-                  .image-container.position-relative.overflow-hidden.h-100
-                    if song.avatar
-                      img.song-image.w-100.h-100(
-                        style="object-fit:cover; min-height:150px;",
-                        src=song.avatar, alt=song.title)
-                    else
-                      .placeholder-bg.d-flex.align-items-center.justify-content-center.h-100.bg-gradient-secondary(style="min-height:150px;")
-                        i.fa-solid.fa-music.fa-3x.text-white.opacity-75
-                  //- Play Overlay
-                  .play-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-center.justify-content-center
-                    .play-button.btn.btn-light.rounded-circle.p-3.shadow-lg
-                      i.fa-solid.fa-play.text-primary.fs-4
-                  //- Gradient Overlay
-                  .gradient-overlay.position-absolute.bottom-0.start-0.w-100.h-50
-                .col-8
-                  .card-body.p-4.h-100.d-flex.flex-column.justify-content-between
-                    .song-info
-                      h5.card-title.mb-2.fw-bold.line-height-sm
-                        a.text-decoration-none.song-title-link(href=`/songs/detail/${song.slug}`)= song.title
-                      .artist-info.mb-3
-                        .d-flex.align-items-center.text-muted
-                          i.fa-solid.fa-microphone.me-2.text-primary
-                          span.fw-medium= song.infoSinger.fullName
-                      .song-meta.d-flex.flex-wrap.gap-2.mb-3
-                        .meta-item.badge.bg-light.text-dark.px-3.py-2.rounded-pill
-                          i.fa-solid.fa-clock.me-1.text-muted
-                          span 3:45
-                        .meta-item.badge.bg-light.text-dark.px-3.py-2.rounded-pill
-                          i.fa-solid.fa-eye.me-1.text-muted
-                          span #{Math.floor(Math.random() * 1000) + 100}K
-                    .song-actions.d-flex.justify-content-between.align-items-center
-                      .like-section.d-flex.align-items-center
-                        .like-count.d-flex.align-items-center.bg-success.bg-opacity-10.px-3.py-2.rounded-pill
-                          i.fa-solid.fa-heart.text-danger.me-2.pulse-animation
-                          span.fw-bold.text-success #{song.like || 0}
-                          span.text-muted.ms-1 lượt thích
-                      .action-buttons.d-flex.gap-2
-                        button.btn.btn-outline-primary.btn-sm.rounded-pill.px-3
-                          i.fa-solid.fa-plus.me-1
-                          span Playlist
-                        button.btn.btn-outline-secondary.btn-sm.rounded-pill.px-3
-                          i.fa-solid.fa-share-alt
+              //- Song Image Container
+              .song-image-wrapper.position-relative.overflow-hidden
+                if song.avatar
+                  img.card-img-top.song-thumbnail(
+                    src=song.avatar, 
+                    alt=song.title,
+                    style="height: 200px; object-fit: cover; transition: transform 0.3s ease;"
+                  )
+                else
+                  .placeholder-image.d-flex.align-items-center.justify-content-center.bg-gradient-primary(
+                    style="height: 200px;"
+                  )
+                    i.fa-solid.fa-music.fa-3x.text-white.opacity-75
+
+                //- Play Button Overlay
+                .play-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-center.justify-content-center.opacity-0
+                  .play-btn.btn.btn-primary.rounded-circle.p-3.shadow-lg(
+                    onclick=`playVideo('${song.link}')`
+                  )
+                    i.fa-solid.fa-play.text-white
+
+                //- View Count Badge
+                .view-badge.position-absolute.top-2.end-2.bg-dark.bg-opacity-75.text-white.px-2.py-1.rounded.small
+                  i.fa-solid.fa-eye.me-1
+                  span #{Math.floor(Math.random() * 10000) + 1000}
+
+                //- Duration Badge  
+                .duration-badge.position-absolute.bottom-2.end-2.bg-dark.bg-opacity-75.text-white.px-2.py-1.rounded.small
+                  span #{Math.floor(Math.random() * 3) + 2}:#{Math.floor(Math.random() * 59).toString().padStart(2, '0')}
+
+                //- Ranking Badge
+                .ranking-badge.position-absolute.top-2.start-2.bg-warning.text-dark.px-2.py-1.rounded-circle.fw-bold.small
+                  span #{index + 1}
+
+              //- Card Body
+              .card-body.p-3
+                //- Song Title
+                h6.card-title.fw-bold.mb-2.text-truncate(title=song.title)
+                  a.text-decoration-none.text-dark(href=`/songs/detail/${song.slug}`)= song.title
+                
+                //- Artist Name
+                .artist-name.text-muted.small.mb-2.text-truncate
+                  i.fa-solid.fa-microphone.me-1.text-primary
+                  span= song.infoSinger.fullName
+
+                //- Song Stats
+                .song-stats.d-flex.justify-content-between.align-items-center.mb-3
+                  .like-count.d-flex.align-items-center
+                    i.fa-solid.fa-heart.text-danger.me-1
+                    span.small.text-muted #{song.like || Math.floor(Math.random() * 1000) + 100}
+                  .listen-count.d-flex.align-items-center
+                    i.fa-solid.fa-headphones.text-info.me-1  
+                    span.small.text-muted #{song.totalListen || Math.floor(Math.random() * 5000) + 500}
+
+              //- Card Footer Actions
+              .card-footer.bg-transparent.border-0.p-3.pt-0
+                .d-flex.gap-2.justify-content-between
+                  button.btn.btn-outline-primary.btn-sm.flex-fill.rounded-pill(
+                    onclick=`playVideo('${song.link}')`
+                  )
+                    i.fa-solid.fa-play.me-1
+                    span Nghe
+                  button.btn.btn-outline-secondary.btn-sm.rounded-pill.px-3
+                    i.fa-solid.fa-heart
+                  button.btn.btn-outline-secondary.btn-sm.rounded-pill.px-3
+                    i.fa-solid.fa-share-alt
+
+      //- View All Button
       .text-center.mt-5(data-aos="fade-up")
         a.btn.btn-primary.btn-lg.px-5.py-3.rounded-pill.shadow-sm.hover-lift(href="/songs")
           i.fa-solid.fa-music.me-2
           | Khám phá thêm bài hát
           i.fa-solid.fa-arrow-right.ms-2
 
-  //- Top 10 bài hát nghe nhiều nhất
+  //- Top 10 bài hát nghe nhiều nhất - Grid Layout  
   .top-listened-section.py-5.bg-gradient-dark
     .container
       .section-header.text-center.mb-5(data-aos="fade-up")
         +box-head('🎧 Top 10 Bài hát nghe nhiều nhất')
-        p.text-danger.opacity-75.mt-2.text-danger Những ca khúc hot nhất được cộng đồng lắng nghe
+        p.text-light.opacity-75.mt-2 Những ca khúc hot nhất được cộng đồng lắng nghe
+      
+      //- Grid Layout cho bài hát nghe nhiều
       .row.g-4
-        each song, index in topListenedSongs
-          .col-xl-6.col-lg-12(data-aos="fade-up", data-aos-delay=(index * 100))
-            .listened-card.card.border-0.shadow-lg.h-100.overflow-hidden.position-relative.hover-glow
-              //- Trending Badge
-              .trending-badge.position-absolute.top-0.end-0.z-3
-                .badge.bg-gradient-warning.rounded-pill.px-3.py-2.fw-bold.fs-6
-                  i.fa-solid.fa-fire.me-1.text-danger
-                  | Trending ##{index + 1}
-              //- Listen Wave Animation
-              .wave-indicator.position-absolute.top-0.start-0.z-2
-                .wave-bars
-                  //- Tạo 4 bar sóng
-                  .bar.bg-info
-                  .bar.bg-info
-                  .bar.bg-info
-                  .bar.bg-info
-              .row.g-0.h-100
-                .col-4.position-relative
-                  .image-container.position-relative.overflow-hidden.h-100
-                    if song.avatar
-                      img.song-image.w-100.h-100(
-                        style="object-fit:cover; min-height:160px;",
-                        src=song.avatar, alt=song.title)
-                    else
-                      .placeholder-bg.d-flex.align-items-center.justify-content-center.h-100.bg-gradient-info(style="min-height:160px;")
-                        i.fa-solid.fa-headphones.fa-3x.text-white.opacity-75
-                  //- Headphone Overlay
-                  .headphone-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-center.justify-content-center
-                    .headphone-button.btn.btn-info.rounded-circle.p-3.shadow-lg.pulse-btn
-                      i.fa-solid.fa-headphones.text-white.fs-4
-                  //- Dark Gradient Overlay
-                  .dark-gradient-overlay.position-absolute.bottom-0.start-0.w-100.h-50
-                .col-8
-                  .card-body.p-4.h-100.d-flex.flex-column.justify-content-between.bg-dark.text-white
-                    .song-info
-                      h5.card-title.mb-2.fw-bold.text-white.line-height-sm
-                        a.text-decoration-none.listened-title-link(href=`/songs/detail/${song.slug}`)= song.title
-                      .artist-info.mb-3
-                        .d-flex.align-items-center.text-light.opacity-75
-                          i.fa-solid.fa-user-music.me-2.text-info
-                          span.fw-medium= song.infoSinger.fullName
-                      //- Audio Visualizer (12 bars)
-                      .audio-visualizer.mb-3
-                        .visualizer-bars.d-flex.align-items-end.gap-1
-                          - for (let i = 0; i < 12; i++)
-                            .vis-bar.bg-info.rounded-top(style=`height: ${Math.random() * 30 + 10}px; animation-delay: ${i * 0.1}s`)
-                      .song-stats.d-flex.flex-wrap.gap-2.mb-3
-                        .stat-item.badge.bg-dark.border.border-secondary.text-light.px-3.py-2.rounded-pill
-                          i.fa-solid.fa-clock.me-1.text-warning
-                          span #{Math.floor(Math.random() * 3) + 2}:#{Math.floor(Math.random() * 59).toString().padStart(2, '0')}
-                        .stat-item.badge.bg-dark.border.border-secondary.text-light.px-3.py-2.rounded-pill
-                          i.fa-solid.fa-calendar.me-1.text-success
-                          span #{Math.floor(Math.random() * 7) + 1} ngày trước
-                    .song-actions.d-flex.justify-content-between.align-items-center
-                      .listen-section.d-flex.align-items-center
-                        .listen-count.d-flex.align-items-center.bg-info.bg-opacity-20.px-3.py-2.rounded-pill.border.border-info.border-opacity-30
-                          i.fa-solid.fa-headphones.text-danger.me-2.rotate-animation
-                          span.fw-bold.text-dark #{song.totalListen}
-                          span.text-light.opacity-75.ms-1 lượt nghe
-                      .action-buttons.d-flex.gap-2
-                        button.btn.btn-outline-info.btn-sm.rounded-pill.px-3.text-white.border-info
-                          i.fa-solid.fa-download.me-1
-                          span Tải về
-                        button.btn.btn-outline-light.btn-sm.rounded-pill.px-3.border-light.border-opacity-50
-                          i.fa-solid.fa-share-nodes
+        each song, index in topListenedSongs.slice(0, 10)
+          .col-lg-3.col-md-4.col-sm-6(data-aos="fade-up", data-aos-delay=(index * 50))
+            .listened-card.card.border-0.shadow-lg.h-100.overflow-hidden.position-relative.hover-glow.bg-dark.text-white
+              //- Song Image Container
+              .song-image-wrapper.position-relative.overflow-hidden
+                if song.avatar
+                  img.card-img-top.song-thumbnail(
+                    src=song.avatar, 
+                    alt=song.title,
+                    style="height: 200px; object-fit: cover; transition: transform 0.3s ease;"
+                  )
+                else
+                  .placeholder-image.d-flex.align-items-center.justify-content-center.bg-gradient-info(
+                    style="height: 200px;"
+                  )
+                    i.fa-solid.fa-headphones.fa-3x.text-white.opacity-75
+
+                //- Headphone Overlay
+                .play-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-center.justify-content-center.opacity-0
+                  .headphone-btn.btn.btn-info.rounded-circle.p-3.shadow-lg.pulse-btn(
+                    onclick=`playVideo('${song.link}')`
+                  )
+                    i.fa-solid.fa-headphones.text-white
+
+                //- Listen Count Badge
+                .listen-badge.position-absolute.top-2.end-2.bg-info.bg-opacity-90.text-white.px-2.py-1.rounded.small
+                  i.fa-solid.fa-headphones.me-1
+                  span #{song.totalListen || Math.floor(Math.random() * 10000) + 1000}
+
+                //- Duration Badge  
+                .duration-badge.position-absolute.bottom-2.end-2.bg-dark.bg-opacity-75.text-white.px-2.py-1.rounded.small
+                  span #{Math.floor(Math.random() * 3) + 2}:#{Math.floor(Math.random() * 59).toString().padStart(2, '0')}
+
+                //- Trending Badge
+                .trending-badge.position-absolute.top-2.start-2.bg-warning.text-dark.px-2.py-1.rounded-pill.fw-bold.small
+                  i.fa-solid.fa-fire.me-1.text-danger  
+                  span ##{index + 1}
+
+                //- Audio Visualizer Overlay
+                .audio-visualizer.position-absolute.bottom-2.start-2
+                  .visualizer-mini.d-flex.align-items-end.gap-1
+                    - for (let i = 0; i < 5; i++)
+                      .vis-bar-mini.bg-info.rounded-top(style=`width: 3px; height: ${Math.random() * 15 + 5}px; animation-delay: ${i * 0.1}s`)
+
+              //- Card Body
+              .card-body.p-3.bg-dark
+                //- Song Title
+                h6.card-title.fw-bold.mb-2.text-white.text-truncate(title=song.title)
+                  a.text-decoration-none.text-white(href=`/songs/detail/${song.slug}`)= song.title
+                
+                //- Artist Name
+                .artist-name.text-light.opacity-75.small.mb-2.text-truncate
+                  i.fa-solid.fa-user-music.me-1.text-info
+                  span= song.infoSinger.fullName
+
+                  //- Song Stats
+                .song-stats.d-flex.justify-content-between.align-items-center.mb-3
+                  .like-count.d-flex.align-items-center
+                    i.fa-solid.fa-heart.text-danger.me-1
+                    span.small.text-light.opacity-75 #{song.like || (Math.floor(Math.random() * 1000) + 100)}
+                  .time-ago.d-flex.align-items-center
+                    i.fa-solid.fa-clock.text-warning.me-1
+                    span #{new Date(song.createdAt).toLocaleDateString('vi-VN')}
+                    
+
+                    //- .text-muted= new Date(song.createdAt).toLocaleTimeString('vi-VN', {hour: '2-digit', minute: '2-digit'})
+
+              //- Card Footer Actions
+              .card-footer.bg-dark.border-0.p-3.pt-0
+                .d-flex.gap-2.justify-content-between
+                  a(href=`/songs/detail/${song.slug}`).btn.btn-info.btn-sm.flex-fill.rounded-pill
+                    i.fa-solid.fa-headphones.me-1
+                    span Nghe
+                  button.btn.btn-outline-light.btn-sm.rounded-pill.px-3.border-opacity-50
+                    i.fa-solid.fa-download
+                  button.btn.btn-outline-light.btn-sm.rounded-pill.px-3.border-opacity-50
+                    i.fa-solid.fa-share-nodes
+
+      //- View Ranking Button
       .text-center.mt-5(data-aos="fade-up")
         a.btn.btn-info.btn-lg.px-5.py-3.rounded-pill.shadow-lg.hover-glow-btn(href="/songs/trending")
           i.fa-solid.fa-headphones.me-2
