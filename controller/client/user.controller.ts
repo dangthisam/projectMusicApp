@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../../model/User.model";
+import passport from "passport";
 import md5 from "md5";
 import sendEmail from "../../helper/sendMail";
 import PasswordReset from "../../model/forgotPassword";
@@ -24,6 +25,7 @@ req.flash("success" , "Đăng ký thành công");
 res.redirect("/topics")
 
 }
+
 
 
 //[POST] /user/login

@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
 import flash from "express-flash";
 import path from "path";
+import passport from "passport";
+import { passportConfig } from "./helper/auth";
 
 dotenv.config();
 const app = express();
@@ -17,7 +19,6 @@ import systemConfig from "./config/system.config";
 import middlewareUser from "./middleware/client/user.middleware";
 
 // ===== THỨ TỰ MIDDLEWARE ĐÚNG =====
-
 // 1. Body parsing middleware TRƯỚC
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -29,7 +30,7 @@ app.use(methodOverride('_method'));
 app.use(cookieParser('nguyenvansamthichdangthithuy'));
 
 // 4. Session và Flash
-app.use(session({ 
+app.use(session({
     cookie: { maxAge: 60000 },
     secret: 'nguyenvansamthichdangthithuy', // Thêm secret
     resave: false,
@@ -37,19 +38,26 @@ app.use(session({
 }));
 app.use(flash());
 
+
+
 // 5. Static files
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
-// 6. View engine setup
-app.set("views", `${__dirname}/views`);
+// 6. Passport middleware
+passportConfig();
+app.use(passport.initialize());
+app.use(passport.session());
+
+// 7. View engine setup
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
-// 7. USER MIDDLEWARE - SAU KHI ĐÃ CẤU HÌNH COOKIE PARSER
+// 8. USER MIDDLEWARE - SAU KHI ĐÃ CẤU HÌNH COOKIE PARSER
 app.use(middlewareUser);
 
-// 8. Routes cuối cùng
+// 9. Routes cuối cùng
 mainAdminRouter(app);
 mainV1Router(app);
 

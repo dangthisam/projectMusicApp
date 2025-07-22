@@ -11,6 +11,8 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const method_override_1 = __importDefault(require("method-override"));
 const express_flash_1 = __importDefault(require("express-flash"));
 const path_1 = __importDefault(require("path"));
+const passport_1 = __importDefault(require("passport"));
+const auth_1 = require("./helper/auth");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const connectDB_1 = __importDefault(require("./config/connectDB"));
@@ -29,9 +31,12 @@ app.use((0, express_session_1.default)({
     saveUninitialized: true
 }));
 app.use((0, express_flash_1.default)());
-app.use(express_1.default.static(`${__dirname}/public`));
+app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 app.use('/tinymce', express_1.default.static(path_1.default.join(__dirname, 'node_modules', 'tinymce')));
-app.set("views", `${__dirname}/views`);
+(0, auth_1.passportConfig)();
+app.use(passport_1.default.initialize());
+app.use(passport_1.default.session());
+app.set("views", path_1.default.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.locals.prefixAdmin = system_config_1.default.prefixAdmin;
 app.use(user_middleware_1.default);

@@ -15,8 +15,8 @@ block main
             .card-body.bg-white
               .row.g-4.align-items-center
                 .col-md-4.text-center
-                  if users.avatar
-                    img.img-fluid.rounded-circle.shadow(style="width: 150px; height: 150px; object-fit: cover;", src=users.avatar, alt="Avatar")
+                  if users.profilePicture
+                    img.img-fluid.rounded-circle.shadow(style="width: 150px; height: 150px; object-fit: cover;", src=users.profilePicture, alt="Avatar")
                   else
                     .avatar-placeholder.bg-secondary.d-flex.align-items-center.justify-content-center.rounded-circle.mx-auto(style="width:150px; height:150px;")
                       i.fas.fa-user-tie.text-white.fs-1

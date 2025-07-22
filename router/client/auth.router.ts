@@ -1,5 +1,5 @@
 import { Router } from "express";
-
+import passport from "passport";
 import {
   userRegister,
   userLogin,
@@ -13,13 +13,34 @@ import {
   userVerifyOtp,
   passWordReset,
   passWordResetPost,
+
 } from "../../controller/client/user.controller";
 import userMiddleware from "../../middleware/client/user.middleware";
 import validateresetPassword from "../../validate/client/resetPassword";
 import validateNewPassword from "../../validate/client/newpassword.validata";
 
 const router = Router();
+// Bắt đầu Google OAuth
+router.get('/auth/google', 
+  passport.authenticate('google', { 
+    scope: ['profile', 'email'] ,
+    prompt: 'select_account'
+  })
+)
 
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { 
+    failureRedirect: '/?error=google_login_failed',
+    failureFlash: true 
+  }),
+  (req, res) => {
+    // Đăng nhập thành công
+    const user = req.user;
+    res.cookie("tokenUser" , user.tokenUser)
+    req.flash('success', 'Đăng nhập thành công!');
+    res.redirect('/');
+  }
+)
 router.post("/register", userRegister);
 router.post("/login", userMiddleware, userLogin);
 

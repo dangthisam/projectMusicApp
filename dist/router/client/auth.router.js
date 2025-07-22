@@ -4,11 +4,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const passport_1 = __importDefault(require("passport"));
 const user_controller_1 = require("../../controller/client/user.controller");
 const user_middleware_1 = __importDefault(require("../../middleware/client/user.middleware"));
 const resetPassword_1 = __importDefault(require("../../validate/client/resetPassword"));
 const newpassword_validata_1 = __importDefault(require("../../validate/client/newpassword.validata"));
 const router = (0, express_1.Router)();
+router.get('/auth/google', passport_1.default.authenticate('google', {
+    scope: ['profile', 'email'],
+    prompt: 'select_account'
+}));
+router.get('/auth/google/callback', passport_1.default.authenticate('google', {
+    failureRedirect: '/?error=google_login_failed',
+    failureFlash: true
+}), (req, res) => {
+    const user = req.user;
+    res.cookie("tokenUser", user.tokenUser);
+    req.flash('success', 'Đăng nhập thành công!');
+    res.redirect('/');
+});
 router.post("/register", user_controller_1.userRegister);
 router.post("/login", user_middleware_1.default, user_controller_1.userLogin);
 router.get("/logout", user_controller_1.userLogout);

@@ -6,6 +6,7 @@ declare global {
     interface Request {
       flash(type: string, message?: string): string[];
       session: any;
+      user:any
     
     }
   }
