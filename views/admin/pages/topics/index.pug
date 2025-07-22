@@ -81,8 +81,9 @@ block main
               th.text-center(style="width: 100px;") Hình ảnh
               th.text-center(style="width: 250px;") Tiêu đề
               th.text-center(style="width: 120px;") Vị trí
-              th.text-center(style="width: 140px;") Trạng thái
+              th.text-center(style="width: 100px;") Trạng thái
               th.text-center(style="width: 180px;") Ngày tạo
+              th.text-center(style="width: 180px;") Ngày cập nhật
               th.text-center(style="width: 200px;") Hành động
 
           tbody
@@ -171,6 +172,14 @@ block main
                         .text-muted= new Date(item.createdAt).toLocaleTimeString('vi-VN', {hour: '2-digit', minute: '2-digit'})
                     else
                       small.text-muted.fst-italic Không xác định
+                      //- Ngày cập nhật
+                  td.text-center 
+                    if item.updatedAt 
+                      .d-flex.flex-column.small
+                        .fw-semibold.text-dark= new Date(item.updatedAt).toLocaleDateString('vi-VN')
+                        .text-muted= new Date(item.updatedAt).toLocaleTimeString('vi-VN', {hour: '2-digit', minute: '2-digit'})
+                    else 
+                      small.text-muted.fst-italic Chưa cập nhật
                   
                   //- Hành động
                   td.text-center
