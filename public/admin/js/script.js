@@ -41,7 +41,7 @@ if (uploadAudio) {
   const uploadAudioInput = uploadAudio.querySelector(
     "[data-upload-audio-input]"
   );
-  console.log(uploadAudioInput);
+
   const uploadAudioPreview = uploadAudio.querySelector(
     "[data-upload-audio-preview]"
   );
@@ -114,7 +114,7 @@ if (buttonPagination) {
 // change -status topics
 
 const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
-console.log(buttonChangeStatus);
+
 
 if (buttonChangeStatus.length > 0) {
   const formChangeStatus = document.querySelector("#form-change-status");
@@ -235,7 +235,7 @@ if (formChangeMulite) {
 
       inputIds.value = ids.join(",");
       formChangeMulite.submit();
-      console.log(inputIds);
+
     } else {
       alert("Bạn chưa chọn sản phẩm nào để thực hiện thao tác này!");
     }

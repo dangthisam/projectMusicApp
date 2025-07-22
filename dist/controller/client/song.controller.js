@@ -109,7 +109,6 @@ const likeSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     song.like = song.likedUsers.length;
     yield song.save();
-    console.log(song);
     res.json({
         code: 200,
         message: "Like thanh cong",

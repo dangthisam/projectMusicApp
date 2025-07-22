@@ -5,7 +5,7 @@
 const aplayer=document.querySelector("#aplayer");
 if(aplayer){
     const dataSong=JSON.parse(aplayer.getAttribute("data-song"));
-  console.log(dataSong.lyrics)
+
 const dataSinger=JSON.parse(aplayer.getAttribute("data-singer"));
     const ap = new APlayer({
     container: aplayer,
@@ -44,7 +44,7 @@ ap.on('ended' , function(){
         .then(res => res.json())
         .then(data=>{
             if(data.code==200){
-               console.log(data);
+         
                const documentLIstend=document.querySelector(".singer-detail .inner-listen span")
     documentLIstend.innerHTML=`${data.listen} listened`;
             }
@@ -133,7 +133,7 @@ fetch(link)
 .then(data=>{
     if(data.code=200){
     const song=data.songs
-    console.log(song);
+
     if(song.length>0){
             boxSuggest.classList.add("show");
             const html =song.map(song =>{

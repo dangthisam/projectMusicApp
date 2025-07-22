@@ -106,7 +106,6 @@ export const likeSong = async (req: Request, res: Response) => {
   song.like = song.likedUsers.length;
   await song.save();
 
-  console.log(song);
 
   res.json({
     code: 200,
