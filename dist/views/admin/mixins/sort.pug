@@ -1,0 +1,29 @@
+mixin sort()
+  .dropdown
+    button.btn.btn-outline-secondary.dropdown-toggle.w-100(
+      type="button",
+      data-bs-toggle="dropdown"
+    )
+      i.fas.fa-sort.me-1
+      | Sắp xếp
+    ul.dropdown-menu
+      li
+        a.dropdown-item(href="?sortKey=title&sortValue=asc")
+          i.fas.fa-sort-alpha-down.me-2
+          | Tên A-Z
+      li
+        a.dropdown-item(href="?sortKey=title&sortValue=desc")
+          i.fas.fa-sort-alpha-up.me-2
+          | Tên Z-A
+      li
+        a.dropdown-item(href="?sortKey=position&sortValue=asc")
+          i.fas.fa-sort-numeric-down.me-2
+          | Vị trí tăng dần
+      li
+        a.dropdown-item(href="?sortKey=position&sortValue=desc")
+          i.fas.fa-sort-numeric-up.me-2
+          | Vị trí giảm dần
+      li
+        a.dropdown-item(href="?sortKey=createdAt&sortValue=desc")
+          i.fas.fa-clock.me-2
+          | Mới nhất

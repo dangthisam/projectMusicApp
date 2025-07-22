@@ -253,3 +253,55 @@ if(formChangeMulite){
     });
 
 }
+
+
+//sort
+const sortElements = document.querySelectorAll("[sort]");
+if (sortElements.length > 0) {
+    sortElements.forEach(sort => {
+        const sortSelect = sort.querySelector("[sort-select]");
+        const sortClear = sort.querySelector("[sort-clear]");
+
+        if (sortSelect) {
+            sortSelect.addEventListener("change", (e) => {
+                const value = e.target.value;
+                if (value) {
+                    const [sortKey, sortValue] = value.split("-");
+                    const url = new URL(window.location.href);
+                    url.searchParams.set("sortKey", sortKey);
+                    url.searchParams.set("sortValue", sortValue);
+                    window.location.href = url.href;
+                }
+            });
+        }
+
+        if (sortClear) {
+            sortClear.addEventListener("click", () => {
+                const url = new URL(window.location.href);
+                url.searchParams.delete("sortKey");
+                url.searchParams.delete("sortValue");
+                window.location.href = url.href;
+            });
+        }
+    });
+    const url = new URL(window.location.href);
+    const sortKey = url.searchParams.get("sortKey");
+    const sortValue = url.searchParams.get("sortValue");
+    if (sortKey && sortValue) {
+        const stringSort = `${sortKey}-${sortValue}`;
+        sortElements.forEach(sort => {
+            const sortSelect = sort.querySelector("[sort-select]");
+            if (sortSelect) {
+                const optionSelect = sortSelect.querySelector(`option[value='${stringSort}']`);
+                if (optionSelect) {
+                    optionSelect.selected = true;
+                }
+            }
+        });
+    }
+
+}
+
+//end sort
+
+

@@ -1,4 +1,5 @@
 extends ../../layout/default.pug
+include ../../mixins/sortJs.pug
 
 include ../../mixins/alert.pug
 include ../../mixins/search.pug
@@ -32,7 +33,7 @@ block main
             class="mb-3"
           )
             .row.align-items-center
-              .col-md-4.mb-2
+              .col-md-6.mb-2
                 .form-group.mb-0.mr-2
                   select.form-control(name='type')
                     option(value="", selected) Chọn hành động
@@ -40,7 +41,7 @@ block main
                     option(value="inactive") Vô hiệu hóa
                     option(value="delete-all") Xóa nhiều
                     option(value="update-position") Cập nhật vị trí
-              .col-md-6.mb-2
+              .col-md-4.mb-6
                 button.btn.btn-danger.w-100(type="submit")
                   i.fas.fa-check.mr-1
                   | Áp dụng
@@ -48,35 +49,9 @@ block main
               .form-group.mb-0.mr-2
                 input.form-control.d-none(type="text", name="ids", value="")
         //- Sắp xếp
-        .col-md-3
-          .dropdown
-            button.btn.btn-outline-secondary.dropdown-toggle.w-100(
-              type="button", 
-              data-bs-toggle="dropdown"
-            )
-              i.fas.fa-sort.me-1
-              | Sắp xếp
-            ul.dropdown-menu
-              li
-                a.dropdown-item(href=`?sortKey=title&sortValue=asc`) 
-                  i.fas.fa-sort-alpha-down.me-2
-                  | Tên A-Z
-              li
-                a.dropdown-item(href=`?sortKey=title&sortValue=desc`)
-                  i.fas.fa-sort-alpha-up.me-2
-                  | Tên Z-A
-              li
-                a.dropdown-item(href=`?sortKey=position&sortValue=asc`)
-                  i.fas.fa-sort-numeric-down.me-2
-                  | Vị trí tăng dần
-              li
-                a.dropdown-item(href=`?sortKey=position&sortValue=desc`)
-                  i.fas.fa-sort-numeric-up.me-2
-                  | Vị trí giảm dần
-              li
-                a.dropdown-item(href=`?sortKey=createdAt&sortValue=desc`)
-                  i.fas.fa-clock.me-2
-                  | Mới nhất
+        .col-md-3.ml-6.align-items-center
+          +sort()
+          
 
   //- Section: Danh sách chủ đề
   .card.border-0.shadow-sm
@@ -175,7 +150,7 @@ block main
                           data-status=item.status
                           button-change-status
                         )
-                          i.fas.fa-toggle-off.mr-1
+                          i.fas.fa-solid.fa-toggle-on.mr-1
                           | On
                         
                     else

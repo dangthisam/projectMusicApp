@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
 import Topic from "../../model/topic.model";
 import Song from "../../model/songs.model";
-import multer from "multer";
 import search from "../../helper/search";
 import systemConfig from "../../config/system.config";
 import objectPagination from "../../helper/pagination";
 import filter from "../../helper/filterStatus";
-const upload = multer();
+
 //[GET]  /admin/topics
 export const topicsController=async (req:Request , res:Response)=>{
   const find={
@@ -33,6 +32,15 @@ if(req.query.status){
       )
     //end pagination
 
+    //start sort
+
+   const sort:any={};
+    //sort={}
+    if(req.query.sortKey && req.query.sortValue){
+      sort[req.query.sortKey as string] = req.query.sortValue as string;
+    
+    }
+
     //start search 
     const keyword:string=req.query.keyword as string;
     if(keyword){
@@ -52,6 +60,7 @@ if(req.query.status){
     }
     //end search)
  const topics=await Topic.find(find)
+ .sort(sort)
   .skip(objectPagi.skip)
   .limit(objectPagi.limitPage)
      
