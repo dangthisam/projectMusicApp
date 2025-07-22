@@ -52,8 +52,12 @@ header.header
             if users
               .dropdown
                 button.btn.btn-outline-primary.dropdown-toggle(type="button", data-bs-toggle="dropdown", aria-expanded="false")
-                  i.fa-solid.fa-user.me-2
-                  | #{users.username}
+                  //- Hiển thị avatar Google nếu có
+                  if users.googleAvatar
+                    img.rounded-circle.me-2(src=users.googleAvatar, alt="Avatar", style="width: 24px; height: 24px;")
+                  else
+                    i.fa-solid.fa-user.me-2
+                  | #{users.username || users.displayName}
                 ul.dropdown-menu
                   li
                     a.dropdown-item(href="/user/profile")
@@ -79,42 +83,116 @@ if !users
     .modal-dialog
       .modal-content
         .modal-header
-          h5.modal-title Đăng nhập
+          h5.modal-title
+            i.fa-solid.fa-right-to-bracket.me-2
+            | Đăng nhập
           button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-        form(action="/user/login", method="POST", autocomplete="off")
-          .modal-body
+        
+        .modal-body
+          //- Đăng nhập bằng Google
+          .text-center.mb-4
+            a.btn.btn-danger.btn-lg.w-100.d-flex.align-items-center.justify-content-center.gap-2.mb-3(
+              href="/auth/google",
+              style="background: #db4437; border-color: #db4437;"
+            )
+              i.fa-brands.fa-google.fs-5
+              span Đăng nhập bằng Google
+            
+            .divider.position-relative.my-4
+              hr.my-0
+              span.position-absolute.top-50.start-50.translate-middle.bg-white.px-3.text-muted.small hoặc
+
+          //- Form đăng nhập thường
+          form(action="/user/login", method="POST", autocomplete="off")
             .mb-3
-              label.form-label(for="loginEmail") Email
-              input#loginEmail.form-control(type="email", name="email", required, placeholder="Nhập email")
+              label.form-label(for="loginEmail") 
+                i.fa-solid.fa-envelope.me-1
+                | Email
+              input#loginEmail.form-control(type="email", name="email", required, placeholder="Nhập địa chỉ email")
             .mb-3
-              label.form-label(for="loginPassword") Mật khẩu
+              label.form-label(for="loginPassword") 
+                i.fa-solid.fa-lock.me-1
+                | Mật khẩu
               input#loginPassword.form-control(type="password", name="password", required, placeholder="Nhập mật khẩu")
-              .text-end.mt-1
-                a.text-decoration-none(href="/user/forgot-password")
+              .text-end.mt-2
+                a.text-decoration-none.small(href="/user/forgot-password")
                   i.fa-solid.fa-unlock-keyhole.me-1
                   | Quên mật khẩu?
-          .modal-footer
-            button.btn.btn-primary(type="submit") Đăng nhập
-            button.btn.btn-link(type="button", data-bs-toggle="modal", data-bs-target="#registerModal", data-bs-dismiss="modal") Chưa có tài khoản? Đăng ký
+            
+            .d-grid.gap-2.mb-3
+              button.btn.btn-primary.btn-lg(type="submit")
+                i.fa-solid.fa-right-to-bracket.me-2
+                | Đăng nhập
+            
+            .text-center
+              span.text-muted Chưa có tài khoản? 
+              button.btn.btn-link.p-0.text-decoration-none(type="button", data-bs-toggle="modal", data-bs-target="#registerModal", data-bs-dismiss="modal") 
+                | Đăng ký ngay
 
   //- Modal Đăng ký
   .modal.fade#registerModal(tabindex="-1", aria-hidden="true")
     .modal-dialog
       .modal-content
         .modal-header
-          h5.modal-title Đăng ký
+          h5.modal-title
+            i.fa-solid.fa-user-plus.me-2
+            | Đăng ký tài khoản
           button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-        form(action="/user/register", method="POST", autocomplete="off")
-          .modal-body
+        
+        .modal-body
+          //- Đăng ký bằng Google
+          .text-center.mb-4
+            a.btn.btn-danger.btn-lg.w-100.d-flex.align-items-center.justify-content-center.gap-2.mb-3(
+              href="/auth/google",
+              style="background: #db4437; border-color: #db4437;"
+            )
+              i.fa-brands.fa-google.fs-5
+              span Đăng ký bằng Google
+            
+            .divider.position-relative.my-4
+              hr.my-0
+              span.position-absolute.top-50.start-50.translate-middle.bg-white.px-3.text-muted.small hoặc
+
+          //- Form đăng ký thường
+          form(action="/user/register", method="POST", autocomplete="off")
             .mb-3
-              label.form-label(for="registerUsername") Tên người dùng
-              input#registerUsername.form-control(type="text", name="username", required, placeholder="Nhập tên người dùng")
+              label.form-label(for="registerUsername") 
+                i.fa-solid.fa-user.me-1
+                | Tên người dùng
+              input#registerUsername.form-control(type="text", name="username", required, placeholder="Nhập tên người dùng", minlength="3", maxlength="20")
+              .form-text Từ 3-20 ký tự, không chứa ký tự đặc biệt
             .mb-3
-              label.form-label(for="registerEmail") Email
-              input#registerEmail.form-control(type="email", name="email", required, placeholder="Nhập email")
+              label.form-label(for="registerEmail") 
+                i.fa-solid.fa-envelope.me-1
+                | Email
+              input#registerEmail.form-control(type="email", name="email", required, placeholder="Nhập địa chỉ email")
             .mb-3
-              label.form-label(for="registerPassword") Mật khẩu
-              input#registerPassword.form-control(type="password", name="password", required, placeholder="Nhập mật khẩu tối thiểu 6 ký tự")
-          .modal-footer
-            button.btn.btn-success(type="submit") Đăng ký
-            button.btn.btn-link(type="button", data-bs-toggle="modal", data-bs-target="#loginModal", data-bs-dismiss="modal") Đã có tài khoản? Đăng nhập
+              label.form-label(for="registerPassword") 
+                i.fa-solid.fa-lock.me-1
+                | Mật khẩu
+              input#registerPassword.form-control(type="password", name="password", required, placeholder="Nhập mật khẩu", minlength="6")
+              .form-text Tối thiểu 6 ký tự, nên bao gồm chữ hoa, chữ thường và số
+            .mb-3
+              label.form-label(for="confirmPassword") 
+                i.fa-solid.fa-lock.me-1
+                | Xác nhận mật khẩu
+              input#confirmPassword.form-control(type="password", name="confirmPassword", required, placeholder="Nhập lại mật khẩu")
+            
+            .mb-3.form-check
+              input#agreeTerms.form-check-input(type="checkbox", required)
+              label.form-check-label(for="agreeTerms")
+                | Tôi đồng ý với 
+                a(href="/terms", target="_blank") Điều khoản sử dụng
+                |  và 
+                a(href="/privacy", target="_blank") Chính sách bảo mật
+            
+            .d-grid.gap-2.mb-3
+              button.btn.btn-success.btn-lg(type="submit")
+                i.fa-solid.fa-user-plus.me-2
+                | Đăng ký tài khoản
+            
+            .text-center
+              span.text-muted Đã có tài khoản? 
+              button.btn.btn-link.p-0.text-decoration-none(type="button", data-bs-toggle="modal", data-bs-target="#loginModal", data-bs-dismiss="modal") 
+                | Đăng nhập ngay
+
