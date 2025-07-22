@@ -1,3 +1,13 @@
-mixin box-head(title)
-  .box-head
-    h2.inner-title= title
+mixin box-head(title, options = {})
+  - const { subtitle, icon, theme = 'default', size = 'medium', alignment = 'left' } = options
+  
+  .box-head(class=`box-head--${theme} box-head--${size} box-head--${alignment}`)
+    .box-head__container
+      if icon
+        .box-head__icon
+          i(class=icon)
+      
+      .box-head__content
+        h2.box-head__title= title
+        if subtitle
+          p.box-head__subtitle= subtitle
