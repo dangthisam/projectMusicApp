@@ -7,4 +7,5 @@ router.get("/", roles_contrller_1.indexRoles);
 router.get("/create", roles_contrller_1.createRoles);
 router.post("/create", roles_contrller_1.createPostRole);
 router.delete("/delete/:id", roles_contrller_1.deleteRoles);
+router.get("/detail/:id", roles_contrller_1.detailRoles);
 exports.default = router;

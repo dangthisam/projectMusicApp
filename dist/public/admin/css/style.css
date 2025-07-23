@@ -1861,3 +1861,31 @@ form {
         font-size: 0.8rem;
       }
     }
+
+            .info-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-value {
+            font-size: 1rem;
+            margin-top: 0.25rem;
+        }
+        
+        .permission-item,
+        .user-item {
+            transition: all 0.2s ease;
+        }
+        
+        .permission-item:hover,
+        .user-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+        }
+        
+        .avatar img {
+            object-fit: cover;
+        }
+        
+        .card-header .btn-group {
+            z-index: 10;
+        }

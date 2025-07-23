@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteRoles = exports.createPostRole = exports.createRoles = exports.indexRoles = void 0;
+exports.detailRoles = exports.deleteRoles = exports.createPostRole = exports.createRoles = exports.indexRoles = void 0;
 const roles_model_1 = __importDefault(require("../../model/roles.model"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
 const indexRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -55,3 +55,15 @@ const deleteRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     res.redirect(`${system_config_1.default.prefixAdmin}/roles`);
 });
 exports.deleteRoles = deleteRoles;
+const detailRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idRole = req.params.id;
+    const role = yield roles_model_1.default.findById({
+        _id: idRole,
+        deleted: false
+    });
+    res.render("admin/pages/roles/detail.pug", {
+        titlePage: "Chi tiết vai trò",
+        role: role
+    });
+});
+exports.detailRoles = detailRoles;

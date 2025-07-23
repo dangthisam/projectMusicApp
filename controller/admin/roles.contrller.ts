@@ -59,3 +59,17 @@ export const deleteRoles=async (req:Request , res:Response)=>{
      res.redirect(`${systemConfig.prefixAdmin}/roles`)
 
 }
+
+// [GET]  /admin/detail/:id
+
+export const detailRoles=async (req:Request , res:Response)=>{
+    const idRole=req.params.id;
+    const role=await Role.findById({
+        _id:idRole,
+        deleted:false
+    })
+    res.render("admin/pages/roles/detail.pug",{
+        titlePage:"Chi tiết vai trò",
+        role:role
+    })
+}
