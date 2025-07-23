@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createRoles = exports.indexRoles = void 0;
+exports.deleteRoles = exports.createPostRole = exports.createRoles = exports.indexRoles = void 0;
 const roles_model_1 = __importDefault(require("../../model/roles.model"));
+const system_config_1 = __importDefault(require("../../config/system.config"));
 const indexRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const find = {
         deleted: false
@@ -31,3 +32,26 @@ const createRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     });
 });
 exports.createRoles = createRoles;
+const createPostRole = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const title = req.body.title;
+    const description = req.body.description;
+    const newRoles = new roles_model_1.default({
+        title: title,
+        description: description
+    });
+    yield newRoles.save();
+    req.flash("success", "Thêm vai trò thành công");
+    res.redirect(`${system_config_1.default.prefixAdmin}/roles`);
+});
+exports.createPostRole = createPostRole;
+const deleteRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idRole = req.params.id;
+    yield roles_model_1.default.updateOne({
+        _id: idRole
+    }, {
+        deleted: true
+    });
+    req.flash("success", "Thực hiện xóa role thành công");
+    res.redirect(`${system_config_1.default.prefixAdmin}/roles`);
+});
+exports.deleteRoles = deleteRoles;

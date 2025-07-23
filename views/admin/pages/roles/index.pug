@@ -1,6 +1,7 @@
 extends ../../layout/default.pug
-
+include ../../mixins/alert.pug
 block main
+  +alert(3000)
   .main-wrapper
     //- Header Section
     .header-section.mb-5
@@ -104,9 +105,13 @@ block main
                               )
                                 i.fas.fa-edit
                               a.btn.btn-action.btn-danger(
-                                href=`${prefixAdmin}/roles/delete/${item._id}`
+                                type="button"
+                                data-id=item.id
+                                data-toggle="modal"
+                                data-target="#exampleModal"
+                                button-delete-role
+                                button-delete-product
                                 title="Xóa"
-                                onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
                               )
                                 i.fas.fa-trash-alt
                     else
@@ -117,5 +122,12 @@ block main
                               i.fas.fa-inbox
                             .empty-title Không có dữ liệu
                             .empty-subtitle Chưa có nhóm quyền nào được tạo
+  form(
+    class="d-none"
+    action=""
+    method="POST"
+    id="form-delete-roles"
+    data-path=`${prefixAdmin}/roles/delete`
+   )
 
   

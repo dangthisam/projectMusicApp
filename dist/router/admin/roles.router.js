@@ -5,4 +5,6 @@ const router = (0, express_1.Router)();
 const roles_contrller_1 = require("../../controller/admin/roles.contrller");
 router.get("/", roles_contrller_1.indexRoles);
 router.get("/create", roles_contrller_1.createRoles);
+router.post("/create", roles_contrller_1.createPostRole);
+router.delete("/delete/:id", roles_contrller_1.deleteRoles);
 exports.default = router;
