@@ -25,7 +25,8 @@ block main
             .card.topic-card.h-100
               img.card-img-top(src=topic.avatar, alt=topic.title, loading="lazy")
               .card-body.d-flex.flex-column
-                h5.card-title= topic.title
+                a(href=`/songs/${topic.slug}`)
+                  h5.card-title.fw-bold.mb-3= topic.title
                 .card-text !{topic.description}
                 a.btn.btn-primary.mt-auto(href=`/songs/${topic.slug}`)
                   i.fas.fa-music.me-2
