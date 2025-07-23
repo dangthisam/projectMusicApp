@@ -8,7 +8,9 @@ import {
   deleteRoles,
   detailRoles,
   editRoles,
-  editPatchRole
+  editPatchRole,
+  rolesPermissions,
+  rolesPermissionsPatch
 } from "../../controller/admin/roles.contrller";
 
 router.get("/", indexRoles);
@@ -23,4 +25,8 @@ router.get("/detail/:id" , detailRoles);
 router.get("/edit/:id" , editRoles);
 
 router.patch("/edit/:id" , editPatchRole);
+
+router.get("/permissions", rolesPermissions);
+
+router.patch("/permissions" , rolesPermissionsPatch)
 export default router;

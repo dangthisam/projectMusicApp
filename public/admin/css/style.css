@@ -1889,3 +1889,223 @@ form {
         .card-header .btn-group {
             z-index: 10;
         }
+
+        .permissions-container {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 2rem 0;
+    }
+    
+    .permissions-card {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 24px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      animation: slideUp 0.6s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .header-gradient {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header-gradient::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+    
+    .header-title {
+      color: white;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 2;
+    }
+    
+    .header-icon {
+      background: rgba(255, 255, 255, 0.2);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    .permissions-body {
+      padding: 2.5rem;
+    }
+    
+    .update-button {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(238, 90, 36, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .update-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .update-button:hover::before {
+      left: 100%;
+    }
+    
+    .update-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(238, 90, 36, 0.4);
+    }
+    
+    .permissions-table {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      border: none;
+    }
+    
+    .permissions-table thead th {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      border: none;
+      padding: 1.5rem 1rem;
+      font-weight: 700;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+      position: relative;
+    }
+    
+    .permissions-table thead th::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    }
+    
+    .permissions-table tbody tr {
+      transition: all 0.3s ease;
+      border: none;
+    }
+    
+    .permissions-table tbody tr:hover {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      transform: scale(1.01);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .permissions-table tbody td {
+      padding: 1.2rem 1rem;
+      border: none;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+    
+    .category-header {
+      background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+      font-weight: 700;
+      color: #4338ca;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .custom-checkbox {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      appearance: none;
+      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .custom-checkbox:checked {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-color: #10b981;
+      transform: scale(1.1);
+    }
+    
+    .custom-checkbox:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    
+    .custom-checkbox:hover {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    }
+    
+    .permission-action {
+      font-weight: 600;
+      color: #475569;
+      padding-left: 2rem;
+      position: relative;
+    }
+    
+    .permission-action::before {
+      content: '';
+   
+      left: 0.5rem;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+    
+    .alert-container {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 1000;
+    }

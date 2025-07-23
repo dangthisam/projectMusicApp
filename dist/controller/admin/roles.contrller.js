@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editPatchRole = exports.editRoles = exports.detailRoles = exports.deleteRoles = exports.createPostRole = exports.createRoles = exports.indexRoles = void 0;
+exports.rolesPermissionsPatch = exports.rolesPermissions = exports.editPatchRole = exports.editRoles = exports.detailRoles = exports.deleteRoles = exports.createPostRole = exports.createRoles = exports.indexRoles = void 0;
 const roles_model_1 = __importDefault(require("../../model/roles.model"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
+const songs_model_1 = __importDefault(require("../../model/songs.model"));
 const indexRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const find = {
         deleted: false
@@ -93,3 +94,33 @@ const editPatchRole = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.redirect(`${system_config_1.default.prefixAdmin}/roles`);
 });
 exports.editPatchRole = editPatchRole;
+const rolesPermissions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const find = {
+        deleted: false
+    };
+    const songs = yield songs_model_1.default.find({
+        deleted: false,
+        status: "active"
+    });
+    const role = yield roles_model_1.default.find(find);
+    res.render("admin/pages/roles/permissions.pug", {
+        titlePage: "Phân quyền vai trò",
+        roles: role,
+        songs: songs
+    });
+});
+exports.rolesPermissions = rolesPermissions;
+const rolesPermissionsPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const permissions = JSON.parse(req.body.permissions);
+    for (const item of permissions) {
+        const idRole = item.id;
+        yield roles_model_1.default.updateOne({
+            _id: idRole
+        }, {
+            permissions: item.permissions
+        });
+    }
+    req.flash("success", "Phân quyền vai trò thành công");
+    res.redirect(`${system_config_1.default.prefixAdmin}/roles/permissions`);
+});
+exports.rolesPermissionsPatch = rolesPermissionsPatch;

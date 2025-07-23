@@ -1,0 +1,115 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+
+
+block main
+  .permissions-container
+    +alert(3000)
+    .container.mt-4
+      .permissions-card
+        .header-gradient
+          .text-center
+            .header-icon
+              i.fas.fa-shield-halved
+            h1.header-title.mb-0
+              | Phân quyền
+            if(roles.length > 0)
+              div(data-records=roles)
+        
+        .permissions-body
+          .text-right.mb-4
+            button.update-button(
+              type="submit"
+              button-submit
+            )
+              i.fas.fa-save.me-2
+              | Cập nhật quyền
+          
+          .table-responsive
+            table.table.permissions-table(
+              id="table-permissions"
+              table-permissions
+            )
+              thead
+                tr
+                  th.text-start Tính năng
+                  each role in roles
+                    th.text-center #{role.title}
+              
+               
+                tr.d-none(data-name="id")
+                  td
+                  each item in roles
+                    td.text-center
+                      input(type="text", value=item.id)
+                
+                tr.category-header
+                  td(colspan=roles.length + 1)
+                    i.fas.fa-tags.me-2
+                    | Quản lý chủ đề
+                
+                tr(data-name="topics_view")
+                  td.permission-action Xem
+                  each role in roles
+                    td.text-center
+                      input.custom-checkbox(type="checkbox")
+                
+                tr(data-name="topics_create")
+                  td.permission-action Thêm mới
+                  each role in roles
+                    td.text-center
+                      input.custom-checkbox(type="checkbox")
+                
+                tr(data-name="topics_edit")
+                  td.permission-action Sửa
+                  each role in roles
+                    td.text-center
+                      input.custom-checkbox(type="checkbox")
+                
+                tr(data-name="topics_delete")
+                  td.permission-action Xóa
+                  each role in roles
+                    td.text-center
+                      input.custom-checkbox(type="checkbox")
+         
+                tr.category-header
+                  td(colspan=roles.length + 1)
+                    i.fas.fa-tags.me-2
+                    | Quản lý bài hát
+                
+                tr(data-name="songs_view")
+                  td.permission-action Xem
+                  each role in roles
+                    td.text-center
+                      input.custom-checkbox(type="checkbox")
+                
+                tr(data-name="songs_create")
+                  td.permission-action Thêm mới
+                  each role in roles
+                    td.text-center
+                      input.custom-checkbox(type="checkbox")
+                
+                tr(data-name="songs_edit")
+                  td.permission-action Sửa
+                  each role in roles
+                    td.text-center
+                      input.custom-checkbox(type="checkbox")
+                
+                tr(data-name="songs_delete")
+                  td.permission-action Xóa
+                  each role in roles
+                    td.text-center
+                      input.custom-checkbox(type="checkbox")
+  
+  form#form-change-permissions(
+    class="d-none"
+    method="POST"
+    action=`${prefixAdmin}/roles/permissions?_method=PATCH`
+  )
+    .form-group
+    class="d-none"
+      input.form-control.d-none(
+        type="text"
+        name="permissions"
+      )
+  

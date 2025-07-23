@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Role from "../../model/roles.model";
 import systemConfig from "../../config/system.config";
-
+import Song from "../../model/songs.model";
 //[GET]  /admin/roles
 export const indexRoles =async (req:Request , res :Response) =>{
 
@@ -106,4 +106,45 @@ export const editPatchRole=async (req:Request , res:Response)=>{
 
   req.flash("success" , "Chỉnh sửa vai trò thành công")
   res.redirect(`${systemConfig.prefixAdmin}/roles`)
+}
+
+
+// [GET]  /admin/roles/permissions
+
+export const rolesPermissions=async (req:Request , res:Response)=>{
+const find={
+    deleted:false
+
+}
+const songs= await Song.find({
+    deleted:false,
+    status:"active"
+})
+const role=await Role.find(find);
+    res.render("admin/pages/roles/permissions.pug",{
+        titlePage:"Phân quyền vai trò",
+        roles:role,
+        songs:songs
+    })
+
+}
+
+// [PATCH]  /admin/roles/permissions
+
+export const rolesPermissionsPatch=async (req:Request , res:Response)=>{
+    const permissions =JSON.parse(req.body.permissions);
+   for (const item of permissions){
+    const idRole=item.id;
+    await Role.updateOne({
+        _id:idRole
+    },{
+        permissions:item.permissions
+    
+    })
+   }
+
+   req.flash("success" , "Phân quyền vai trò thành công")
+   res.redirect(`${systemConfig.prefixAdmin}/roles/permissions`)
+
+
 }

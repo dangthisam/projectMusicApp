@@ -10,4 +10,6 @@ router.delete("/delete/:id", roles_contrller_1.deleteRoles);
 router.get("/detail/:id", roles_contrller_1.detailRoles);
 router.get("/edit/:id", roles_contrller_1.editRoles);
 router.patch("/edit/:id", roles_contrller_1.editPatchRole);
+router.get("/permissions", roles_contrller_1.rolesPermissions);
+router.patch("/permissions", roles_contrller_1.rolesPermissionsPatch);
 exports.default = router;
