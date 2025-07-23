@@ -5,29 +5,37 @@ include ../../mixins/alert.pug
 block main
   +alert(3000)
   +alertError(3000)
-
+  
   .container.my-4
     .row
       .col-12
         +box-head(titlePage)
 
-  //- Section title (tùy chọn)
-  .section-title.text-center.mb-4
-    h2 Chủ Đề Âm Nhạc
-    p.text-muted Khám phá những chủ đề nhạc hay nhất
+        //- Section title (tùy chọn)
+      .section-title.text-center.mb-4
+        h2.main-title Chủ Đề Âm Nhạc
+        p.subtitle.text-muted Khám phá những chủ đề nhạc hay nhất
+        .title-decoration
 
-  //- Container chính cho topics
-  .topics-container
-    .container
-      .row.g-4
-        each topic in topics
-          .col-md-6.col-lg-4
-            .card.topic-card.h-100
-              img.card-img-top(src=topic.avatar, alt=topic.title, loading="lazy")
-              .card-body.d-flex.flex-column
-                a(href=`/songs/${topic.slug}`)
-                  h5.card-title.fw-bold.mb-3= topic.title
-                .card-text !{topic.description}
-                a.btn.btn-primary.mt-auto(href=`/songs/${topic.slug}`)
-                  i.fas.fa-music.me-2
-                  | Xem chi tiết
+      //- Container chính cho topics
+      .topics-container
+        .container
+          .row.g-4
+            each topic in topics
+              .col-md-6.col-lg-4
+                .card.topic-card.h-100
+                  .card-image-wrapper
+                    img.card-img-top(src=topic.avatar, alt=topic.title, loading="lazy")
+                    .image-overlay
+                      .play-icon
+                        i.fas.fa-play
+                  .card-body.d-flex.flex-column
+                    a.topic-link(href=`/songs/${topic.slug}`)
+                      h5.card-title.fw-bold.mb-3= topic.title
+                    .card-text.flex-grow-1 !{topic.description}
+                    a.btn.btn-primary.mt-auto.animated-btn(href=`/songs/${topic.slug}`)
+                      i.fas.fa-music.me-2
+                      span Xem chi tiết
+
+
+      

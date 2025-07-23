@@ -1,0 +1,121 @@
+extends ../../layout/default.pug
+
+block main
+  .main-wrapper
+    //- Header Section
+    .header-section.mb-5
+      .header-background
+      .header-content
+        .container
+          .row.align-items-center
+            .col-md-8
+              .page-title-wrapper
+                .icon-wrapper
+                  i.fas.fa-shield-alt
+                h1.page-title Quản lý nhóm quyền
+                p.page-subtitle Tổng quan và quản lý các vai trò trong hệ thống
+            .col-md-4.text-right
+              .header-stats
+                .stat-item
+                  .stat-number= records.length
+                  .stat-label Tổng nhóm quyền
+
+    //- Action Bar
+    .action-bar.mb-4
+      .container
+        .row.align-items-center
+          .col-md-8
+            .breadcrumb-wrapper
+              nav(aria-label="breadcrumb")
+                ol.breadcrumb.custom-breadcrumb
+                  li.breadcrumb-item
+                    a(href="#") Trang chủ
+                  li.breadcrumb-item.active Nhóm quyền
+          .col-md-4.text-right
+            a.btn.btn-primary.btn-create(
+              href=`${prefixAdmin}/roles/create`
+            )
+              .btn-content
+                i.fas.fa-plus.btn-icon
+                span Thêm mới
+              .btn-ripple
+
+    //- Main Content
+    .content-wrapper
+      .container
+        .data-card
+          .card-header-custom
+            .header-left
+              h3.card-title
+                i.fas.fa-table.mr-2
+                | Danh sách nhóm quyền
+            .header-right
+              .search-wrapper
+                input.form-control.search-input(
+                  type="text"
+                  placeholder="Tìm kiếm..."
+                  id="searchInput"
+                )
+                i.fas.fa-search.search-icon
+
+          .card-body-custom
+            .table-wrapper
+              .table-responsive
+                table.data-table
+                  thead
+                    tr
+                      th.text-center
+                        .th-content STT
+                      th
+                        .th-content
+                          i.fas.fa-tag.mr-2
+                          | Tên nhóm quyền
+                      th
+                        .th-content
+                          i.fas.fa-align-left.mr-2
+                          | Mô tả
+                      th.text-center
+                        .th-content
+                          i.fas.fa-cogs.mr-2
+                          | Hành động
+                  tbody
+                    if(records.length > 0)
+                      each item, index in records
+                        tr.table-row(data-index=index)
+                          td.text-center
+                            .index-badge #{index + 1}
+                          td
+                            .role-info
+                              .role-name #{item.title}
+                              .role-meta
+                                span.badge.badge-outline ID: #{item._id.toString().slice(-6)}
+                          td
+                            .description-text #{item.description}
+                          td.text-center
+                            .action-buttons
+                              a.btn.btn-action.btn-info(
+                                href=`${prefixAdmin}/roles/detail/${item._id}`
+                                title="Xem chi tiết"
+                              )
+                                i.fas.fa-eye
+                              a.btn.btn-action.btn-warning(
+                                href=`${prefixAdmin}/roles/edit/${item._id}`
+                                title="Chỉnh sửa"
+                              )
+                                i.fas.fa-edit
+                              a.btn.btn-action.btn-danger(
+                                href=`${prefixAdmin}/roles/delete/${item._id}`
+                                title="Xóa"
+                                onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+                              )
+                                i.fas.fa-trash-alt
+                    else
+                      tr
+                        td.empty-state(colspan="4")
+                          .empty-content
+                            .empty-icon
+                              i.fas.fa-inbox
+                            .empty-title Không có dữ liệu
+                            .empty-subtitle Chưa có nhóm quyền nào được tạo
+
+  
