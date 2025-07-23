@@ -1,8 +1,11 @@
 import { Router } from "express";
-import multer from "multer";
+
 const router = Router();
-import {indexRoles} from "../../controller/admin/roles.contrller";
+import {
+  indexRoles,
+  createRoles,
+} from "../../controller/admin/roles.contrller";
 
 router.get("/", indexRoles);
-
+router.get("/create", createRoles);
 export default router;

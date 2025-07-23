@@ -1,0 +1,81 @@
+extends ../../layout/default.pug
+
+block main
+    .bg-gradient-primary-to-secondary.py-4.mb-4.rounded.shadow
+        h1.mb-0.text-primary.text-center.font-weight-bold(style="text-shadow:2px 2px 8px #aaa;letter-spacing:2px;") 
+            i.fas.fa-user-tag.mr-2
+            | #{titlePage}
+
+    .row.justify-content-center
+        .col-md-8.col-lg-6
+            .card.shadow
+                .card-header.bg-primary.text-white
+                    h5.mb-0
+                        i.fas.fa-plus-circle.mr-2
+                        | Thêm vai trò mới
+                
+                .card-body
+                    form(
+                        action=`${prefixAdmin}/roles/create`
+                        method="POST"
+                        id="roleForm"
+                        novalidate
+                    )
+                        .form-group
+                            label.required(for="title") 
+                                i.fas.fa-tag.mr-1
+                                | Tên vai trò
+                            input(
+                                type="text"
+                                class="form-control"
+                                id="title"
+                                name="title"
+                                placeholder="Nhập tên vai trò..."
+                                required
+                                minlength="2"
+                                maxlength="50"
+                            )
+                            .invalid-feedback Vui lòng nhập tên vai trò hợp lệ (2-50 ký tự)
+
+                        .form-group
+                            label(for="description") 
+                                i.fas.fa-info-circle.mr-1
+                                | Mô tả
+                            textarea(
+                                class="form-control"
+                                id="description"
+                                name="description"
+                                rows="3"
+                                placeholder="Nhập mô tả cho vai trò..."
+                                maxlength="200"
+                            )
+                            small.form-text.text-muted Tối đa 200 ký tự
+                            .invalid-feedback Mô tả quá dài (tối đa 200 ký tự)
+
+                        .form-group
+                            label(for="permissions") 
+                                i.fas.fa-shield-alt.mr-1
+                                | Quyền hạn
+                            .form-check-container(style="max-height: 200px; overflow-y: auto; border: 1px solid #dee2e6; border-radius: 0.25rem; padding: 10px;")
+                                each permission in permissions || []
+                                    .form-check
+                                        input(
+                                            type="checkbox"
+                                            class="form-check-input"
+                                            id=`permission_${permission.id}`
+                                            name="permissions[]"
+                                            value=permission.id
+                                        )
+                                        label.form-check-label(for=`permission_${permission.id}`)
+                                            | #{permission.name}
+                                            if permission.description
+                                                small.text-muted.d-block #{permission.description}
+
+                        .form-group.mb-0
+                            .d-flex.justify-content-between
+                                a.btn.btn-secondary(href=`${prefixAdmin}/roles`)
+                                    i.fas.fa-arrow-left.mr-1
+                                    | Quay lại
+                                button.btn.btn-primary(type="submit")
+                                    i.fas.fa-save.mr-1
+                                    | Tạo vai trò

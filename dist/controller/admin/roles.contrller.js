@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.indexRoles = void 0;
+exports.createRoles = exports.indexRoles = void 0;
 const roles_model_1 = __importDefault(require("../../model/roles.model"));
 const indexRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const find = {
@@ -25,3 +25,9 @@ const indexRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     });
 });
 exports.indexRoles = indexRoles;
+const createRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.render("admin/pages/roles/create.pug", {
+        titlePage: "Tạo vai trò"
+    });
+});
+exports.createRoles = createRoles;
