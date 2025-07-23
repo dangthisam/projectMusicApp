@@ -73,3 +73,37 @@ export const detailRoles=async (req:Request , res:Response)=>{
         role:role
     })
 }
+
+
+//[GET] /admin/roles/edit/:id
+
+export const editRoles=async (req:Request , res:Response)=>{
+    const idRole=req.params.id;
+    const role=await Role.findById({
+        _id:idRole,
+        deleted:false
+    })
+  res.render("admin/pages/roles/edit.pug",{
+    titlePage:"Chỉnh sửa vai trò",
+    role:role
+  } )
+
+}
+
+//[PATCH]  /admin/roles/edit/:id
+
+export const editPatchRole=async (req:Request , res:Response)=>{
+  const idRole=req.params.id;
+  const title=req.body.title;
+  const description=req.body.description;
+
+  await Role.updateOne({
+    _id:idRole
+  },{
+    title:title,
+    description:description
+  })
+
+  req.flash("success" , "Chỉnh sửa vai trò thành công")
+  res.redirect(`${systemConfig.prefixAdmin}/roles`)
+}

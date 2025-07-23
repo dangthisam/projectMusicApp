@@ -6,7 +6,9 @@ import {
   createRoles,
   createPostRole,
   deleteRoles,
-  detailRoles
+  detailRoles,
+  editRoles,
+  editPatchRole
 } from "../../controller/admin/roles.contrller";
 
 router.get("/", indexRoles);
@@ -17,4 +19,8 @@ router.post("/create" , createPostRole);
 router.delete("/delete/:id" , deleteRoles); 
 
 router.get("/detail/:id" , detailRoles);
+
+router.get("/edit/:id" , editRoles);
+
+router.patch("/edit/:id" , editPatchRole);
 export default router;

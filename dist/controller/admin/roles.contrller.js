@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.detailRoles = exports.deleteRoles = exports.createPostRole = exports.createRoles = exports.indexRoles = void 0;
+exports.editPatchRole = exports.editRoles = exports.detailRoles = exports.deleteRoles = exports.createPostRole = exports.createRoles = exports.indexRoles = void 0;
 const roles_model_1 = __importDefault(require("../../model/roles.model"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
 const indexRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -67,3 +67,29 @@ const detailRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     });
 });
 exports.detailRoles = detailRoles;
+const editRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idRole = req.params.id;
+    const role = yield roles_model_1.default.findById({
+        _id: idRole,
+        deleted: false
+    });
+    res.render("admin/pages/roles/edit.pug", {
+        titlePage: "Chỉnh sửa vai trò",
+        role: role
+    });
+});
+exports.editRoles = editRoles;
+const editPatchRole = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idRole = req.params.id;
+    const title = req.body.title;
+    const description = req.body.description;
+    yield roles_model_1.default.updateOne({
+        _id: idRole
+    }, {
+        title: title,
+        description: description
+    });
+    req.flash("success", "Chỉnh sửa vai trò thành công");
+    res.redirect(`${system_config_1.default.prefixAdmin}/roles`);
+});
+exports.editPatchRole = editPatchRole;
