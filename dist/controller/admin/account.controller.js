@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postCreateAccount = exports.createAccount = exports.indexAccount = void 0;
+exports.editAccountPatch = exports.editAccount = exports.postCreateAccount = exports.createAccount = exports.indexAccount = void 0;
 const account_model_1 = __importDefault(require("../../model/account.model"));
 const roles_model_1 = __importDefault(require("../../model/roles.model"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
@@ -73,3 +73,50 @@ const postCreateAccount = (req, res) => __awaiter(void 0, void 0, void 0, functi
     res.redirect(`${system_config_1.default.prefixAdmin}/accounts`);
 });
 exports.postCreateAccount = postCreateAccount;
+const editAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idAccount = req.params.id;
+    const account = yield account_model_1.default.findById({
+        _id: idAccount,
+        deleted: false,
+        status: "active"
+    });
+    const roles = yield roles_model_1.default.find({
+        deleted: false,
+    });
+    res.render("admin/pages/account/edit.pug", {
+        titlePage: "Chỉnh sửa tài khoản",
+        account: account,
+        roles: roles
+    });
+});
+exports.editAccount = editAccount;
+const editAccountPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idAccount = req.params.id;
+    const emailExist = yield account_model_1.default.findOne({
+        email: req.body.email,
+        _id: { $ne: idAccount },
+        deleted: false,
+        status: "active"
+    });
+    if (!req.file) {
+        delete req.body.avatar;
+    }
+    if (emailExist) {
+        req.flash("error", "Email đã tồn tại");
+        res.redirect(`${system_config_1.default.prefixAdmin}/accounts/edit/${idAccount}`);
+    }
+    else {
+        if (req.body.password) {
+            req.body.password = (0, md5_1.default)(req.body.password);
+        }
+        else {
+            delete req.body.password;
+        }
+        yield account_model_1.default.updateOne({
+            _id: idAccount
+        }, req.body);
+        req.flash("success", "Chỉnh sửa tài khoản thành công");
+        res.redirect(`${system_config_1.default.prefixAdmin}/accounts`);
+    }
+});
+exports.editAccountPatch = editAccountPatch;

@@ -3,7 +3,9 @@ const router = Router();
 import {
   indexAccount,
   createAccount,
-  postCreateAccount
+  postCreateAccount,
+  editAccount,
+  editAccountPatch
 } from "../../controller/admin/account.controller";
 
 import multer from "multer";
@@ -21,6 +23,13 @@ router.post("/create" ,
     postCreateAccount
 )
 
+router.get("/edit/:id" , editAccount);
+
+router.patch("/edit/:id" , 
+  upload.single("avatar"),
+  uploadMiddleware.uploadSingle,
+
+  editAccountPatch);
 
 
 export default router;

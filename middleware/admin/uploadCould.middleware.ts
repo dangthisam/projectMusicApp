@@ -47,7 +47,7 @@ const uploadToCloudinary=async (buffer:any)=>{
 export const uploadSingle = async (req: Request, res: Response, next: NextFunction) => {
   try {
     if (!req['file'] || !req['file'].buffer) {
-      return res.status(400).json({ error: 'No file provided' });
+      return next();
     }
 
     const result = await uploadToCloudinary(req['file'].buffer);

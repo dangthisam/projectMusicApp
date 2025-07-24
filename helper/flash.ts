@@ -7,7 +7,7 @@ declare global {
       flash(type: string, message?: string): string[];
       session: any;
       user:any
-    
+    file:any
     }
   }
 }

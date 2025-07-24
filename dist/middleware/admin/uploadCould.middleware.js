@@ -44,7 +44,7 @@ const uploadToCloudinary = (buffer) => __awaiter(void 0, void 0, void 0, functio
 const uploadSingle = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!req['file'] || !req['file'].buffer) {
-            return res.status(400).json({ error: 'No file provided' });
+            return next();
         }
         const result = yield uploadToCloudinary(req['file'].buffer);
         req.body[req['file'].fieldname] = result;

@@ -85,3 +85,71 @@ res.redirect(`${systemConfig.prefixAdmin}/accounts`)
 
    
 }
+
+//[GET]  /admin/account/edit/:id
+
+export const editAccount =async (req: Request, res: Response)=>{
+    const idAccount=req.params.id;
+    const account =await Account.findById({
+        _id:idAccount,
+        deleted:false,
+        status:"active"
+    })
+
+    const roles=await Role.find({
+        deleted:false,
+
+    })
+
+    res.render("admin/pages/account/edit.pug",{
+        titlePage:"Chỉnh sửa tài khoản",
+        account:account,
+        roles:roles
+    })
+
+}
+
+//  [GET] /admin/account/edit/:id
+
+export const editAccountPatch =async (req: Request, res: Response)=>{
+    const idAccount=req.params.id;
+ const emailExist =await Account.findOne({
+    email:req.body.email,
+    _id:{$ne:idAccount},
+    deleted:false,
+    status:"active"
+ 
+ })
+
+ 
+if(!req.file){
+    delete req.body.avatar;
+}
+ if(emailExist){
+    req.flash("error" , "Email đã tồn tại")
+    res.redirect(`${systemConfig.prefixAdmin}/accounts/edit/${idAccount}`)
+
+ }
+
+ else{
+    if(req.body.password){
+        req.body.password=md5(req.body.password)
+    
+    }else{
+        delete req.body.password;
+    
+    }
+
+
+
+    await Account.updateOne({
+        _id:idAccount
+    },req.body)
+
+    req.flash("success" , "Chỉnh sửa tài khoản thành công")
+    res.redirect(`${systemConfig.prefixAdmin}/accounts`)
+ 
+ }
+
+
+}
