@@ -1,14 +1,18 @@
 .sider
   .inner-menu
     ul
+      
       li
         a(href=`${prefixAdmin}/dashboard`) Tổng quan
-      li
-        a(href=`${prefixAdmin}/topics`) Quản lý chủ đề
-      li
-        a(href=`${prefixAdmin}/songs`) Quản lý bài hát
+      if(role.permissions.includes("topics_view"))
+        li
+          a(href=`${prefixAdmin}/topics`) Quản lý chủ đề
+      if(role.permissions.includes("songs_view"))
+        li
+          a(href=`${prefixAdmin}/songs`) Quản lý bài hát
       li
         a(href=`${prefixAdmin}/singers`) Quản lý ca sĩ
+      
       li
         a(href=`${prefixAdmin}/roles`) Quản lý nhóm quyền
       li
