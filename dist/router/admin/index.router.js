@@ -10,6 +10,7 @@ const songs_router_1 = __importDefault(require("./songs.router"));
 const upload_image_router_1 = __importDefault(require("./upload-image.router"));
 const roles_router_1 = __importDefault(require("./roles.router"));
 const account_router_1 = __importDefault(require("./account.router"));
+const auth_router_1 = __importDefault(require("./auth.router"));
 const mainAdminRouter = (app) => {
     const PATH_ADMIN = `${system_config_1.default.prefixAdmin}`;
     app.use(`${PATH_ADMIN}/dashboard`, dashboard_router_1.default);
@@ -18,5 +19,6 @@ const mainAdminRouter = (app) => {
     app.use(`${PATH_ADMIN}/upload-image`, upload_image_router_1.default);
     app.use(`${PATH_ADMIN}/roles`, roles_router_1.default);
     app.use(`${PATH_ADMIN}/accounts`, account_router_1.default);
+    app.use(`${PATH_ADMIN}/auth`, auth_router_1.default);
 };
 exports.default = mainAdminRouter;

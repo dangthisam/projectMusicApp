@@ -6,6 +6,8 @@ import songsRouter from "./songs.router"
 import uploadImageRouter from "./upload-image.router"
 import rolesRouter from "./roles.router";
 import accountRouter from "./account.router"
+import authRouter from "./auth.router";
+
 const mainAdminRouter =(app:Express ):void =>{
      const PATH_ADMIN =`${systemConfig.prefixAdmin}`;
     app.use( `${PATH_ADMIN}/dashboard` , dashboardRouter)
@@ -14,6 +16,7 @@ const mainAdminRouter =(app:Express ):void =>{
 app.use(`${PATH_ADMIN}/upload-image` , uploadImageRouter)
 app.use(`${PATH_ADMIN}/roles` , rolesRouter)
 app.use(`${PATH_ADMIN}/accounts` , accountRouter)
+app.use(`${PATH_ADMIN}/auth` , authRouter)
 }
 
 export default mainAdminRouter;

@@ -1,0 +1,120 @@
+extends ../../layout/default-layout.pug
+include ../../mixins/alert.pug
+include ../../mixins/box-header/pug
+block main
+  +alertError(5000)
+  
+  // Background với gradient và particles
+  .login-wrapper(style="min-height: 100vh; background: linear-gradient(135deg,rgb(102, 234, 111) 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; padding: 20px; position: relative; overflow: hidden;")
+    
+    // Animated Background Elements
+    .bg-animation
+      .floating-shapes
+        .shape.shape-1
+        .shape.shape-2  
+        .shape.shape-3
+        .shape.shape-4
+        .shape.shape-5
+    
+    .container(style="position: relative; z-index: 10;")
+      .row.justify-content-center
+        .col-lg-5.col-md-7.col-sm-9
+          // Card chính với hiệu ứng đẹp
+          .card.login-card.shadow-xl.border-0
+            // Header với wave effect
+            .card-header.login-header
+              .wave-bg
+              .header-content
+                .login-icon.mb-3
+                  .icon-inner
+                    i.fas.fa-shield-alt
+                  .icon-glow
+                h2.login-title.mb-2 Quản Trị Viên
+                p.login-subtitle.mb-0 Đăng nhập để truy cập hệ thống
+            
+            .card-body.login-body.p-5
+              // Form đăng nhập
+              form.login-form(
+                action=`${prefixAdmin}/auth/login`
+                method="POST"
+              )
+                .form-group.form-floating.mb-4
+                  .input-wrapper
+                    .input-icon
+                      i.fas.fa-envelope
+                    input.form-control.modern-input(
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder=" "
+                      required
+                    )
+                    label.floating-label(for="email") Địa chỉ Email
+                    .input-border
+                    .input-focus-bg
+
+                .form-group.form-floating.mb-4  
+                  .input-wrapper
+                    .input-icon
+                      i.fas.fa-lock
+                    input.form-control.modern-input(
+                      type="password"
+                      id="password"
+                      name="password"
+                      placeholder=" "
+                      required
+                    )
+                    label.floating-label(for="password") Mật khẩu
+                    .password-toggle
+                      i.fas.fa-eye
+                    .input-border
+                    .input-focus-bg
+
+                // Remember me với custom design
+                .form-group.remember-section.mb-4
+                  .custom-checkbox-wrapper
+                    input.custom-checkbox(type="checkbox" id="remember")
+                    label.checkbox-label(for="remember")
+                      .checkbox-box
+                        i.fas.fa-check.checkbox-icon
+                      .checkbox-text Ghi nhớ đăng nhập
+
+                // Nút đăng nhập với loading effect
+                .form-group.mb-4
+                  button.btn.login-btn.w-100(type="submit")
+                    .btn-bg
+                    .btn-content
+                      .btn-icon
+                        i.fas.fa-sign-in-alt
+                      .btn-text Đăng Nhập
+                    .btn-loading
+                      .spinner
+                    .btn-ripple
+              
+              // Divider với style đẹp
+              .divider.my-4
+                .divider-line
+                .divider-text hoặc
+                .divider-line
+              
+              // Social login buttons (optional)
+              .social-login.mb-4
+                button.btn.social-btn.google-btn(type="button")
+                  .social-icon
+                    i.fab.fa-google
+                  .social-text Đăng nhập với Google
+                
+                button.btn.social-btn.microsoft-btn(type="button")
+                  .social-icon  
+                    i.fab.fa-microsoft
+                  .social-text Đăng nhập với Microsoft
+              
+              // Footer
+              .login-footer.text-center.mt-4
+                .security-badge.mb-3
+                  .security-icon
+                    i.fas.fa-shield-check
+                  .security-text Hệ thống bảo mật cao
+                .copyright
+                  small © 2025 Admin Panel. All rights reserved.
+
