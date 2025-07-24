@@ -1,6 +1,6 @@
 extends ../../layout/default-layout.pug
 include ../../mixins/alert.pug
-include ../../mixins/box-header/pug
+include ../../mixins/box-header.pug
 block main
   +alertError(5000)
   
@@ -47,7 +47,7 @@ block main
                       id="email"
                       name="email"
                       placeholder=" "
-                      required
+            
                     )
                     label.floating-label(for="email") Địa chỉ Email
                     .input-border
@@ -62,7 +62,7 @@ block main
                       id="password"
                       name="password"
                       placeholder=" "
-                      required
+                     
                     )
                     label.floating-label(for="password") Mật khẩu
                     .password-toggle
