@@ -1,0 +1,196 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/box-header.pug
+
+block main
+  +alertError(5000)
+  +alert(2000)
+
+  // Hero Header Section
+  .hero-header.position-relative.mb-5
+    .bg-gradient-modern.py-5.px-4.rounded-3xl.shadow-xl.overflow-hidden
+      .hero-particles
+      .container-fluid.position-relative(style="z-index: 2;")
+        .row.justify-content-center
+          .col-md-8.text-center
+            .hero-content.text-white
+              .hero-icon.mx-auto.mb-4
+                i.fas.fa-user-plus
+              h1.hero-title.mb-3(
+                style="font-size: 3rem; font-weight: 800; letter-spacing: 2px; text-shadow: 3px 3px 15px rgba(0,0,0,0.3);"
+              )
+                +box-head(titlePage)
+              p.hero-subtitle.mb-0.opacity-90.h5 Tạo tài khoản mới cho hệ thống
+
+  // Main Form Card
+  .form-container.mb-5
+    .card.border-0.shadow-2xl.rounded-3xl.overflow-hidden
+      .card-header.bg-gradient-header.border-0.py-4
+        .text-center
+          .form-header-icon.mx-auto.mb-3
+            i.fas.fa-user-circle
+          h3.text-white.font-weight-700.mb-2 Thông tin tài khoản
+          p.text-white-75.mb-0 Vui lòng điền đầy đủ thông tin bên dưới
+
+      .card-body.p-5
+        form(
+          action=`${prefixAdmin}/accounts/create`
+          method="POST"
+          enctype="multipart/form-data"
+          class="modern-form"
+        )
+          .row
+            // Left Column
+            .col-lg-6
+              // Username Field
+              .form-group-modern.mb-4
+                .input-group-wrapper
+                  .input-icon
+                    i.fas.fa-user-tag
+                  label.floating-label(for="username") Tên đăng nhập *
+                  input.form-control-modern(
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    placeholder=" "
+                  )
+
+              // Email Field
+              .form-group-modern.mb-4
+                .input-group-wrapper
+                  .input-icon
+                    i.fas.fa-envelope
+                  label.floating-label(for="email") Email *
+                  input.form-control-modern(
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    placeholder=" "
+                  )
+                  .input-line
+
+              // Password Field
+              .form-group-modern.mb-4
+                .input-group-wrapper
+                  .input-icon
+                    i.fas.fa-lock
+                  label.floating-label(for="password") Mật khẩu *
+                  input.form-control-modern(
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    placeholder=" "
+                  )
+                  .password-toggle
+                    i.fas.fa-eye
+                  .input-line
+
+              // Phone Field
+              .form-group-modern.mb-4
+                .input-group-wrapper
+                  .input-icon
+                    i.fas.fa-phone
+                  label.floating-label(for="phone") Số điện thoại *
+                  input.form-control-modern(
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    required
+                    placeholder=" "
+                  )
+                  .input-line
+
+            // Right Column
+            .col-lg-6
+              // Avatar Upload
+              .form-group-modern.mb-4(upload-image)
+                .upload-container
+                  .upload-header
+                    .upload-icon
+                      i.fas.fa-image
+                    label.upload-label(for="avatar") Ảnh đại diện
+                  .upload-area
+                    input.upload-input(
+                      type="file"
+                      id="avatar"
+                      name="avatar"
+                      accept="image/*"
+                      upload-image-input
+                    )
+                    .upload-content
+                      .upload-icon-large
+                        i.fas.fa-cloud-upload-alt
+                      .upload-text Kéo thả ảnh vào đây hoặc
+                      .upload-button Chọn file
+                    img.image-preview.d-none(
+                      src=""
+                      upload-image-preview
+                      style="max-width: 100%; border-radius: 1rem; box-shadow: 0 8px 25px rgba(0,0,0,0.1);"
+                    )
+
+              // Role Selection
+              .form-group-modern.mb-4
+                .select-wrapper
+                  .input-icon
+                    i.fas.fa-shield-alt
+                  label.floating-label(for="role_id") Phân quyền *
+                  select.form-control-modern(name="role_id" id="role_id" required)
+                    option(value="" disabled selected) -- Chọn quyền hạn --
+                    if roles && roles.length > 0
+                      each role in roles
+                        option(value=role.id)= role.title
+                  .select-arrow
+                    i.fas.fa-chevron-down
+                  .input-line
+
+              // Status Selection
+              .form-group-modern.mb-4
+                .status-section
+                  .status-header
+                    .status-icon
+                      i.fas.fa-toggle-on
+                    h6.status-title Trạng thái tài khoản
+                  .status-options
+                    .status-option
+                      input.status-radio(
+                        type="radio"
+                        id="statusActive"
+                        name="status"
+                        value="active"
+                        checked
+                      )
+                      label.status-label.status-active(for="statusActive")
+                        .status-indicator
+                        .status-content
+                          .status-name HOẠT ĐỘNG
+                          .status-desc Tài khoản có thể đăng nhập
+
+                    .status-option
+                      input.status-radio(
+                        type="radio"
+                        id="statusInactive"
+                        name="status"
+                        value="inactive"
+                      )
+                      label.status-label.status-inactive(for="statusInactive")
+                        .status-indicator
+                        .status-content
+                          .status-name TẠM DỪNG
+                          .status-desc Tài khoản bị vô hiệu hóa
+
+          // Submit Button
+          .form-actions.mt-5
+            .row
+              .col-md-6.mb-3
+                button.btn.btn-cancel.btn-lg.w-100(type="button" onclick="history.back()")
+                  i.fas.fa-arrow-left.mr-2
+                  span Quay lại
+              .col-md-6.mb-3
+                button.btn.btn-submit.btn-lg.w-100(type="submit")
+                  .btn-content
+                    i.fas.fa-save.mr-2
+                    span Tạo tài khoản
+                  .btn-shine
