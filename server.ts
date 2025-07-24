@@ -17,6 +17,7 @@ import mainV1Router from "./router/client/index.router";
 import mainAdminRouter from "./router/admin/index.router";
 import systemConfig from "./config/system.config";
 import middlewareUser from "./middleware/client/user.middleware";
+import * as middlewareAccount from "./middleware/admin/auth.middleware"
 
 // ===== THỨ TỰ MIDDLEWARE ĐÚNG =====
 // 1. Body parsing middleware TRƯỚC
@@ -56,6 +57,7 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 // 8. USER MIDDLEWARE - SAU KHI ĐÃ CẤU HÌNH COOKIE PARSER
 app.use(middlewareUser);
+// app.use(middlewareAccount.checkLoginSuccess);
 
 // 9. Routes cuối cùng
 mainAdminRouter(app);

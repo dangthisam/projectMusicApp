@@ -6,9 +6,16 @@ import systemConfig from "../../config/system.config";
 
 //  [GET]   /admin/auth/login
 export const indexRouterAuth=async (req:Request , res:Response)=>{
-    res.render("admin/pages/auth/login.pug",{
+
+    if(req.cookies.token){
+        res.redirect(`${systemConfig.prefixAdmin}/dashboard`)
+        return;
+    }
+   else{
+     res.render("admin/pages/auth/login.pug",{
         titlePage:"Đăng nhập"
     })
+   }
 
 }
 

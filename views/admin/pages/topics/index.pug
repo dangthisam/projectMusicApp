@@ -81,7 +81,8 @@ block main
               th.text-center(style="width: 100px;") Hình ảnh
               th.text-center(style="width: 250px;") Tiêu đề
               th.text-center(style="width: 120px;") Vị trí
-              th.text-center(style="width: 100px;") Trạng thái
+              if(role.permissions.includes("topics_edit"))
+               th.text-center(style="width: 100px;") Trạng thái
               th.text-center(style="width: 180px;") Ngày tạo
               th.text-center(style="width: 180px;") Ngày cập nhật
               th.text-center(style="width: 200px;") Hành động
@@ -143,26 +144,27 @@ block main
                     )
                   
                   //- Trạng thái
-                  td.text-center
-                    if item.status == "active"
-                      a.btn.btn-outline-success.btn-sm(
-                          href="javascript:;"
-                          data-id=item.id
-                          data-status=item.status
-                          button-change-status
-                        )
-                          i.fas.fa-solid.fa-toggle-on.mr-1
-                          | On
-                        
-                    else
-                      a.btn.btn-outline-danger.btn-sm(
-                          href="javascript:;"
-                          data-id=item.id
-                          data-status=item.status
-                          button-change-status
-                        )
-                          i.fas.fa-toggle-off.mr-1
-                          | OFF
+                  if(role.permissions.includes("topics_edit"))
+                    td.text-center
+                      if item.status == "active"
+                        a.btn.btn-outline-success.btn-sm(
+                            href="javascript:;"
+                            data-id=item.id
+                            data-status=item.status
+                            button-change-status
+                          )
+                            i.fas.fa-solid.fa-toggle-on.mr-1
+                            | On
+                          
+                      else
+                        a.btn.btn-outline-danger.btn-sm(
+                            href="javascript:;"
+                            data-id=item.id
+                            data-status=item.status
+                            button-change-status
+                          )
+                            i.fas.fa-toggle-off.mr-1
+                            | OFF
                   
                   //- Ngày tạo
                   td.text-center

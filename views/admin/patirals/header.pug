@@ -1,4 +1,5 @@
 header.header
+
   .container-fluid
     .row.align-items-center
       .col-3
@@ -15,11 +16,12 @@ header.header
               aria-expanded="false"
             )
               i.fa-solid.fa-user.me-1
-              | Đặng Thị Thùy
+              | #{account.username}
             ul.dropdown-menu.dropdown-menu-end(aria-labelledby="userDropdown")
               li.px-3.py-2
-                div.fw-semibold.mb-1 Tài khoản: Dang Thi Thuy
-                div.text-muted Email: youremail@example.com
+                div.fw-semibold.mb-1 Tài khoản: #{account.username}
+                div.text-muted Email: #{account.email}
+                div.text-muted Quyền hạn : #{role.title}
               li
                 hr.dropdown-divider
               li

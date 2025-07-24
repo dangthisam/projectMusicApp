@@ -17,9 +17,15 @@ const md5_1 = __importDefault(require("md5"));
 const account_model_1 = __importDefault(require("../../model/account.model"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
 const indexRouterAuth = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.render("admin/pages/auth/login.pug", {
-        titlePage: "Đăng nhập"
-    });
+    if (req.cookies.token) {
+        res.redirect(`${system_config_1.default.prefixAdmin}/dashboard`);
+        return;
+    }
+    else {
+        res.render("admin/pages/auth/login.pug", {
+            titlePage: "Đăng nhập"
+        });
+    }
 });
 exports.indexRouterAuth = indexRouterAuth;
 const adminLoginPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
