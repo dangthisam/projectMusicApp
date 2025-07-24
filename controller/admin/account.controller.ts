@@ -109,7 +109,7 @@ export const editAccount =async (req: Request, res: Response)=>{
 
 }
 
-//  [GET] /admin/account/edit/:id
+//  [PATCH] /admin/account/edit/:id
 
 export const editAccountPatch =async (req: Request, res: Response)=>{
     const idAccount=req.params.id;
@@ -153,3 +153,33 @@ if(!req.file){
 
 
 }
+
+//[DELETE]  /admin/account/delete/:id
+
+export const deleteAccount=async (req:Request , res:Response)=>{
+    const idAccount=req.params.id;
+
+    const find={
+        _id:idAccount,
+        deleted:false,
+        status:"active"
+    }
+
+    const account=await Account.findOne(find);
+    if(!account){
+        req.flash("error" , "Không tìm thấy tài khoản")
+        res.redirect(`${systemConfig.prefixAdmin}/accounts`)
+
+    }else{
+        await Account.updateOne({
+            _id:idAccount
+        },{
+            deleted:true
+        })
+
+        req.flash("success" , "Xóa tài khoản thành công")
+        res.redirect(`${systemConfig.prefixAdmin}/accounts`)
+
+    }
+}
+

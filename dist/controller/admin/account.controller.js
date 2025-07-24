@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editAccountPatch = exports.editAccount = exports.postCreateAccount = exports.createAccount = exports.indexAccount = void 0;
+exports.deleteAccount = exports.editAccountPatch = exports.editAccount = exports.postCreateAccount = exports.createAccount = exports.indexAccount = void 0;
 const account_model_1 = __importDefault(require("../../model/account.model"));
 const roles_model_1 = __importDefault(require("../../model/roles.model"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
@@ -120,3 +120,26 @@ const editAccountPatch = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.editAccountPatch = editAccountPatch;
+const deleteAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idAccount = req.params.id;
+    const find = {
+        _id: idAccount,
+        deleted: false,
+        status: "active"
+    };
+    const account = yield account_model_1.default.findOne(find);
+    if (!account) {
+        req.flash("error", "Không tìm thấy tài khoản");
+        res.redirect(`${system_config_1.default.prefixAdmin}/accounts`);
+    }
+    else {
+        yield account_model_1.default.updateOne({
+            _id: idAccount
+        }, {
+            deleted: true
+        });
+        req.flash("success", "Xóa tài khoản thành công");
+        res.redirect(`${system_config_1.default.prefixAdmin}/accounts`);
+    }
+});
+exports.deleteAccount = deleteAccount;

@@ -203,8 +203,17 @@ block main
                           data-toggle="modal"
                           data-target="#exampleModal"
                           button-delete
-                          button-delete-product
+                          button-delete-account
                           title="Xóa tài khoản"
                           data-tooltip="Xóa"
                         )
                           i.fas.fa-trash-alt
+                     
+
+    form(
+    class="d-none"
+    action=""
+    method="POST"
+    id="form-delete-account"
+    data-path=`${prefixAdmin}/accounts/delete`
+   )

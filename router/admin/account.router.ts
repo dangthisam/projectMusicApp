@@ -5,7 +5,8 @@ import {
   createAccount,
   postCreateAccount,
   editAccount,
-  editAccountPatch
+  editAccountPatch,
+  deleteAccount
 } from "../../controller/admin/account.controller";
 
 import multer from "multer";
@@ -30,6 +31,9 @@ router.patch("/edit/:id" ,
   uploadMiddleware.uploadSingle,
 
   editAccountPatch);
+
+  router.delete("/delete/:id" ,deleteAccount);
+
 
 
 export default router;

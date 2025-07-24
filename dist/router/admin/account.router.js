@@ -48,4 +48,5 @@ router.get("/create", account_controller_1.createAccount);
 router.post("/create", upload.single("avatar"), uploadMiddleware.uploadSingle, validateAccount.createAccount, account_controller_1.postCreateAccount);
 router.get("/edit/:id", account_controller_1.editAccount);
 router.patch("/edit/:id", upload.single("avatar"), uploadMiddleware.uploadSingle, account_controller_1.editAccountPatch);
+router.delete("/delete/:id", account_controller_1.deleteAccount);
 exports.default = router;
