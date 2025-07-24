@@ -3,7 +3,7 @@ import Account from "../../model/account.model";
 import Role from "../../model/roles.model";
 import systemConfig from "../../config/system.config";
 import md5 from "md5";
-import { emitWarning } from "process";
+
 
 //  [GET] /admin/accounts
 export const indexAccount =async (req:Request , res:Response)=>{
@@ -53,14 +53,15 @@ export const createAccount=async (req:Request , res:Response)=>{
 export const postCreateAccount=async (req:Request , res:Response)=>{
 
     const find={
-        email:req.body.email,
-    delete:false,
-    status:"active"
+        email:req.body.email
+    
     }
 
     const emailExist=await Account.findOne(find);
     if(emailExist){
-        req.flash("error" , "Email đã tồn tại")
+        req.flash("error" , "Email đã tồn tại");
+        res.redirect(`${systemConfig.prefixAdmin}/accounts/create`);
+        return;
 
     }else{
         const account=new Account({

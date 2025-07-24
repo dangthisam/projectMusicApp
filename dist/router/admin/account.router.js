@@ -42,7 +42,8 @@ const account_controller_1 = require("../../controller/admin/account.controller"
 const multer_1 = __importDefault(require("multer"));
 const upload = (0, multer_1.default)();
 const uploadMiddleware = __importStar(require("../../middleware/admin/uploadCould.middleware"));
+const validateAccount = __importStar(require("../../validate/admin/createAccount"));
 router.get("/", account_controller_1.indexAccount);
 router.get("/create", account_controller_1.createAccount);
-router.post("/create", upload.single("avatar"), uploadMiddleware.uploadSingle, account_controller_1.postCreateAccount);
+router.post("/create", upload.single("avatar"), uploadMiddleware.uploadSingle, validateAccount.createAccount, account_controller_1.postCreateAccount);
 exports.default = router;

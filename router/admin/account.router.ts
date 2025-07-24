@@ -9,7 +9,7 @@ import {
 import multer from "multer";
 const upload = multer();
 import * as uploadMiddleware from "../../middleware/admin/uploadCould.middleware";
-
+import * as validateAccount from "../../validate/admin/createAccount";
 router.get("/", indexAccount);
 
 router.get("/create", createAccount);
@@ -17,6 +17,7 @@ router.get("/create", createAccount);
 router.post("/create" ,
     upload.single("avatar"),
     uploadMiddleware.uploadSingle,
+    validateAccount.createAccount,
     postCreateAccount
 )
 

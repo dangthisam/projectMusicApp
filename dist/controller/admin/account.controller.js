@@ -49,13 +49,13 @@ const createAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.createAccount = createAccount;
 const postCreateAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const find = {
-        email: req.body.email,
-        delete: false,
-        status: "active"
+        email: req.body.email
     };
     const emailExist = yield account_model_1.default.findOne(find);
     if (emailExist) {
         req.flash("error", "Email đã tồn tại");
+        res.redirect(`${system_config_1.default.prefixAdmin}/accounts/create`);
+        return;
     }
     else {
         const account = new account_model_1.default({

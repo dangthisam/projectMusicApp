@@ -8,7 +8,7 @@ const generateString_1 = require("../helper/generateString");
 const accountSchema = new mongoose_1.default.Schema({
     username: { type: String, required: true },
     password: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String },
     token: { type: String, default: (0, generateString_1.generateRandomString)(20) },
     phone: String,
     avatar: { type: String, default: null },
