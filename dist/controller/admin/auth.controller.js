@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.adminLoginPost = exports.indexRouterAuth = void 0;
+exports.accountLogout = exports.adminLoginPost = exports.indexRouterAuth = void 0;
 const md5_1 = __importDefault(require("md5"));
 const account_model_1 = __importDefault(require("../../model/account.model"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
@@ -49,6 +49,13 @@ const adminLoginPost = (req, res) => __awaiter(void 0, void 0, void 0, function*
         httpOnly: true,
         secure: false
     });
+    req.flash("success", "Đăng nhập thành công");
     res.redirect(`${system_config_1.default.prefixAdmin}/dashboard`);
 });
 exports.adminLoginPost = adminLoginPost;
+const accountLogout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.clearCookie("token");
+    req.flash("success", "Đăng xuất thành công");
+    res.redirect(`${system_config_1.default.prefixAdmin}/auth/login`);
+});
+exports.accountLogout = accountLogout;

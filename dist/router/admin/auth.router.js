@@ -39,4 +39,5 @@ const auth_controller_1 = require("../../controller/admin/auth.controller");
 const validateAdminLogin = __importStar(require("../../validate/admin/authlogin.validate"));
 router.get("/login", auth_controller_1.indexRouterAuth);
 router.post("/login", validateAdminLogin.createAccount, auth_controller_1.adminLoginPost);
+router.get("/logout", auth_controller_1.accountLogout);
 exports.default = router;

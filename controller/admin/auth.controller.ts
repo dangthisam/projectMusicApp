@@ -48,10 +48,20 @@ res.cookie("token" , account.token, {
     httpOnly:true,
     secure:false
 });
+req.flash("success" , "Đăng nhập thành công")
 
 res.redirect(`${systemConfig.prefixAdmin}/dashboard`)
 
 
 
+
+}
+
+//[GET]  /admin/auth/logout
+
+export const accountLogout =async (req:Request , res:Response)=>{
+    res.clearCookie("token");
+    req.flash("success" , "Đăng xuất thành công")
+    res.redirect(`${systemConfig.prefixAdmin}/auth/login`)
 
 }
