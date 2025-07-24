@@ -2109,3 +2109,52 @@ form {
       right: 2rem;
       z-index: 1000;
     }
+
+    .hover-shadow:hover {
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+    
+    .btn-gradient-primary {
+      background: linear-gradient(45deg, #007bff, #0056b3);
+      border: none;
+      color: white;
+    }
+    
+    .btn-gradient-primary:hover {
+      background: linear-gradient(45deg, #0056b3, #004085);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,123,255,0.3);
+    }
+    
+    .bg-gradient-dark {
+      background: linear-gradient(135deg, #343a40, #495057);
+    }
+    
+    .shadow-hover:hover {
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+    }
+    
+    .font-size-13 {
+      font-size: 0.8125rem;
+    }
+    
+    .font-size-14 {
+      font-size: 0.875rem;
+    }
+    
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+    
+    .avatar-container:hover .avatar-overlay {
+      opacity: 1;
+    }
+    
+    .table td {
+      border-color: #f8f9fa;
+    }
+    
+    .rounded-lg {
+      border-radius: 1rem !important;
+    }
