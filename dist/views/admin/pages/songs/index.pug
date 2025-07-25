@@ -42,8 +42,10 @@ block main
                     a.badge.badge-success(href="javascript:void(0);") Hoạt động
                   else
                     a.badge.badge-danger(href="javascript:void(0);") Dừng hoạt động
-                if(role.permissions.includes("songs_edit"))
+               
                 td
                   a.btn.btn-secondary.btn-sm(href=`${prefixAdmin}/songs/detail/${item.id}`) Chi tiết
-                  a.btn.btn-warning.btn-sm.ms-1(href=`${prefixAdmin}/songs/edit/${item.id}`) Sửa
-                  button.btn.btn-danger.btn-sm.ms-1(button-delete, data-id=item.id) Xóa
+                  if(role.permissions.includes("songs_edit"))
+                   a.btn.btn-warning.btn-sm.ms-1(href=`${prefixAdmin}/songs/edit/${item.id}`) Sửa
+                  if(role.permissions.includes("songs_delete"))
+                   button.btn.btn-danger.btn-sm.ms-1(button-delete, data-id=item.id) Xóa

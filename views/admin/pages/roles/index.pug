@@ -32,14 +32,15 @@ block main
                   li.breadcrumb-item
                     a(href="#") Trang chủ
                   li.breadcrumb-item.active Nhóm quyền
-          .col-md-4.text-right
-            a.btn.btn-primary.btn-create(
-              href=`${prefixAdmin}/roles/create`
-            )
-              .btn-content
-                i.fas.fa-plus.btn-icon
-                span Thêm mới
-              .btn-ripple
+          if(role.permissions.includes("roles_create"))
+            .col-md-4.text-right
+              a.btn.btn-primary.btn-create(
+                href=`${prefixAdmin}/roles/create`
+              )
+                .btn-content
+                  i.fas.fa-plus.btn-icon
+                  span Thêm mới
+                .btn-ripple
 
     //- Main Content
     .content-wrapper
@@ -75,10 +76,11 @@ block main
                         .th-content
                           i.fas.fa-align-left.mr-2
                           | Mô tả
-                      th.text-center
-                        .th-content
-                          i.fas.fa-cogs.mr-2
-                          | Hành động
+                      if(role.permissions.includes("roles_edit"))
+                        th.text-center
+                          .th-content
+                            i.fas.fa-cogs.mr-2
+                            | Hành động
                   tbody
                     if(records.length > 0)
                       each item, index in records
@@ -92,28 +94,33 @@ block main
                                 span.badge.badge-outline ID: #{item._id.toString().slice(-6)}
                           td
                             .description-text #{item.description}
-                          td.text-center
-                            .action-buttons
-                              a.btn.btn-action.btn-info(
-                                href=`${prefixAdmin}/roles/detail/${item._id}`
-                                title="Xem chi tiết"
-                              )
-                                i.fas.fa-eye
-                              a.btn.btn-action.btn-warning(
-                                href=`${prefixAdmin}/roles/edit/${item._id}`
-                                title="Chỉnh sửa"
-                              )
-                                i.fas.fa-edit
-                              a.btn.btn-action.btn-danger(
-                                type="button"
-                                data-id=item.id
-                                data-toggle="modal"
-                                data-target="#exampleModal"
-                                button-delete-role
-                                button-delete-product
-                                title="Xóa"
-                              )
-                                i.fas.fa-trash-alt
+                          
+                       
+                            td.text-center
+                              .action-buttons
+                                if(role.permissions.includes("roles_edit"))
+                                  a.btn.btn-action.btn-info(
+                                    href=`${prefixAdmin}/roles/detail/${item._id}`
+                                    title="Xem chi tiết"
+                                  )
+                                  i.fas.fa-eye
+                              if(role.permissions.includes("roles_edit"))
+                                a.btn.btn-action.btn-warning(
+                                  href=`${prefixAdmin}/roles/edit/${item._id}`
+                                  title="Chỉnh sửa"
+                                )
+                                  i.fas.fa-edit
+                              if(role.permissions.includes("roles_delete"))
+                                a.btn.btn-action.btn-danger(
+                                  type="button"
+                                  data-id=item.id
+                                  data-toggle="modal"
+                                  data-target="#exampleModal"
+                                  button-delete-role
+                                  button-delete-product
+                                  title="Xóa"
+                                )
+                                  i.fas.fa-trash-alt
                     else
                       tr
                         td.empty-state(colspan="4")

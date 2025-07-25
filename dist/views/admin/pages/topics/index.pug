@@ -44,7 +44,7 @@ block main
                         option(value="update-position") Cập nhật vị trí
                
                    
-              if(role.permissions.includes("topics_edit"))
+           
                 .col-md-4.mb-6
                   button.btn.btn-danger.w-100(type="submit")
                     i.fas.fa-check.mr-1
@@ -189,8 +189,8 @@ block main
                     else 
                       small.text-muted.fst-italic Chưa cập nhật
                   
-                  //- Hành động
-                  if(role.permissions.includes("topics_edit"))
+                    //- Hành động
+                  
                     td.text-center
                       .btn-group(role="group")
                         a.btn.btn-outline-info.btn-sm.rounded-pill.me-1(
@@ -198,19 +198,21 @@ block main
                           title="Xem chi tiết"
                         )
                           i.fas.fa-eye
-                        a.btn.btn-outline-warning.btn-sm.rounded-pill.me-1(
-                          href=`${prefixAdmin}/topics/edit/${item.id}`, 
-                          title="Chỉnh sửa"
-                        )
-                          i.fas.fa-edit
-                        button.btn.btn-outline-danger.btn-sm.rounded-pill(
-                          type="button", 
-                          data-id=item.id, 
-                          title="Xóa chủ đề này", 
-                          button-delete, 
-                          button-delete-topics
-                        )
-                          i.fas.fa-trash
+                        if(role.permissions.includes("topics_edit"))
+                          a.btn.btn-outline-warning.btn-sm.rounded-pill.me-1(
+                            href=`${prefixAdmin}/topics/edit/${item.id}`, 
+                            title="Chỉnh sửa"
+                          )
+                           i.fas.fa-edit
+                        if(role.permissions.includes("topics_delete"))
+                          button.btn.btn-outline-danger.btn-sm.rounded-pill(
+                            type="button", 
+                            data-id=item.id, 
+                            title="Xóa chủ đề này", 
+                            button-delete, 
+                            button-delete-topics
+                          )
+                            i.fas.fa-trash
               else
                 //- Empty state
                 tr

@@ -100,6 +100,57 @@ block main
                   each role in roles
                     td.text-center
                       input.custom-checkbox(type="checkbox")
+                tr.category-header
+                  td(colspan=roles.length + 1)
+                    i.fas.fa-tags.me-2
+                    | Quản lý nhóm quyền
+                tr(data-name="permission_view")
+                    td.permission-action Xem
+                    each role in roles
+                      td.text-center
+                        input.custom-checkbox(type="checkbox")
+                tr(data-name="permission_create")
+                   td.permission-action Thêm
+                    each role in roles
+                      td.text-center
+                        input.custom-checkbox(type="checkbox")
+                   
+                tr(data-name="permission_edit")
+                  td.permission-action Sửa
+                    each role in roles
+                      td.text-center
+                        input.custom-checkbox(type="checkbox")
+                tr(data-name="permission_delete")
+                   td.permission-action Xóa
+                    each role in roles
+                      td.text-center
+                        input.custom-checkbox(type="checkbox")
+                        //- tài khoản admin
+                tr.category-header
+                  td(colspan=roles.length + 1)
+                    i.fas.fa-tags.me-2
+                    | Quản lý tài khoản admin
+                tr(data-name="accounts_view")
+                    td.permission-action Xem
+                    each role in roles
+                      td.text-center
+                        input.custom-checkbox(type="checkbox")
+                tr(data-name="accounts_create")
+                   td.permission-action Thêm
+                    each role in roles
+                      td.text-center
+                        input.custom-checkbox(type="checkbox")
+                   
+                tr(data-name="accounts_edit")
+                  td.permission-action Sửa
+                    each role in roles
+                      td.text-center
+                        input.custom-checkbox(type="checkbox")
+                tr(data-name="accounts_delete")
+                   td.permission-action Xóa
+                    each role in roles
+                      td.text-center
+                        input.custom-checkbox(type="checkbox")
   
   form#form-change-permissions(
     class="d-none"

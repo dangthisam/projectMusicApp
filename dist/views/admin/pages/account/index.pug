@@ -42,15 +42,16 @@ block main
             .breadcrumb-item.active
               i.fas.fa-users.mr-2.text-primary
               span.font-weight-600.text-dark Quản lý tài khoản
-        .col-md-6.text-right
-          .action-buttons
-            a(
-              href=`${prefixAdmin}/accounts/create`
-              class="btn btn-gradient-success btn-lg px-4 py-3 rounded-pill shadow-lg hover-lift"
-            )
-              i.fas.fa-user-plus.mr-2
-              span.font-weight-600 Thêm tài khoản mới
-              .btn-shine
+        if(role.permissions.includes("accounts_create"))
+          .col-md-6.text-right
+            .action-buttons
+              a(
+                href=`${prefixAdmin}/accounts/create`
+                class="btn btn-gradient-success btn-lg px-4 py-3 rounded-pill shadow-lg hover-lift"
+              )
+                i.fas.fa-user-plus.mr-2
+                span.font-weight-600 Thêm tài khoản mới
+                .btn-shine
 
   // Main Content Card
   .main-card
@@ -109,10 +110,11 @@ block main
                     .header-content
                       i.fas.fa-toggle-on.mr-2
                       span.font-weight-700 Trạng thái
-                  th.text-center.py-4.border-0.table-header-cell
-                    .header-content
-                      i.fas.fa-cogs.mr-2
-                      span.font-weight-700 Hành động
+                  if(role.permissions.includes("accounts_edit"))
+                    th.text-center.py-4.border-0.table-header-cell
+                      .header-content
+                        i.fas.fa-cogs.mr-2
+                        span.font-weight-700 Hành động
 
               tbody.table-body-modern
                 each item, index in records
@@ -183,31 +185,33 @@ block main
                     // Actions
                     td.text-center.align-middle.py-4
                       .action-group
-                        a.action-btn.action-view(
-                          href=`${prefixAdmin}/accounts/detail/${item.id}`
-                          title="Xem chi tiết"
-                          data-tooltip="Xem chi tiết"
-                        )
-                          i.fas.fa-eye
+                        if(role.permissions.includes("accounts_edit"))
+                          a.action-btn.action-view(
+                            href=`${prefixAdmin}/accounts/detail/${item.id}`
+                            title="Xem chi tiết"
+                            data-tooltip="Xem chi tiết"
+                          )
+                            i.fas.fa-eye
+                        if(role.permissions.includes("accounts_edit"))
 
-                        a.action-btn.action-edit(
-                          href=`${prefixAdmin}/accounts/edit/${item.id}`
-                          title="Chỉnh sửa"
-                          data-tooltip="Chỉnh sửa"
-                        )
-                          i.fas.fa-edit
-
-                        button.action-btn.action-delete(
-                          type="button"
-                          data-id=item.id
-                          data-toggle="modal"
-                          data-target="#exampleModal"
-                          button-delete
-                          button-delete-account
-                          title="Xóa tài khoản"
-                          data-tooltip="Xóa"
-                        )
-                          i.fas.fa-trash-alt
+                          a.action-btn.action-edit(
+                            href=`${prefixAdmin}/accounts/edit/${item.id}`
+                            title="Chỉnh sửa"
+                            data-tooltip="Chỉnh sửa"
+                          )
+                            i.fas.fa-edit
+                        if(role.permissions.includes("accounts_delete"))
+                          button.action-btn.action-delete(
+                            type="button"
+                            data-id=item.id
+                            data-toggle="modal"
+                            data-target="#exampleModal"
+                            button-delete
+                            button-delete-account
+                            title="Xóa tài khoản"
+                            data-tooltip="Xóa"
+                          )
+                            i.fas.fa-trash-alt
                      
 
     form(
