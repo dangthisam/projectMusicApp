@@ -9,8 +9,9 @@ block main
       .row
         .col-8
           //- Nơi hiển thị bảng hoặc các thông tin phụ
-        .col-4.text-end
-          a.btn.btn-outline-success(href=`${prefixAdmin}/songs/create`) + Thêm mới
+        if(role.permissions.includes("songs_create"))
+          .col-4.text-end
+            a.btn.btn-outline-success(href=`${prefixAdmin}/songs/create`) + Thêm mới
 
       table.table.table-hover.table-sm
         thead
@@ -21,8 +22,10 @@ block main
             //- th Ca sĩ
             //- th Chủ đề
             //- th Vị trí
-            th Trạng thái
-            th Hành động
+            if(role.permissions.includes("songs_edit")) 
+              th Hành động
+            if(role.permissions.includes("songs_edit"))
+              th Trạng thái
         tbody
           each item, index in songs
             tr
@@ -33,12 +36,14 @@ block main
               //- td Để dữ liệu ca sĩ nếu cần
               //- td Để dữ liệu chủ đề nếu cần
               //- td Để dữ liệu vị trí nếu cần
-              td
-                if item.status === "active"
-                  a.badge.badge-success(href="javascript:void(0);") Hoạt động
-                else
-                  a.badge.badge-danger(href="javascript:void(0);") Dừng hoạt động
-              td
-                a.btn.btn-secondary.btn-sm(href=`${prefixAdmin}/songs/detail/${item.id}`) Chi tiết
-                a.btn.btn-warning.btn-sm.ms-1(href=`${prefixAdmin}/songs/edit/${item.id}`) Sửa
-                button.btn.btn-danger.btn-sm.ms-1(button-delete, data-id=item.id) Xóa
+              if(role.permissions.includes("songs_edit"))
+                td
+                  if item.status === "active"
+                    a.badge.badge-success(href="javascript:void(0);") Hoạt động
+                  else
+                    a.badge.badge-danger(href="javascript:void(0);") Dừng hoạt động
+                if(role.permissions.includes("songs_edit"))
+                td
+                  a.btn.btn-secondary.btn-sm(href=`${prefixAdmin}/songs/detail/${item.id}`) Chi tiết
+                  a.btn.btn-warning.btn-sm.ms-1(href=`${prefixAdmin}/songs/edit/${item.id}`) Sửa
+                  button.btn.btn-danger.btn-sm.ms-1(button-delete, data-id=item.id) Xóa
