@@ -19,6 +19,7 @@ const search_1 = __importDefault(require("../../helper/search"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
 const pagination_1 = __importDefault(require("../../helper/pagination"));
 const filterStatus_1 = __importDefault(require("../../helper/filterStatus"));
+const account_model_1 = __importDefault(require("../../model/account.model"));
 const topicsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const find = {
         deleted: false,
@@ -52,10 +53,28 @@ const topicsController = (req, res) => __awaiter(void 0, void 0, void 0, functio
             }
         ];
     }
+    const account = yield account_model_1.default.findOne({
+        _id: res.locals.account.id,
+        deleted: false,
+        status: "active"
+    });
     const topics = yield topic_model_1.default.find(find)
         .sort(sort)
         .skip(objectPagi.skip)
         .limit(objectPagi.limitPage);
+    for (const topic of topics) {
+        const userAdmin = yield account_model_1.default.findOne({
+            _id: topic.createdBy.accountID,
+            deleted: false,
+            status: "active"
+        });
+        if (userAdmin) {
+            topic["createByName"] = userAdmin.username;
+        }
+        else {
+            topic["createByName"] = "Không xác định";
+        }
+    }
     res.render("admin/pages/topics/index.pug", {
         titlePage: " Quản lý chủ đề",
         topics: topics,
@@ -83,11 +102,16 @@ const adminPostCreateTopics = (req, res) => __awaiter(void 0, void 0, void 0, fu
         });
         req.body.position = countTopics + 1;
     }
+    const accountID = res.locals.account.id;
+    const createBy = {
+        accountID: accountID
+    };
     const data = {
         title: req.body.title,
         description: req.body.description,
         status: req.body.status,
         avatar: avatar,
+        createdBy: createBy,
         position: req.body.position
     };
     const topics = new topic_model_1.default(data);

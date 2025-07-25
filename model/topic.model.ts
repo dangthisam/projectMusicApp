@@ -12,6 +12,13 @@ const topicSchema = new mongoose.Schema({
         default:false
     
     },
+    createdBy:{
+        accountID:String,
+        createdAt:{
+            type:Date,
+            default:Date.now()
+        }
+    },
     position:Number,
     slug: {
         type: String,

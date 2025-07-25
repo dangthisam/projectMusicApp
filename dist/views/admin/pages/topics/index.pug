@@ -1,6 +1,6 @@
 extends ../../layout/default.pug
 include ../../mixins/sortJs.pug
-
+include ../../mixins/moment.pug
 include ../../mixins/alert.pug
 include ../../mixins/search.pug
 include ../../mixins/filter-status.pug
@@ -89,6 +89,7 @@ block main
               if(role.permissions.includes("topics_edit"))
                th.text-center(style="width: 100px;") Trạng thái
               th.text-center(style="width: 180px;") Ngày tạo
+              th.text-center(style="width: 180px;") Tạo bởi
               th.text-center(style="width: 180px;") Ngày cập nhật
               if(role.permissions.includes("topics_edit"))
                th.text-center(style="width: 200px;") Hành động
@@ -172,12 +173,21 @@ block main
                             i.fas.fa-toggle-off.mr-1
                             | OFF
                   
+               
                   //- Ngày tạo
                   td.text-center
                     if item.createdAt
                       .d-flex.flex-column.small
                         .fw-semibold.text-dark= new Date(item.createdAt).toLocaleDateString('vi-VN')
                         .text-muted= new Date(item.createdAt).toLocaleTimeString('vi-VN', {hour: '2-digit', minute: '2-digit'})
+                    else
+                      small.text-muted.fst-italic Không xác định
+                  
+                  td.text-center 
+                    if item.createdBy
+                      .d-flex.flex-column.small
+                        .fw-semibold.text-dark= item.createByName
+                        +formatDateTime(item.createdBy.createdAt)
                     else
                       small.text-muted.fst-italic Không xác định
                       //- Ngày cập nhật

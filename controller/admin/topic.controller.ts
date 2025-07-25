@@ -5,7 +5,8 @@ import search from "../../helper/search";
 import systemConfig from "../../config/system.config";
 import objectPagination from "../../helper/pagination";
 import filter from "../../helper/filterStatus";
-
+import Account from "../../model/account.model";
+import { create } from "domain";
 //[GET]  /admin/topics
 export const topicsController=async (req:Request , res:Response)=>{
   const find={
@@ -59,11 +60,30 @@ if(req.query.status){
       ]
     }
     //end search)
+
+    const account=await Account.findOne({
+      _id:res.locals.account.id,
+      deleted:false,
+      status:"active"
+    })
  const topics=await Topic.find(find)
  .sort(sort)
   .skip(objectPagi.skip)
   .limit(objectPagi.limitPage)
      
+
+  for (const topic of topics){
+    const userAdmin=await Account.findOne({
+      _id:topic.createdBy.accountID,
+      deleted:false,
+      status:"active"
+    })
+    if(userAdmin){
+      topic["createByName"]=userAdmin.username;
+    }else{
+      topic["createByName"] ="Không xác định"
+    }
+  }
    res.render("admin/pages/topics/index.pug",{
     titlePage:" Quản lý chủ đề",
     topics:topics,
@@ -99,11 +119,17 @@ export const adminPostCreateTopics=async (req:Request , res:Response)=>{
     });
     req.body.position=countTopics+1;
   }
+
+  const accountID=res.locals.account.id
+  const createBy={
+    accountID:accountID
+  }
   const data={
     title:req.body.title,
     description:req.body.description,
     status:req.body.status,
     avatar:avatar,
+    createdBy:createBy,
     position:req.body.position
   }
 
