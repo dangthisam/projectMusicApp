@@ -25,29 +25,33 @@ block main
           +search(keyword)
         
         //- Thao tác hàng loạt
-        .col-md-6
-           form(
-            action=`${prefixAdmin}/topics/change-multi?_method=PATCH`
-            method="POST"
-            form-change-multi
-            class="mb-3"
-          )
-            .row.align-items-center
-              .col-md-6.mb-2
+        if(role.permissions.includes("topics_edit"))
+          .col-md-6
+            form(
+              action=`${prefixAdmin}/topics/change-multi?_method=PATCH`
+              method="POST"
+              form-change-multi
+              class="mb-3"
+            )
+              .row.align-items-center
+                .col-md-6.mb-2
+                  .form-group.mb-0.mr-2
+                    select.form-control(name='type')
+                        option(value="", selected) Chọn hành động
+                        option(value="active") Kích hoạt
+                        option(value="inactive") Vô hiệu hóa
+                        option(value="delete-all") Xóa nhiều
+                        option(value="update-position") Cập nhật vị trí
+               
+                   
+              if(role.permissions.includes("topics_edit"))
+                .col-md-4.mb-6
+                  button.btn.btn-danger.w-100(type="submit")
+                    i.fas.fa-check.mr-1
+                    | Áp dụng
+              .col-md-4.mb-2
                 .form-group.mb-0.mr-2
-                  select.form-control(name='type')
-                    option(value="", selected) Chọn hành động
-                    option(value="active") Kích hoạt
-                    option(value="inactive") Vô hiệu hóa
-                    option(value="delete-all") Xóa nhiều
-                    option(value="update-position") Cập nhật vị trí
-              .col-md-4.mb-6
-                button.btn.btn-danger.w-100(type="submit")
-                  i.fas.fa-check.mr-1
-                  | Áp dụng
-            .col-md-4.mb-2
-              .form-group.mb-0.mr-2
-                input.form-control.d-none(type="text", name="ids", value="")
+                  input.form-control.d-none(type="text", name="ids", value="")
         //- Sắp xếp
         .col-md-3.ml-6.align-items-center
           +sort()
@@ -64,9 +68,10 @@ block main
             small.text-muted Quản lý và theo dõi các chủ đề âm nhạc
         
         //- Nút thêm mới
-        a.btn.btn-primary(href=`${prefixAdmin}/topics/create`)
-          i.fas.fa-plus.me-2
-          | Thêm chủ đề
+        if(role.permissions.includes("topics_create"))
+          a.btn.btn-primary(href=`${prefixAdmin}/topics/create`)
+            i.fas.fa-plus.me-2
+            | Thêm chủ đề
 
     .card-body.p-0
       .table-responsive
@@ -85,7 +90,8 @@ block main
                th.text-center(style="width: 100px;") Trạng thái
               th.text-center(style="width: 180px;") Ngày tạo
               th.text-center(style="width: 180px;") Ngày cập nhật
-              th.text-center(style="width: 200px;") Hành động
+              if(role.permissions.includes("topics_edit"))
+               th.text-center(style="width: 200px;") Hành động
 
           tbody
             if topics && topics.length > 0
@@ -184,38 +190,39 @@ block main
                       small.text-muted.fst-italic Chưa cập nhật
                   
                   //- Hành động
-                  td.text-center
-                    .btn-group(role="group")
-                      a.btn.btn-outline-info.btn-sm.rounded-pill.me-1(
-                        href=`${prefixAdmin}/topics/detail/${item.id}`, 
-                        title="Xem chi tiết"
-                      )
-                        i.fas.fa-eye
-                      a.btn.btn-outline-warning.btn-sm.rounded-pill.me-1(
-                        href=`${prefixAdmin}/topics/edit/${item.id}`, 
-                        title="Chỉnh sửa"
-                      )
-                        i.fas.fa-edit
-                      button.btn.btn-outline-danger.btn-sm.rounded-pill(
-                        type="button", 
-                        data-id=item.id, 
-                        title="Xóa chủ đề này", 
-                        button-delete, 
-                        button-delete-topics
-                      )
-                        i.fas.fa-trash
-            else
-              //- Empty state
-              tr
-                td.text-center.py-5(colspan="8")
-                  .d-flex.flex-column.align-items-center.justify-content-center
-                    .mb-4
-                      i.fas.fa-music.text-muted.opacity-50(style="font-size: 4rem;")
-                    h4.text-muted.mb-2 Chưa có chủ đề nào
-                    p.text-muted.mb-4 Hãy bắt đầu bằng cách tạo chủ đề đầu tiên của bạn
-                    a.btn.btn-primary.btn-lg.px-4(href=`${prefixAdmin}/topics/create`)
-                      i.fas.fa-plus.me-2
-                      | Tạo chủ đề đầu tiên
+                  if(role.permissions.includes("topics_edit"))
+                    td.text-center
+                      .btn-group(role="group")
+                        a.btn.btn-outline-info.btn-sm.rounded-pill.me-1(
+                          href=`${prefixAdmin}/topics/detail/${item.id}`, 
+                          title="Xem chi tiết"
+                        )
+                          i.fas.fa-eye
+                        a.btn.btn-outline-warning.btn-sm.rounded-pill.me-1(
+                          href=`${prefixAdmin}/topics/edit/${item.id}`, 
+                          title="Chỉnh sửa"
+                        )
+                          i.fas.fa-edit
+                        button.btn.btn-outline-danger.btn-sm.rounded-pill(
+                          type="button", 
+                          data-id=item.id, 
+                          title="Xóa chủ đề này", 
+                          button-delete, 
+                          button-delete-topics
+                        )
+                          i.fas.fa-trash
+              else
+                //- Empty state
+                tr
+                  td.text-center.py-5(colspan="8")
+                    .d-flex.flex-column.align-items-center.justify-content-center
+                      .mb-4
+                        i.fas.fa-music.text-muted.opacity-50(style="font-size: 4rem;")
+                      h4.text-muted.mb-2 Chưa có chủ đề nào
+                      p.text-muted.mb-4 Hãy bắt đầu bằng cách tạo chủ đề đầu tiên của bạn
+                      a.btn.btn-primary.btn-lg.px-4(href=`${prefixAdmin}/topics/create`)
+                        i.fas.fa-plus.me-2
+                        | Tạo chủ đề đầu tiên
 
   //- Section: Phân trang
   if pagination && pagination.totalPage > 1
