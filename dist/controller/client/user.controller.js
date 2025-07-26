@@ -18,6 +18,7 @@ const md5_1 = __importDefault(require("md5"));
 const sendMail_1 = __importDefault(require("../../helper/sendMail"));
 const forgotPassword_1 = __importDefault(require("../../model/forgotPassword"));
 const generateString_1 = require("../../helper/generateString");
+const secretKey = process.env.JWT_SECRET;
 const userRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const exitsEmail = yield User_model_1.default.findOne({
         email: req.body.email

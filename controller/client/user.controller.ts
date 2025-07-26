@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import User from "../../model/User.model";
-import passport from "passport";
+import jwt from "jsonwebtoken"
 import md5 from "md5";
 import sendEmail from "../../helper/sendMail";
 import PasswordReset from "../../model/forgotPassword";
 import { generateRandomNumber } from "../../helper/generateString"
+const secretKey = process.env.JWT_SECRET
 //[POST]  /user/register
 export const userRegister= async (req:Request , res:Response) =>{
    const exitsEmail=await User.findOne({
@@ -55,8 +56,14 @@ deleted:false,
   res.redirect("/topics")
   return;
  }
+// //generate token,
+// const payload ={
+//   id:user.id,
+//   email:user.email
+// }
+//  const tokenUser=jwt.sign(payload, secretKey, { expiresIn: '1h' });
 
- res.cookie("tokenUser" , user.tokenUser)
+ res.cookie("tokenUser" , user.tokenUser);
 
 
  req.flash("success" , "Đăng nhập thành công");

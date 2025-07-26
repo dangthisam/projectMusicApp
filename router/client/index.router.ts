@@ -5,14 +5,15 @@ import favoriteSongsRouter from "./favorite-songs.router";
 import searchSongs from "./search.router";
 import authRouter from "./auth.router";
 import home from "./home.router"
+import authenticateToken from "../../middleware/client/jwt.middleware"
 const mainV1Router =(app:Express ):void =>{
     app.use("/" , home);
-    app.use("/topics",TopicRouter)
+    app.use("/topics",  TopicRouter)
     app.use("/songs" , songRouter)
-    app.use("/favorite-songs" ,favoriteSongsRouter )
+    app.use("/favorite-songs" , favoriteSongsRouter )
     app.use("/search" , searchSongs)
-    app.use("/user" , authRouter)
-    
+    app.use("/user" ,authRouter)
+
 
 }
 
