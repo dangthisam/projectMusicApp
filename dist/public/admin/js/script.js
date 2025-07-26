@@ -1,5 +1,3 @@
-
-
 // xử lý upload ảnh
 const uploadImage = document.querySelector("[data-upload-image]");
 
@@ -92,31 +90,9 @@ if (buttonDelete.length > 0) {
   });
 }
 
-// Xử lý phân trang
-const buttonPagination = document.querySelectorAll("[button-pagination]");
-
-if (buttonPagination) {
-  buttonPagination.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      // lấy ra số trang khi người dùng click vào
-      const page = button.getAttribute("button-pagination");
-      const url = new URL(window.location.href);
-      if (page) {
-        url.searchParams.set("page", page);
-      } else {
-        url.searchParams.delete("page");
-      }
-      window.location.href = url.href;
-    });
-  });
-}
-
 // change -status topics
 
 const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
-
 
 if (buttonChangeStatus.length > 0) {
   const formChangeStatus = document.querySelector("#form-change-status");
@@ -237,7 +213,6 @@ if (formChangeMulite) {
 
       inputIds.value = ids.join(",");
       formChangeMulite.submit();
-
     } else {
       alert("Bạn chưa chọn sản phẩm nào để thực hiện thao tác này!");
     }
@@ -293,5 +268,4 @@ if (sortElements.length > 0) {
 }
 
 //end sort
-
 

@@ -14,9 +14,6 @@ export const topicsController=async (req:Request , res:Response)=>{
    
 
   }
-
-
-   
   const filterStatus=filter(req.query.status as string);
 if(req.query.status){
   find["status"]=req.query.status;

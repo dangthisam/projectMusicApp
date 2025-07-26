@@ -1,7 +1,7 @@
 //delete account
 
 const buttonDeleteAccount=document.querySelectorAll("[button-delete]");
-console.log(buttonDeleteAccount);
+
 if(buttonDeleteAccount.length>0){
   const formDeleteAccount=document.querySelector("#form-delete-account");
   const path =formDeleteAccount.getAttribute("data-path");
@@ -18,3 +18,4 @@ formDeleteAccount.submit();
     })
   })
 }
+

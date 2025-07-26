@@ -1,0 +1,74 @@
+mixin pagination(pagination)
+   if pagination && pagination.totalPage > 1
+    .card.border-0.shadow-sm.mt-4
+      .card-body.py-3
+        .d-flex.justify-content-between.align-items-center
+          //- Thông tin trang
+          .text-muted
+            | Trang #{pagination.currentPage} / #{pagination.totalPage}
+            if pagination.totalItems
+              |  (#{pagination.totalItems} mục)
+          
+          //- Navigation
+          nav(aria-label="Phân trang chủ đề")
+            ul.pagination.mb-0.pagination-sm
+              //- First page
+              if pagination.currentPage > 2
+                li.page-item
+                  button.page-link.rounded-pill.me-1(
+                    button-pagination='1', 
+                    title="Trang đầu"
+                  )
+                    i.fas.fa-angle-double-left
+              
+              //- Previous page
+              if pagination.currentPage > 1
+                li.page-item
+                  button.page-link.rounded-pill.me-1(
+                    button-pagination=pagination.currentPage - 1, 
+                    title="Trang trước"
+                  )
+                    i.fas.fa-angle-left
+
+              //- Page numbers
+              - var startPage = Math.max(1, pagination.currentPage - 2)
+              - var endPage = Math.min(pagination.totalPage, pagination.currentPage + 2)
+
+              if startPage > 1
+                li.page-item
+                  button.page-link.rounded-pill.me-1(button-pagination='1') 1
+                if startPage > 2
+                  li.page-item.disabled
+                    span.page-link.me-1.border-0 ...
+              
+              - for (var i = startPage; i <= endPage; i++)
+                li.page-item(class=(pagination.currentPage === i ? 'active' : ''))
+                  button.page-link.rounded-pill.me-1(
+                    button-pagination=i
+                    class=(pagination.currentPage === i ? 'bg-primary border-primary text-white' : '')
+                  ) #{i}
+              
+              if endPage < pagination.totalPage
+                if endPage < pagination.totalPage - 1
+                  li.page-item.disabled
+                    span.page-link.me-1.border-0 ...
+                li.page-item
+                  button.page-link.rounded-pill.me-1(button-pagination=pagination.totalPage) #{pagination.totalPage}
+              
+              //- Next page
+              if pagination.currentPage < pagination.totalPage
+                li.page-item
+                  button.page-link.rounded-pill.me-1(
+                    button-pagination=pagination.currentPage + 1, 
+                    title="Trang sau"
+                  )
+                    i.fas.fa-angle-right
+              
+              //- Last page
+              if pagination.currentPage < pagination.totalPage - 1
+                li.page-item
+                  button.page-link.rounded-pill(
+                    button-pagination=pagination.totalPage, 
+                    title="Trang cuối"
+                  )
+                    i.fas.fa-angle-double-right

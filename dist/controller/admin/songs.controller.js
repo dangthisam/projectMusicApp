@@ -13,18 +13,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.editPatchSongs = exports.editSongs = exports.postCreateSong = exports.createSong = exports.indexSongs = void 0;
+const pagination_1 = __importDefault(require("../../helper/pagination"));
 const songs_model_1 = __importDefault(require("../../model/songs.model"));
 const topic_model_1 = __importDefault(require("../../model/topic.model"));
 const singer_model_1 = __importDefault(require("../../model/singer.model"));
 const system_config_1 = __importDefault(require("../../config/system.config"));
 const indexSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const songs = yield songs_model_1.default.find({
+    const find = {
+        deleted: false,
+        status: "active"
+    };
+    const countSong = yield songs_model_1.default.countDocuments({
         deleted: false,
         status: "active"
     });
+    let objectSong = (0, pagination_1.default)({
+        currentPage: 1,
+        limitPage: 5
+    }, req.query, countSong);
+    const songs = yield songs_model_1.default.find(find)
+        .skip(objectSong.skip)
+        .limit(objectSong.limitPage);
     res.render("admin/pages/songs/index.pug", {
         titlePage: "Danh sach bai hat",
-        songs: songs
+        songs: songs,
+        pagination: objectSong
     });
 });
 exports.indexSongs = indexSongs;

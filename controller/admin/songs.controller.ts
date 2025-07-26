@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-
+import pagination from "../../helper/pagination";
 import Song from "../../model/songs.model";
 import Topic from "../../model/topic.model";
 import Singer from "../../model/singer.model";
@@ -7,14 +7,35 @@ import systemConfig from "../../config/system.config";
 
 
 export const indexSongs=async (req:Request , res:Response)=>{
-    const songs=await Song.find({
+
+
+    const find={
+        deleted:false,
+        status:"active"
+
+    }
+
+
+    const countSong=await Song.countDocuments({
         deleted:false,
         status:"active"
     })
+
+let objectSong = pagination({
+    currentPage: 1,
+    limitPage: 5
+}, req.query, countSong)
+
+
+const songs=await Song.find(find)
+.skip(objectSong.skip)
+.limit(objectSong.limitPage)
+
+
  res.render("admin/pages/songs/index.pug",{
     titlePage:"Danh sach bai hat",
-    songs:songs
-
+    songs:songs,
+    pagination:objectSong
  })
 }
 

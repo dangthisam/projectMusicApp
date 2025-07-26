@@ -1,4 +1,5 @@
 extends ../../layout/default.pug
+include ../../mixins/pagination.pug
 
 block main
   h1.mb-4 #{titlePage}
@@ -15,20 +16,35 @@ block main
 
       table.table.table-hover.table-sm
         thead
+        
           tr
+            th.ps-4.text-center(style="width: 60px;")
+              .form-check
+                input.form-check-input(type="checkbox", id="selectAll", name="checkAll")
+                label.form-check-label.visually-hidden(for="selectAll") Chọn tất cả
             th STT
             th Hình ảnh
             th Tiêu đề
             //- th Ca sĩ
             //- th Chủ đề
             //- th Vị trí
-            if(role.permissions.includes("songs_edit")) 
+            if(role.permissions.includes("songs_edit"))
               th Hành động
             if(role.permissions.includes("songs_edit"))
               th Trạng thái
         tbody
           each item, index in songs
             tr
+              td.ps-4.text-center
+                    .form-check
+                      input.form-check-input.row-checkbox(
+                        type="checkbox", 
+                        value=item.id, 
+                        name="id",
+                        id=`check-${item.id}`
+                      )
+                      label.form-check-label.visually-hidden(for=`check-${item.id}`) Chọn item này
+                  
               td #{index + 1}
               td
                 img(src=item.avatar, alt=item.title, width="80px", height="auto")
@@ -42,10 +58,13 @@ block main
                     a.badge.badge-success(href="javascript:void(0);") Hoạt động
                   else
                     a.badge.badge-danger(href="javascript:void(0);") Dừng hoạt động
-               
-                td
-                  a.btn.btn-secondary.btn-sm(href=`${prefixAdmin}/songs/detail/${item.id}`) Chi tiết
-                  if(role.permissions.includes("songs_edit"))
-                   a.btn.btn-warning.btn-sm.ms-1(href=`${prefixAdmin}/songs/edit/${item.id}`) Sửa
-                  if(role.permissions.includes("songs_delete"))
-                   button.btn.btn-danger.btn-sm.ms-1(button-delete, data-id=item.id) Xóa
+              td
+                a.btn.btn-secondary.btn-sm(href=`${prefixAdmin}/songs/detail/${item.id}`) Chi tiết
+                if(role.permissions.includes("songs_edit"))
+                  a.btn.btn-warning.btn-sm.ms-1(href=`${prefixAdmin}/songs/edit/${item.id}`) Sửa
+                if(role.permissions.includes("songs_delete"))
+                  button.btn.btn-danger.btn-sm.ms-1(button-delete, data-id=item.id) Xóa
+
+  //- Sử dụng mixin pagination thay vì viết inline
+  +pagination(pagination)
+
