@@ -159,4 +159,16 @@ export const editPatchSongs = async (req: Request, res: Response) =>{
 }
 
 
+// [DELETE]   admin/songs/delete/:id
+export const deleteSongs = async (req: Request, res: Response) => {
+    const songId = req.params.id;
+await Song.updateOne({
+    _id:songId
+},{
+    deleted:true
+})
+   req.flash("success", "Xóa bài hát thành công");
+    res.redirect(`${systemConfig.prefixAdmin}/songs`);
+};
+
 

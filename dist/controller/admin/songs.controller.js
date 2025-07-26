@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editPatchSongs = exports.editSongs = exports.postCreateSong = exports.createSong = exports.indexSongs = void 0;
+exports.deleteSongs = exports.editPatchSongs = exports.editSongs = exports.postCreateSong = exports.createSong = exports.indexSongs = void 0;
 const pagination_1 = __importDefault(require("../../helper/pagination"));
 const songs_model_1 = __importDefault(require("../../model/songs.model"));
 const topic_model_1 = __importDefault(require("../../model/topic.model"));
@@ -131,3 +131,14 @@ const editPatchSongs = (req, res) => __awaiter(void 0, void 0, void 0, function*
     res.redirect(`${system_config_1.default.prefixAdmin}/songs`);
 });
 exports.editPatchSongs = editPatchSongs;
+const deleteSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const songId = req.params.id;
+    yield songs_model_1.default.updateOne({
+        _id: songId
+    }, {
+        deleted: true
+    });
+    req.flash("success", "Xóa bài hát thành công");
+    res.redirect(`${system_config_1.default.prefixAdmin}/songs`);
+});
+exports.deleteSongs = deleteSongs;

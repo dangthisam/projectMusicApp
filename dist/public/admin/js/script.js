@@ -72,7 +72,7 @@ if (closeAlert) {
 }
 
 // xử lý xóa sản phẩm
-const buttonDelete = document.querySelectorAll("[button-delete]");
+const buttonDelete = document.querySelectorAll("[button-delete-topics]");
 if (buttonDelete.length > 0) {
   const formDelete = document.querySelector("#form-delete-topics");
   const path = formDelete.getAttribute("data-path");
@@ -135,7 +135,7 @@ statusButtons.forEach((button) => {
 // check box
 
 const checkBoxMulti = document.querySelector("[check-box-multi]");
-
+console.log(checkBoxMulti)
 if (checkBoxMulti) {
   const checkBoxAll = checkBoxMulti.querySelector("input[name='checkAll']");
 

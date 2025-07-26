@@ -6,7 +6,8 @@ import {
   createSong,
   postCreateSong,
   editSongs,
-  editPatchSongs
+  editPatchSongs,
+  deleteSongs
 } from "../../controller/admin/songs.controller";
 import * as uploadMiddleware from "../../middleware/admin/uploadCould.middleware";
 const upload = multer();
@@ -37,5 +38,8 @@ router.patch(
 
   editPatchSongs
 );
+
+
+router.delete("/delete/:id", deleteSongs);
 
 export default router;

@@ -53,4 +53,5 @@ router.patch("/edit/:id", upload.fields([
     { name: "avatar", maxCount: 1 },
     { name: "audio", maxCount: 1 },
 ]), uploadMiddleware.uploadFields, songs_controller_1.editPatchSongs);
+router.delete("/delete/:id", songs_controller_1.deleteSongs);
 exports.default = router;

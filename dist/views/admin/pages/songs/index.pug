@@ -1,7 +1,9 @@
 extends ../../layout/default.pug
 include ../../mixins/pagination.pug
-
+include ../../mixins/alert.pug
 block main
+  +alert(3000)
+
   h1.mb-4 #{titlePage}
 
   .card.mb-3
@@ -14,9 +16,8 @@ block main
           .col-4.text-end
             a.btn.btn-outline-success(href=`${prefixAdmin}/songs/create`) + Thêm mới
 
-      table.table.table-hover.table-sm
+      table.table.table-hover.table-sm(check-box-multi)
         thead
-        
           tr
             th.ps-4.text-center(style="width: 60px;")
               .form-check
@@ -63,8 +64,14 @@ block main
                 if(role.permissions.includes("songs_edit"))
                   a.btn.btn-warning.btn-sm.ms-1(href=`${prefixAdmin}/songs/edit/${item.id}`) Sửa
                 if(role.permissions.includes("songs_delete"))
-                  button.btn.btn-danger.btn-sm.ms-1(button-delete, data-id=item.id) Xóa
+                  button.btn.btn-danger.btn-sm.ms-1(button-delete, button-delete-songs,data-id=item.id) Xóa
 
   //- Sử dụng mixin pagination thay vì viết inline
   +pagination(pagination)
 
+  //- Hidden Forms for AJAX actions
+  form#form-delete-songs.d-none(
+      action="", 
+      method="POST", 
+      data-path=`${prefixAdmin}/songs/delete`
+  )
