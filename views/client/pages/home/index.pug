@@ -17,13 +17,23 @@ block main
               i.fa-solid.fa-music.me-3.text-warning.bounce-animation
               | Thế Giới Âm Nhạc Của Bạn
             p.lead.mb-4.fs-5.text-light Khám phá, lắng nghe và chia sẻ những bài hát yêu thích mỗi ngày cùng cộng đồng âm nhạc sôi động!
-            .d-flex.flex-wrap.gap-3
+            .d-flex.flex-wrap.gap-3.mb-4
               a.btn.btn-warning.btn-lg.px-4.py-3.rounded-pill.shadow-lg.hover-lift(href="/topics")
                 i.fa-solid.fa-headphones.me-2
                 | Khám phá ngay
               a.btn.btn-outline-light.btn-lg.px-4.py-3.rounded-pill.shadow(href="/songs")
                 i.fa-solid.fa-play.me-2
                 | Nghe nhạc
+            //- Social Media Links
+            .social-links.d-flex.gap-3.mt-3
+              a.social-link.text-white(href="https://facebook.com", target="_blank", title="Follow us on Facebook")
+                i.fa-brands.fa-facebook.fs-4.hover-bounce
+              a.social-link.text-white(href="#", target="_blank", title="Follow us on Instagram")
+                i.fa-brands.fa-instagram.fs-4.hover-bounce
+              a.social-link.text-white(href="#", target="_blank", title="Follow us on YouTube")
+                i.fa-brands.fa-youtube.fs-4.hover-bounce
+              a.social-link.text-white(href="#", target="_blank", title="Follow us on TikTok")
+                i.fa-brands.fa-tiktok.fs-4.hover-bounce
         .col-lg-5.col-md-4.text-center.mt-4.mt-md-0
           .hero-image-container.position-relative(data-aos="fade-left")
             img.img-fluid.rounded-circle.shadow-lg.hover-zoom(
@@ -178,8 +188,8 @@ block main
                       span Nghe
                     button.btn.btn-outline-secondary.btn-sm.rounded-pill.px-3(type="button")
                       i.fa-solid.fa-heart
-                    button.btn.btn-outline-secondary.btn-sm.rounded-pill.px-3(type="button")
-                      i.fa-solid.fa-share-alt
+                    button.btn.btn-outline-secondary.btn-sm.rounded-pill.px-3(type="button", onclick="shareOnFacebook()")
+                      i.fa-brands.fa-facebook
 
         //- View All Button
         .text-center.mt-5(data-aos="fade-up")
@@ -273,8 +283,8 @@ block main
                     span Nghe
                   button.btn.btn-outline-light.btn-sm.rounded-pill.px-3.border-opacity-50
                     i.fa-solid.fa-download
-                  button.btn.btn-outline-light.btn-sm.rounded-pill.px-3.border-opacity-50
-                    i.fa-solid.fa-share-nodes
+                  button.btn.btn-outline-light.btn-sm.rounded-pill.px-3.border-opacity-50(onclick="shareOnFacebook()")
+                    i.fa-brands.fa-facebook
 
       //- View Ranking Button
       .text-center.mt-5(data-aos="fade-up")
@@ -282,3 +292,25 @@ block main
           i.fa-solid.fa-headphones.me-2
           | Xem bảng xếp hạng
           i.fa-solid.fa-chart-line.ms-2
+
+  //- Footer Section with Social Media
+  .footer-section.bg-dark.text-white.py-5.mt-5
+    .container
+      .row.align-items-center
+        .col-md-6
+          h5.mb-3
+            i.fa-solid.fa-music.me-2.text-warning
+            | Kết nối với chúng tôi
+          p.text-light.opacity-75 Theo dõi chúng tôi trên các mạng xã hội để cập nhật những bài hát mới nhất!
+        .col-md-6.text-md-end
+          .social-media-links.d-flex.justify-content-md-end.justify-content-start.gap-3.flex-wrap
+            a.social-btn.btn.btn-outline-light.rounded-circle.p-3(href="https://facebook.com", target="_blank", title="Facebook")
+              i.fa-brands.fa-facebook.fs-4
+            a.social-btn.btn.btn-outline-light.rounded-circle.p-3(href="#", target="_blank", title="Instagram")
+              i.fa-brands.fa-instagram.fs-4
+            a.social-btn.btn.btn-outline-light.rounded-circle.p-3(href="#", target="_blank", title="YouTube")
+              i.fa-brands.fa-youtube.fs-4
+            a.social-btn.btn.btn-outline-light.rounded-circle.p-3(href="#", target="_blank", title="TikTok")
+              i.fa-brands.fa-tiktok.fs-4
+            a.social-btn.btn.btn-outline-light.rounded-circle.p-3(href="#", target="_blank", title="Twitter")
+              i.fa-brands.fa-twitter.fs-4

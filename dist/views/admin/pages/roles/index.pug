@@ -32,15 +32,15 @@ block main
                   li.breadcrumb-item
                     a(href="#") Trang chủ
                   li.breadcrumb-item.active Nhóm quyền
-          if(role.permissions.includes("roles_create"))
+          if(role.permissions.includes("permission_create"))
             .col-md-4.text-right
-              a.btn.btn-primary.btn-create(
-                href=`${prefixAdmin}/roles/create`
-              )
-                .btn-content
-                  i.fas.fa-plus.btn-icon
-                  span Thêm mới
-                .btn-ripple
+                a.btn.btn-primary.btn-create(
+                  href=`${prefixAdmin}/roles/create`
+                )
+                  .btn-content
+                    i.fas.fa-plus.btn-icon
+                    span Thêm mới
+                  .btn-ripple
 
     //- Main Content
     .content-wrapper
@@ -76,7 +76,7 @@ block main
                         .th-content
                           i.fas.fa-align-left.mr-2
                           | Mô tả
-                      if(role.permissions.includes("roles_edit"))
+                      if(role.permissions.includes("permissions_edit"))
                         th.text-center
                           .th-content
                             i.fas.fa-cogs.mr-2
@@ -98,19 +98,19 @@ block main
                        
                             td.text-center
                               .action-buttons
-                                if(role.permissions.includes("roles_edit"))
-                                  a.btn.btn-action.btn-info(
-                                    href=`${prefixAdmin}/roles/detail/${item._id}`
-                                    title="Xem chi tiết"
-                                  )
-                                  i.fas.fa-eye
-                              if(role.permissions.includes("roles_edit"))
+                              if(role.permissions.includes("permissions_view"))
+                                a.btn.btn-action.btn-info(
+                                  href=`${prefixAdmin}/roles/detail/${item._id}`
+                                  title="Xem chi tiết"
+                                )
+                                 i.fas.fa-eye
+                              if(role.permissions.includes("permissions_edit"))
                                 a.btn.btn-action.btn-warning(
                                   href=`${prefixAdmin}/roles/edit/${item._id}`
                                   title="Chỉnh sửa"
                                 )
                                   i.fas.fa-edit
-                              if(role.permissions.includes("roles_delete"))
+                              if(role.permissions.includes("permissions_delete"))
                                 a.btn.btn-action.btn-danger(
                                   type="button"
                                   data-id=item.id

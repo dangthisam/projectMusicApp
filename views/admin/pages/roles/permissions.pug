@@ -100,27 +100,29 @@ block main
                   each role in roles
                     td.text-center
                       input.custom-checkbox(type="checkbox")
+
+                      //- nhóm quyền
                 tr.category-header
                   td(colspan=roles.length + 1)
                     i.fas.fa-tags.me-2
                     | Quản lý nhóm quyền
-                tr(data-name="permission_view")
+                tr(data-name="permissions_view")
                     td.permission-action Xem
                     each role in roles
                       td.text-center
                         input.custom-checkbox(type="checkbox")
-                tr(data-name="permission_create")
+                tr(data-name="permissions_create")
                    td.permission-action Thêm
                     each role in roles
                       td.text-center
                         input.custom-checkbox(type="checkbox")
                    
-                tr(data-name="permission_edit")
+                tr(data-name="permissions_edit")
                   td.permission-action Sửa
                     each role in roles
                       td.text-center
                         input.custom-checkbox(type="checkbox")
-                tr(data-name="permission_delete")
+                tr(data-name="permissions_delete")
                    td.permission-action Xóa
                     each role in roles
                       td.text-center

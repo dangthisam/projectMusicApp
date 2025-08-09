@@ -13,8 +13,7 @@ export const indexRouterAuth=async (req:Request , res:Response)=>{
     }
    else{
      res.render("admin/pages/auth/login.pug",{
-        titlePage:"Đăng nhập"
-    })
+        titlePage:"Đăng nhập"  })
    }
 
 }
